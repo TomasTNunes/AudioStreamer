@@ -46,6 +46,8 @@ class AudioStreamer:
         # Initialize PyAudio and Stream
         self.p = pyaudio.PyAudio()
         self.stream = None
+        self.open_stream()
+        print(self.stream)
         self.sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
         # Control Variables
         self.queue = []
@@ -58,14 +60,15 @@ class AudioStreamer:
     ########################################################################
     ############################ MANAGE STREAM #############################
     ########################################################################
-
-    def open_stream(self):
-        self.stream = self.p.open(format=pyaudio.paInt16,
-                                  channels=self.channels,
-                                  rate=self.sample_rate,
-                                  output=True)
-        logger.info('Stream Opened')
     
+    def open_stream(self):
+        self.close_stream()
+        self.stream = self.p.open(format=pyaudio.paInt16,
+                                channels=self.channels,
+                                rate=self.sample_rate,
+                                output=True)
+        logger.info('Stream Opened')
+
     def close_stream(self):
         self.is_playing = False
         try:
@@ -81,12 +84,7 @@ class AudioStreamer:
     def terminate_audiostreamer(self):
         self.streamplayer_running = False
         self.pause_stream_player.set()
-        if self.is_playing:
-            self.is_playing = False
-        else:
-            self.close_stream()
-        while self.stream:
-            time.sleep(0.2)
+        self.close_stream()
         self.p.terminate()
         logger.info('Audiostreamer Terminated')
     
@@ -122,7 +120,7 @@ class AudioStreamer:
     
     def pause(self):
         try:
-            if self.stream and self.is_playing:
+            if self.is_playing:
                 if not self.is_paused:
                     self.is_paused = True
                     self.stream.stop_stream()
@@ -132,7 +130,7 @@ class AudioStreamer:
     
     def resume(self):
         try:
-            if self.stream and self.is_playing: # self.is_playing is enough?
+            if self.is_playing:
                 if self.is_paused:
                     self.stream.start_stream()
                     self.is_paused = False
@@ -157,6 +155,7 @@ class AudioStreamer:
             if self.queue:
                 self.play(self.queue[0])
                 self.queue = self.queue[1:]
+                self.stream.start_stream()
                 self.is_paused = False
             else:
                 #time.sleep(0.5)
@@ -207,7 +206,6 @@ class AudioStreamer:
         
         logger.info('Starting Stream')
         self.is_playing = True
-        self.open_stream()
         chunk_buffer = queue.Queue(maxsize=600/self.sec_per_chunk) # number of chunks for 10 minutes
         
         ffmpeg_command = [
@@ -240,10 +238,11 @@ class AudioStreamer:
         ffmpeg_thread.start()
 
         try:
+            self.stream.start_stream()
             while self.is_playing:
 
                 if self.is_paused:
-                    time.sleep(0.5)
+                    time.sleep(0.2)
                     continue
                 
                 chunk = chunk_buffer.get(timeout=3)
@@ -253,20 +252,21 @@ class AudioStreamer:
                     self.stream.write(audio_data.tobytes())
                 else:
                     logger.info('End of audio stream reached')
-                    break
+                    self.is_playing = False
         except queue.Empty:
             logger.error(f"Error during audio streaming: Chunk Buffer Empty for 5 seconds")
         except Exception as e:
             logger.error(f"Error during audio streaming: {e}")
         finally:
+            self.is_playing = False
+            self.stream.stop_stream()
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
             ffmpeg_thread.join()
-            self.close_stream()
+            del chunk_buffer # ?
         
         if self.new_track_position:
-            del chunk_buffer # ?
             new_track_position = self.new_track_position
             self.new_track_position = None
             logger.info(f'Position set to {new_track_position}')
@@ -304,7 +304,7 @@ def result_handler(async_results, streamer, pause_event, stop_event):
     logger.info('Start Result Handler Thread')
     while not stop_event.is_set():
         time.sleep(1)
-        if pause_event.is_set() and not async_results:
+        if not async_results:
             pause_event.clear()
             logger.info('Result Handler Thread Paused')
         pause_event.wait()  # Will block if pause_event is cleared

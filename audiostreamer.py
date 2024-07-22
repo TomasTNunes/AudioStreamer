@@ -122,7 +122,7 @@ class AudioStreamer:
     
     def pause(self):
         try:
-            if self.stream and self.is_playing:
+            if self.is_playing:
                 if not self.is_paused:
                     self.is_paused = True
                     self.stream.stop_stream()
@@ -132,7 +132,7 @@ class AudioStreamer:
     
     def resume(self):
         try:
-            if self.stream and self.is_playing: # self.is_playing is enough?
+            if self.is_playing:
                 if self.is_paused:
                     self.stream.start_stream()
                     self.is_paused = False
@@ -227,7 +227,7 @@ class AudioStreamer:
             while self.is_playing:
 
                 if self.is_paused:
-                    time.sleep(0.5)
+                    time.sleep(0.3)
                     continue
                 
                 chunk = chunk_buffer.get(timeout=3)
@@ -243,14 +243,15 @@ class AudioStreamer:
         except Exception as e:
             logger.error(f"Error during audio streaming: {e}")
         finally:
+            self.is_playing = False
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
             ffmpeg_thread.join()
+            del chunk_buffer # ?
             self.close_stream()
         
         if self.new_track_position:
-            del chunk_buffer # ?
             new_track_position = self.new_track_position
             self.new_track_position = None
             logger.info(f'Position set to {new_track_position}')
@@ -288,7 +289,7 @@ def result_handler(async_results, streamer, pause_event, stop_event):
     logger.info('Start Result Handler Thread')
     while not stop_event.is_set():
         time.sleep(1)
-        if pause_event.is_set() and not async_results:
+        if not async_results:
             pause_event.clear()
             logger.info('Result Handler Thread Paused')
         pause_event.wait()  # Will block if pause_event is cleared
