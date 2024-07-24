@@ -46,8 +46,6 @@ class AudioStreamer:
         # Initialize PyAudio and Stream
         self.p = pyaudio.PyAudio()
         self.stream = None
-        self.open_stream()
-        print(self.stream)
         self.sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
         # Control Variables
         self.queue = []
@@ -60,15 +58,14 @@ class AudioStreamer:
     ########################################################################
     ############################ MANAGE STREAM #############################
     ########################################################################
-    
-    def open_stream(self):
-        self.close_stream()
-        self.stream = self.p.open(format=pyaudio.paInt16,
-                                channels=self.channels,
-                                rate=self.sample_rate,
-                                output=True)
-        logger.info('Stream Opened')
 
+    def open_stream(self):
+        self.stream = self.p.open(format=pyaudio.paInt16,
+                                  channels=self.channels,
+                                  rate=self.sample_rate,
+                                  output=True)
+        logger.info('Stream Opened')
+    
     def close_stream(self):
         self.is_playing = False
         try:
@@ -84,7 +81,12 @@ class AudioStreamer:
     def terminate_audiostreamer(self):
         self.streamplayer_running = False
         self.pause_stream_player.set()
-        self.close_stream()
+        if self.is_playing:
+            self.is_playing = False
+        else:
+            self.close_stream()
+        while self.stream:
+            time.sleep(0.2)
         self.p.terminate()
         logger.info('Audiostreamer Terminated')
     
@@ -105,7 +107,7 @@ class AudioStreamer:
     def set_volume(self, volume):
         try:
             self.volume = np.clip(volume/100, 0, 1)
-            logger.info(f'Volume set to {self.volume*100}')
+            logger.info(f'Volume set to {int(self.volume*100)}')
         except Exception as e:
             logger.error(f"Error in Volume Setting: {e}")
     
@@ -155,7 +157,6 @@ class AudioStreamer:
             if self.queue:
                 self.play(self.queue[0])
                 self.queue = self.queue[1:]
-                self.stream.start_stream()
                 self.is_paused = False
             else:
                 #time.sleep(0.5)
@@ -188,24 +189,9 @@ class AudioStreamer:
             logger.info('Process Closed')
 
     def play(self, track, position=0):
-        # if all tracks share the same sample rate and channel configuration, keeping the stream open is efficient. 
-        # However, if a new track requires a different configuration, then you should close and reopen the stream with the new parameters.
-        # So use the same self.stream
-        # Something similar to:
-        # def open_stream(self):
-        #     if self.stream is not None:
-        #         self.stream.close()
-        #     self.stream = self.p.open(format=pyaudio.paInt16,
-        #                             channels=self.channels,
-        #                             rate=self.sample_rate,
-        #                             output=True)
-        # in case it needs to be restarted
-        # delete close stream, and only close it in open_stream and terminated fucntion
-        # to control if playing use self.is_playing or self.streamisactive
-        # stop (not close) stream when queue is empty, start stream when queu is not empty
-        
         logger.info('Starting Stream')
         self.is_playing = True
+        self.open_stream()
         chunk_buffer = queue.Queue(maxsize=600/self.sec_per_chunk) # number of chunks for 10 minutes
         
         ffmpeg_command = [
@@ -238,11 +224,10 @@ class AudioStreamer:
         ffmpeg_thread.start()
 
         try:
-            self.stream.start_stream()
             while self.is_playing:
 
                 if self.is_paused:
-                    time.sleep(0.2)
+                    time.sleep(0.3)
                     continue
                 
                 chunk = chunk_buffer.get(timeout=3)
@@ -252,19 +237,19 @@ class AudioStreamer:
                     self.stream.write(audio_data.tobytes())
                 else:
                     logger.info('End of audio stream reached')
-                    self.is_playing = False
+                    break
         except queue.Empty:
             logger.error(f"Error during audio streaming: Chunk Buffer Empty for 5 seconds")
         except Exception as e:
             logger.error(f"Error during audio streaming: {e}")
         finally:
             self.is_playing = False
-            self.stream.stop_stream()
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
             ffmpeg_thread.join()
             del chunk_buffer # ?
+            self.close_stream()
         
         if self.new_track_position:
             new_track_position = self.new_track_position
@@ -362,7 +347,7 @@ if __name__ == "__main__":
                     STREAMER.resume()
                 elif command.lower().startswith("v"):
                     _, vol = command.split()
-                    STREAMER.set_volume(float(vol))
+                    STREAMER.set_volume(int(vol))
                 elif command.lower().startswith("sp"):
                     _, pos = command.split()
                     STREAMER.set_position(int(pos))

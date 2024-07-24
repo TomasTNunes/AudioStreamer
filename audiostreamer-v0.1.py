@@ -107,7 +107,7 @@ class AudioStreamer:
     def set_volume(self, volume):
         try:
             self.volume = np.clip(volume/100, 0, 1)
-            logger.info(f'Volume set to {self.volume*100}')
+            logger.info(f'Volume set to {int(self.volume*100)}')
         except Exception as e:
             logger.error(f"Error in Volume Setting: {e}")
     
@@ -347,7 +347,7 @@ if __name__ == "__main__":
                     STREAMER.resume()
                 elif command.lower().startswith("v"):
                     _, vol = command.split()
-                    STREAMER.set_volume(float(vol))
+                    STREAMER.set_volume(int(vol))
                 elif command.lower().startswith("sp"):
                     _, pos = command.split()
                     STREAMER.set_position(int(pos))
@@ -366,3 +366,7 @@ if __name__ == "__main__":
             pool.close()
             pool.join()
             logger.info('EXIT Script')
+
+# chamge stream player (delete) make it such when music ends plays next until emty queue
+# when add queue if not playing, tsart playing
+# make with events?
