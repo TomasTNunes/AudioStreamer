@@ -49,11 +49,9 @@ class AudioStreamer:
         self.sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
         # Control Variables
         self.queue = []
-        self.streamplayer_running = False
         self.is_playing = False
         self.is_paused = False
-        self.pause_stream_player = threading.Event()
-        self.new_track_position = None
+        self.new_position = False
     
     ########################################################################
     ############################ MANAGE STREAM #############################
@@ -79,8 +77,6 @@ class AudioStreamer:
             logger.error(f"Error in Close Stream: {e}")
     
     def terminate_audiostreamer(self):
-        self.streamplayer_running = False
-        self.pause_stream_player.set()
         if self.is_playing:
             self.is_playing = False
         else:
@@ -98,9 +94,9 @@ class AudioStreamer:
         try:
             self.queue.append(track)
             logger.info(f'Song Added to Queue')
-            if self.queue and not self.pause_stream_player.is_set():
-                self.pause_stream_player.set()
-                logger.info(f'Resume Stream Player')
+            if not self.is_playing:
+                self.play()
+                
         except Exception as e:
             logger.error(f"Error in Add Song: {e}")
 
@@ -115,7 +111,8 @@ class AudioStreamer:
         if self.is_playing:
             track_duration = self.queue[0]['duration']
             if position >= 0 and position <= track_duration:
-                self.new_track_position = position
+                self.queue[0]['position'] = position
+                self.new_position = True
                 self.is_playing = False
             else:
                 logger.error(f"Error in Set Position: {position} outside of bounds - [0, {track_duration}]")
@@ -149,34 +146,11 @@ class AudioStreamer:
     ############################ STREAM PLAYER #############################
     ########################################################################
 
-    def stream_player(self):
-        logger.info('Create Stream Player')
-        self.streamplayer_running = True
-        while self.streamplayer_running:
-            self.pause_stream_player.wait() # Will block if self.pause_stream_player is cleared
-            if self.queue:
-                self.play(self.queue[0])
-                self.queue = self.queue[1:]
-                self.is_paused = False
-            else:
-                #time.sleep(0.5)
-                if self.pause_stream_player.is_set():
-                    self.pause_stream_player.clear()
-                    logger.info(f'Pause Stream Player')
-        logger.info('Stream Player Closed')
-
     @staticmethod
     @contextmanager
     def managed_subprocess(command):
         logger.info('Starting Process')
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # import ffmpeg
-        # process = (
-        #     ffmpeg
-        #     .input(url)
-        #     .output('pipe:', format='s16le', ac=self.channels, ar=self.sample_rate)
-        #     .run_async(pipe_stdout=True, pipe_stderr=True)
-        # )
         try:
             yield process
         except Exception as e:
@@ -188,8 +162,14 @@ class AudioStreamer:
             process.wait()
             logger.info('Process Closed')
 
-    def play(self, track, position=0):
-        logger.info('Starting Stream')
+    def play(self, position=0):
+        if not self.is_playing:
+            threading.Thread(target=self.play_func, args=(self.queue[0],position,), daemon=True).start()
+        else:
+            logger.info(f'Player Already Playing')
+
+    def play_func(self, track, position):
+        logger.info('Player Thread Start')
         self.is_playing = True
         self.open_stream()
         chunk_buffer = queue.Queue(maxsize=600/self.sec_per_chunk) # number of chunks for 10 minutes
@@ -243,19 +223,34 @@ class AudioStreamer:
         except Exception as e:
             logger.error(f"Error during audio streaming: {e}")
         finally:
+            self.close_stream()
             self.is_playing = False
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
             ffmpeg_thread.join()
-            del chunk_buffer # ?
-            self.close_stream()
+            self.on_track_end()
+        logger.info('Player Thread Exiting')
+
+    def on_track_end(self):
+        if self.new_position:
+            self.change_position()
+        else:
+            logger.info('Track Ended')
+            self.play_next_track()
+    
+    def change_position(self):
+        self.play(position=self.queue[0]['position'])
+        logger.info(f'Position set to {self.queue[0]["position"]}')
+        self.new_position= False
+
+    def play_next_track(self):
+        self.queue.pop(0)
+        if self.queue:
+            self.play()
+        else:
+            logger.info('Queue Empty')
         
-        if self.new_track_position:
-            new_track_position = self.new_track_position
-            self.new_track_position = None
-            logger.info(f'Position set to {new_track_position}')
-            self.play(track, position=new_track_position)
 
 
 ########################################################################
@@ -299,7 +294,8 @@ def result_handler(async_results, streamer, pause_event, stop_event):
                     audio_url, duration = result.get()
                     if audio_url:
                         track = {'url': audio_url,
-                                'duration': duration}
+                                'duration': duration,
+                                'position': 0}
                         streamer.add_track(track)
                 except Exception as e:
                     logger.error(f"Error fetching audio URL from Worker Process: {e}")
@@ -310,9 +306,6 @@ if __name__ == "__main__":
     logger.info('START Script')
 
     STREAMER = AudioStreamer()
-    
-    streaming_thread = threading.Thread(target=STREAMER.stream_player, daemon=True)
-    streaming_thread.start()
 
     # Create a multiprocessing Pool for handling URL fetching
     with multiprocessing.Pool(processes=1) as pool:
@@ -362,11 +355,6 @@ if __name__ == "__main__":
             stop_event.set()
             result_thread.join()
             STREAMER.terminate_audiostreamer()
-            streaming_thread.join()
             pool.close()
             pool.join()
             logger.info('EXIT Script')
-
-# chamge stream player (delete) make it such when music ends plays next until emty queue
-# when add queue if not playing, tsart playing
-# make with events?
