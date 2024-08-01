@@ -262,6 +262,7 @@ def get_youtube_audio_url(url):
         'format': 'bestaudio',
         'noplaylist': True,
         'quiet': True,
+        'no_warnings': True,
         'extract_flat': 'in_playlist',
         }
     
