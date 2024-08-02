@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>801</width>
     <height>570</height>
    </rect>
   </property>
@@ -20,9 +20,13 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 0, 0);</string>
+   <string notr="true">background-color: rgb(0, 0, 0);
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
      <number>8</number>
@@ -40,7 +44,7 @@
      <number>8</number>
     </property>
     <item row="1" column="0" colspan="2">
-     <widget class="QWidget" name="widget_4" native="true">
+     <widget class="QWidget" name="bottomWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -50,7 +54,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>87</height>
+        <height>75</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -59,12 +63,12 @@
      </widget>
     </item>
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="leftVLayout">
       <property name="spacing">
        <number>8</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="homeBackgroundWidget" native="true">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -112,7 +116,7 @@ background-color: rgb(18, 18, 18);</string>
           <number>8</number>
          </property>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="homeButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -146,8 +150,8 @@ background-color: rgb(18, 18, 18);</string>
            <property name="styleSheet">
             <string notr="true">QPushButton {
     text-align: left;       /* Align text to the left */
-    padding-left: 0px;     /* Adjust padding as needed */
-	color: rgb(180, 180, 180);
+    padding-left: 0px;      /* Adjust padding as needed */
+    color: rgb(180, 180, 180);
 }
 
 QPushButton::icon {
@@ -155,13 +159,13 @@ QPushButton::icon {
 }
 
 QPushButton:hover {
-    icon: url(C:/Users/tomas/Downloads/home_hover.png);
-	color: rgb(255, 255, 255);
+    icon: url(:/assets/buttons/home_hover.png);
+    color: rgb(255, 255, 255);
 }
 
-QPushButton:pressed {
-    icon: url(C:/Users/tomas/Downloads/home_pressed.png);
-	color: rgb(255, 255, 255);
+QPushButton:checked {
+    icon: url(:/assets/buttons/home_pressed.png);
+    color: rgb(255, 255, 255);
 }
 </string>
            </property>
@@ -169,8 +173,8 @@ QPushButton:pressed {
             <string>    Home</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>../../../Downloads/home.png</normaloff>../../../Downloads/home.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/assets/buttons/home.png</normaloff>:/assets/buttons/home.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -179,7 +183,10 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="checkable">
-            <bool>false</bool>
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
            <property name="autoRepeat">
             <bool>false</bool>
@@ -196,7 +203,7 @@ QPushButton:pressed {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="searchButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -213,6 +220,7 @@ QPushButton:pressed {
             <font>
              <family>Segoe UI Black</family>
              <pointsize>11</pointsize>
+             <hintingpreference>PreferDefaultHinting</hintingpreference>
             </font>
            </property>
            <property name="cursor">
@@ -230,12 +238,12 @@ QPushButton::icon {
 }
 
 QPushButton:hover {
-    icon: url(C:/Users/tomas/Downloads/search_hover.png);
+    icon: url(:assets/buttons/search_hover.png);
 	color: rgb(255, 255, 255);
 }
 
-QPushButton:pressed {
-    icon: url(C:/Users/tomas/Downloads/search_pressed.png);
+QPushButton:checked {
+    icon: url(:assets/buttons/search_pressed.png);
 	color: rgb(255, 255, 255);
 }</string>
            </property>
@@ -243,8 +251,8 @@ QPushButton:pressed {
             <string>    Search</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>../../../Downloads/search.png</normaloff>../../../Downloads/search.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/assets/buttons/search.png</normaloff>:/assets/buttons/search.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -252,13 +260,16 @@ QPushButton:pressed {
              <height>22</height>
             </size>
            </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_2" native="true">
+       <widget class="QWidget" name="libraryBackgroundWidget" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -292,7 +303,7 @@ background-color: rgb(18, 18, 18);</string>
           <number>0</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QHBoxLayout" name="libraryHLayout">
            <property name="spacing">
             <number>73</number>
            </property>
@@ -309,9 +320,9 @@ background-color: rgb(18, 18, 18);</string>
             <number>8</number>
            </property>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="libraryButton">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -329,7 +340,7 @@ background-color: rgb(18, 18, 18);</string>
               </font>
              </property>
              <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+              <cursorShape>ArrowCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
@@ -348,8 +359,8 @@ QPushButton::icon {
               <string> Your Library</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../Downloads/library.png</normaloff>../../../Downloads/library.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/assets/buttons/library.png</normaloff>:/assets/buttons/library.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -360,9 +371,9 @@ QPushButton::icon {
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="addButton">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -388,12 +399,12 @@ QPushButton::icon {
 }
 
 QPushButton:hover {
-    icon: url(C:/Users/tomas/Downloads/add_hover.png);
+    icon: url(:assets/buttons/add_hover.png);
 	background-color: rgb(31, 31, 31);
 }
 
 QPushButton:pressed {
-    icon: url(C:/Users/tomas/Downloads/add_hover.png);
+    icon: url(:assets/buttons/add_hover.png);
 	background-color: rgb(0, 0, 0);
 }
 </string>
@@ -402,8 +413,8 @@ QPushButton:pressed {
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../Downloads/add.png</normaloff>../../../Downloads/add.png</iconset>
+              <iconset resource="resources.qrc">
+               <normaloff>:/assets/buttons/add.png</normaloff>:/assets/buttons/add.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -416,7 +427,7 @@ QPushButton:pressed {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="playlistsButtonsHLayout">
            <property name="spacing">
             <number>8</number>
            </property>
@@ -433,7 +444,7 @@ QPushButton:pressed {
             <number>8</number>
            </property>
            <item>
-            <widget class="QPushButton" name="pushButton_5">
+            <widget class="QPushButton" name="playlistsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -458,16 +469,16 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
-	background-color: rgb(42, 42, 42);
+	background-color: rgb(36, 36, 36);
 	color: rgb(244, 244, 244);
 	border-radius: 16.4px;
 }
 
 QPushButton:hover {
-	background-color: rgb(50, 50, 50);
+	background-color: rgb(42, 42, 42);
 }
 
-QPushButton:pressed {
+QPushButton:checked {
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
 }
@@ -483,10 +494,13 @@ QPushButton:pressed {
                <height>22</height>
               </size>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_6">
+            <widget class="QPushButton" name="albumsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -517,16 +531,16 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
-	background-color: rgb(42, 42, 42);
+	background-color: rgb(36, 36, 36);
 	color: rgb(244, 244, 244);
-		border-radius: 16.4px;
+	border-radius: 16.4px;
 }
 
 QPushButton:hover {
-	background-color: rgb(50, 50, 50);
+	background-color: rgb(42, 42, 42);
 }
 
-QPushButton:pressed {
+QPushButton:checked {
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
 }
@@ -542,10 +556,13 @@ QPushButton:pressed {
                <height>14</height>
               </size>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_7">
+            <widget class="QPushButton" name="artistsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -570,16 +587,16 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
-	background-color: rgb(42, 42, 42);
+	background-color: rgb(36, 36, 36);
 	color: rgb(244, 244, 244);
-		border-radius: 16.4px;
+	border-radius: 16.4px;
 }
 
 QPushButton:hover {
-	background-color: rgb(50, 50, 50);
+	background-color: rgb(42, 42, 42);
 }
 
-QPushButton:pressed {
+QPushButton:checked {
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
 }
@@ -589,10 +606,13 @@ QPushButton:pressed {
              <property name="text">
               <string>Artists</string>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer">
+            <spacer name="playlistsButtonsSpacer">
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
              </property>
@@ -610,7 +630,7 @@ QPushButton:pressed {
           </layout>
          </item>
          <item>
-          <widget class="QScrollArea" name="scrollArea_2">
+          <widget class="QScrollArea" name="libraryScrollArea">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -625,13 +645,13 @@ QPushButton:pressed {
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <widget class="QWidget" name="libraryScrollAreaWidget">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>0</y>
               <width>290</width>
-              <height>235</height>
+              <height>247</height>
              </rect>
             </property>
            </widget>
@@ -643,7 +663,7 @@ QPushButton:pressed {
      </layout>
     </item>
     <item row="0" column="1">
-     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QStackedWidget" name="rightStackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -661,13 +681,229 @@ background-color: rgb(18, 18, 18);
       <property name="lineWidth">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="page"/>
-      <widget class="QWidget" name="page_2"/>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="RSWhomeWidget"/>
+      <widget class="QWidget" name="RSWsearchWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="RSWSsearchHLayout" stretch="0,0,0">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>16</number>
+          </property>
+          <property name="topMargin">
+           <number>8</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="RSWSbackButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <fontweight>DemiBold</fontweight>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Go back</string>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="whatsThis">
+             <string/>
+            </property>
+            <property name="accessibleName">
+             <string/>
+            </property>
+            <property name="accessibleDescription">
+             <string/>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(0, 0, 0);
+	border-radius: 16.4px;
+}
+
+QToolTip {
+    color: rgb(255, 255, 255); 
+    background-color: rgb(36, 36, 36); 
+    padding: 5px; 
+    font: 13px &quot;Segoe UI&quot;; 
+	font-weight: 600;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/assets/buttons/left.png</normaloff>:/assets/buttons/left.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="RSWSsearchQLineEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>320</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>364</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <strikeout>false</strikeout>
+              <fontweight>DemiBold</fontweight>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	color: rgb(150, 150, 150);
+	background-color: rgb(36, 36, 36);
+    border-radius: 24.4px;
+	border: 2px solid;
+	border-color: rgb(18, 18, 18);
+	padding-left: 32px;
+	background: url(:/assets/buttons/search16x16.png) no-repeat;
+    background-position: left center;
+}
+
+QLineEdit:hover {
+    background-color: rgb(42, 42, 42);
+	border: 2px solid;
+	border-color: rgb(80, 80, 80);
+	background: url(:/assets/buttons/search16x16_hover.png) no-repeat;
+    background-position: left center;
+}
+
+QLineEdit:focus {
+    border: 2px solid;
+	border-color: rgb(255, 255, 255);
+	background: url(:/assets/buttons/search16x16_hover.png) no-repeat;
+    background-position: left center;
+	color: rgb(250, 250, 250);
+}
+
+QLineEdit::clear-button {
+        image: url(:/assets/buttons/search16x16_hover.png);  /* Set your custom icon path */
+        width: 16px;
+        height: 16px;
+    }
+</string>
+            </property>
+            <property name="placeholderText">
+             <string>What do you want to play?</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="RSWSsearchHSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>120</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>485</width>
+             <height>405</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
