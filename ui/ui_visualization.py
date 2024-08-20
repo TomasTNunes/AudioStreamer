@@ -1,21 +1,27 @@
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
-from build_ui import run_command
 
-from mainwindow import Ui_MainWindow  # Import the converted class
+from mainwindow_ui import Ui_MainWindow  # Import the converted class
+from searchtrackwidget import SearchTrackWidget
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
+        # Create an instance of SearchTrackWidget
+        track_widget = SearchTrackWidget("Artist Name", "Music Title")
+        
+        # Add the widget to the vertical layout
+        self.RSWSscrollVLayout.addWidget(track_widget)
+
+        for i in range(10):
+            track_widget = SearchTrackWidget(f'{i}', f'{i}')
+            self.RSWSscrollVLayout.addWidget(track_widget)
+
+
 if __name__ == "__main__":
-    commands = [
-        "pyside6-rcc resources.qrc -o resources_rc.py",
-        "pyside6-uic mainwindow.ui -o mainwindow.py"
-    ]
-    for command in commands:
-        run_command(command)
+    # Run application
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
