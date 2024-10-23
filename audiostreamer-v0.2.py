@@ -10,8 +10,6 @@ import multiprocessing
 import sounddevice as sd
 
 
-
-
 ########################################################################
 ############################ AUDIOSTREAMER #############################
 ########################################################################
@@ -23,9 +21,10 @@ class AudioStreamer:
         self.channels = channels
         self.sample_rate = sample_rate
         self.set_volume(volume)
-        # Initialize PyAudio and Stream
+        # Initialize Stream
         self.stream = None
         self.sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
+        self.max_buffersize = 600/self.sec_per_chunk # number of chunks for 10 minutes (buffersize)
         # Control Variables
         self.queue = []
         self.is_playing = False
@@ -37,8 +36,7 @@ class AudioStreamer:
     ########################################################################
 
     def open_stream(self):
-        self.stream = sd.OutputStream(samplerate=48000, 
-                                    channels=2, dtype='int16',)
+        self.stream = sd.OutputStream(samplerate=48000, channels=2, dtype='int16')
         self.stream.start()
         print('Stream Opened')
     
@@ -46,8 +44,7 @@ class AudioStreamer:
         self.is_playing = False
         try:
             if self.stream:
-                if self.stream.is_active():
-                    self.stream.stop_stream()
+                self.stream.stop()
                 self.stream.close()
                 self.stream = None
                 print('Stream Closed')
@@ -61,7 +58,6 @@ class AudioStreamer:
             self.close_stream()
         while self.stream:
             time.sleep(0.2)
-        self.p.terminate()
         print('Audiostreamer Terminated')
     
     ########################################################################
@@ -100,7 +96,7 @@ class AudioStreamer:
             if self.is_playing:
                 if not self.is_paused:
                     self.is_paused = True
-                    self.stream.stop_stream()
+                    self.stream.stop()
                     print(f'Stream Paused')
         except Exception as e:
             print(f"Error in Pause: {e}")
@@ -109,7 +105,7 @@ class AudioStreamer:
         try:
             if self.is_playing:
                 if self.is_paused:
-                    self.stream.start_stream()
+                    self.stream.start()
                     self.is_paused = False
                     print(f'Stream Resumed')
         except Exception as e:
@@ -142,15 +138,15 @@ class AudioStreamer:
 
     def play(self, position=0):
         if not self.is_playing:
-            threading.Thread(target=self.play_func, args=(self.queue[0],position,), daemon=True).start()
+            threading.Thread(target=self.player_thread, args=(self.queue[0],position,), daemon=True).start()
         else:
             print(f'Player Already Playing')
 
-    def play_func(self, track, position):
+    def player_thread(self, track, position):
         print('Player Thread Start')
         self.is_playing = True
         self.open_stream()
-        chunk_buffer = queue.Queue(maxsize=600/self.sec_per_chunk) # number of chunks for 10 minutes (buffersize)
+        chunk_buffer = queue.Queue(maxsize=self.max_buffersize)
         
         ffmpeg_command = [
             'ffmpeg',
@@ -158,8 +154,8 @@ class AudioStreamer:
             '-ss', str(position),
             '-i', track['url'],
             '-f', 's16le',
-            '-ac', str(2),
-            '-ar', str(48000),
+            '-ac', str(self.channels),
+            '-ar', str(self.sample_rate),
             '-'
         ]
 
@@ -169,7 +165,7 @@ class AudioStreamer:
         def read_ffmpeg_output():
             with self.managed_subprocess(ffmpeg_command) as process:
                 while not stop_event_ffmpeg_thread.is_set():
-                    chunk = process.stdout.read(1024)
+                    chunk = process.stdout.read(self.chunk_size)
                     if chunk:
                         chunk_buffer.put(chunk)
                     else:
@@ -188,11 +184,11 @@ class AudioStreamer:
                     time.sleep(0.3)
                     continue
 
-                chunk = chunk_buffer.get()
+                chunk = chunk_buffer.get(timeout=3)
                 if chunk:
                     audio_data = np.frombuffer(chunk, dtype=np.int16)
                     audio_data = np.clip(audio_data * self.volume, -32768, 32767).astype(np.int16)
-                    audio_data = audio_data.reshape(-1,2)
+                    audio_data = audio_data.reshape(-1,self.channels)
                     self.stream.write(audio_data)
                 else:
                     print('End of audio stream reached')
@@ -203,7 +199,6 @@ class AudioStreamer:
             print(f"Error during audio streaming: {e}")
         finally:
             self.close_stream()
-            self.is_playing = False
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
