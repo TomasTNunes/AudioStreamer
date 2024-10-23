@@ -1,5 +1,4 @@
 import subprocess
-import pyaudio
 import yt_dlp
 import threading
 import numpy as np
@@ -25,7 +24,6 @@ class AudioStreamer:
         self.sample_rate = sample_rate
         self.set_volume(volume)
         # Initialize PyAudio and Stream
-        self.p = pyaudio.PyAudio()
         self.stream = None
         self.sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
         # Control Variables
