@@ -5,9 +5,32 @@ import numpy as np
 import time
 import queue
 from contextlib import contextmanager
+import logging
 from logging.handlers import RotatingFileHandler
 import multiprocessing
 import sounddevice as sd
+
+
+########################################################################
+################################# LOGS #################################
+########################################################################
+
+# Configure logging
+logger = logging.getLogger('AudioStreamerLogger')
+logger.setLevel(logging.INFO)
+
+# Create handlers
+console_handler = logging.StreamHandler()
+file_handler = RotatingFileHandler('audiostreamer.log', maxBytes=1*1024*1024*1024, backupCount=1)
+
+# Create formatters and add them to the handlers
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+# Add handlers to the logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 ########################################################################
@@ -38,7 +61,7 @@ class AudioStreamer:
     def open_stream(self):
         self.stream = sd.OutputStream(samplerate=48000, channels=2, dtype='int16')
         self.stream.start()
-        print('Stream Opened')
+        logger.info('Stream Opened')
     
     def close_stream(self):
         self.is_playing = False
@@ -47,9 +70,9 @@ class AudioStreamer:
                 self.stream.stop()
                 self.stream.close()
                 self.stream = None
-                print('Stream Closed')
+                logger.info('Stream Closed')
         except Exception as e:
-            print(f"Error in Close Stream: {e}")
+            logger.error(f"Error in Close Stream: {e}")
     
     def terminate_audiostreamer(self):
         if self.is_playing:
@@ -58,7 +81,7 @@ class AudioStreamer:
             self.close_stream()
         while self.stream:
             time.sleep(0.2)
-        print('Audiostreamer Terminated')
+        logger.info('Audiostreamer Terminated')
     
     ########################################################################
     ########################### STREAM COMMANDS ############################
@@ -67,19 +90,19 @@ class AudioStreamer:
     def add_track(self, track):
         try:
             self.queue.append(track)
-            print(f'Song Added to Queue')
+            logger.info(f'Song Added to Queue')
             if not self.is_playing:
                 self.play()
                 
         except Exception as e:
-            print(f"Error in Add Song: {e}")
+            logger.error(f"Error in Add Song: {e}")
 
     def set_volume(self, volume):
         try:
             self.volume = np.clip(volume/100, 0, 1)
-            print(f'Volume set to {int(self.volume*100)}')
+            logger.info(f'Volume set to {int(self.volume*100)}')
         except Exception as e:
-            print(f"Error in Volume Setting: {e}")
+            logger.error(f"Error in Volume Setting: {e}")
     
     def set_position(self, position):
         if self.is_playing:
@@ -89,7 +112,7 @@ class AudioStreamer:
                 self.new_position = True
                 self.is_playing = False
             else:
-                print(f"Error in Set Position: {position} outside of bounds - [0, {track_duration}]")
+                logger.error(f"Error in Set Position: {position} outside of bounds - [0, {track_duration}]")
     
     def pause(self):
         try:
@@ -97,9 +120,9 @@ class AudioStreamer:
                 if not self.is_paused:
                     self.is_paused = True
                     self.stream.stop()
-                    print(f'Stream Paused')
+                    logger.info(f'Stream Paused')
         except Exception as e:
-            print(f"Error in Pause: {e}")
+            logger.error(f"Error in Pause: {e}")
     
     def resume(self):
         try:
@@ -107,14 +130,14 @@ class AudioStreamer:
                 if self.is_paused:
                     self.stream.start()
                     self.is_paused = False
-                    print(f'Stream Resumed')
+                    logger.info(f'Stream Resumed')
         except Exception as e:
-            print(f"Error in Resume: {e}")
+            logger.error(f"Error in Resume: {e}")
     
     def skip(self):
         if self.queue:
             self.is_playing = False
-            print(f'Song Skip')
+            logger.info(f'Song Skip')
 
     ########################################################################
     ############################ STREAM PLAYER #############################
@@ -123,27 +146,27 @@ class AudioStreamer:
     @staticmethod
     @contextmanager
     def managed_subprocess(command):
-        print('Starting Process')
+        logger.info('Starting Process')
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             yield process
         except Exception as e:
-            print(f"Error in Process: {e}")
+            logger.error(f"Error in Process: {e}")
         finally:
             process.stdout.close()
             process.stderr.close()
             process.terminate()
             process.wait()
-            print('Process Closed')
+            logger.info('Process Closed')
 
     def play(self, position=0):
         if not self.is_playing:
             threading.Thread(target=self.player_thread, args=(self.queue[0],position,), daemon=True).start()
         else:
-            print(f'Player Already Playing')
+            logger.info(f'Player Already Playing')
 
     def player_thread(self, track, position):
-        print('Player Thread Start')
+        logger.info('Player Thread Start')
         self.is_playing = True
         self.open_stream()
         chunk_buffer = queue.Queue(maxsize=self.max_buffersize)
@@ -171,7 +194,7 @@ class AudioStreamer:
                     else:
                         chunk_buffer.put(None)
                         break
-            print('ffmpeg Thread Exiting')
+            logger.info('ffmpeg Thread Exiting')
 
         # Thread to Read ffmpeg Output
         ffmpeg_thread = threading.Thread(target=read_ffmpeg_output, daemon=True)
@@ -191,12 +214,12 @@ class AudioStreamer:
                     audio_data = audio_data.reshape(-1,self.channels)
                     self.stream.write(audio_data)
                 else:
-                    print('End of audio stream reached')
+                    logger.info('End of audio stream reached')
                     break
         except queue.Empty:
-            print(f"Error during audio streaming: Chunk Buffer Empty for 5 seconds")
+            logger.error(f"Error during audio streaming: Chunk Buffer Empty for 5 seconds")
         except Exception as e:
-            print(f"Error during audio streaming: {e}")
+            logger.error(f"Error during audio streaming: {e}")
         finally:
             self.close_stream()
             stop_event_ffmpeg_thread.set()
@@ -204,18 +227,18 @@ class AudioStreamer:
                 chunk_buffer.get()
             ffmpeg_thread.join()
             self.on_track_end()
-        print('Player Thread Exiting')
+        logger.info('Player Thread Exiting')
 
     def on_track_end(self):
         if self.new_position:
             self.change_position()
         else:
-            print('Track Ended')
+            logger.info('Track Ended')
             self.play_next_track()
     
     def change_position(self):
         self.play(position=self.queue[0]['position'])
-        print(f'Position set to {self.queue[0]["position"]}')
+        logger.info(f'Position set to {self.queue[0]["position"]}')
         self.new_position= False
 
     def play_next_track(self):
@@ -223,7 +246,7 @@ class AudioStreamer:
         if self.queue:
             self.play()
         else:
-            print('Queue Empty')
+            logger.info('Queue Empty')
         
 
 
@@ -245,10 +268,10 @@ def get_youtube_audio_url(url):
             info_dict = ydl.extract_info(url, download=False)
             audio_url = info_dict['url']
             duration = int(info_dict['duration'])
-        print('Youtube Audio URL Obtained')
+        logger.info('Youtube Audio URL Obtained')
         return audio_url, duration
     except Exception as e:
-        print(f"Error in Obtaining Youtube Audio URL: {e}")
+        logger.error(f"Error in Obtaining Youtube Audio URL: {e}")
         return 0, 0
     
 ########################################################################
@@ -256,12 +279,12 @@ def get_youtube_audio_url(url):
 ########################################################################
 
 def result_handler(async_results, streamer, pause_event, stop_event):
-    print('Start Result Handler Thread')
+    logger.info('Start Result Handler Thread')
     while not stop_event.is_set():
         time.sleep(1)
         if not async_results:
             pause_event.clear()
-            print('Result Handler Thread Paused')
+            logger.info('Result Handler Thread Paused')
         pause_event.wait()  # Will block if pause_event is cleared
         for result in async_results:
             if result.ready():
@@ -273,12 +296,12 @@ def result_handler(async_results, streamer, pause_event, stop_event):
                                 'position': 0}
                         streamer.add_track(track)
                 except Exception as e:
-                    print(f"Error fetching audio URL from Worker Process: {e}")
+                    logger.error(f"Error fetching audio URL from Worker Process: {e}")
                 async_results.remove(result)
-    print('Result Handler Thread Exiting')
+    logger.info('Result Handler Thread Exiting')
 
 if __name__ == "__main__":
-    print('START Script')
+    logger.info('#'*40 + ' START Script ' + '#'*40)
 
     STREAMER = AudioStreamer()
 
@@ -301,12 +324,12 @@ if __name__ == "__main__":
                 command = input("Enter command (a/s/p/r/v/q): ")
                 if command.lower().startswith("a"):
                     _, url = command.split()
-                    print('Youtube URL Obtained')
+                    logger.info('Youtube URL Obtained')
                     result = pool.apply_async(get_youtube_audio_url, (url,))
                     async_results.append(result)
                     if async_results and not pause_event.is_set():
                         pause_event.set()
-                        print('Result Handler Thread Resumed')
+                        logger.info('Result Handler Thread Resumed')
                 elif command.lower() == "s":
                     STREAMER.skip()
                 elif command.lower() == "p":
@@ -322,9 +345,9 @@ if __name__ == "__main__":
                 elif command.lower() == "q":
                     raise KeyboardInterrupt
                 else:
-                    print("Unknown command. Use 'a', 's', 'p', 'r', 'v', 'sp', or 'q'")       
+                    logger.info("Unknown command. Use 'a', 's', 'p', 'r', 'v', 'sp', or 'q'")       
         except KeyboardInterrupt:
-            print('Keyboard interrupt received')
+            logger.error('Keyboard interrupt received')
         finally:
             pause_event.set()
             stop_event.set()
@@ -332,4 +355,4 @@ if __name__ == "__main__":
             STREAMER.terminate_audiostreamer()
             pool.close()
             pool.join()
-            print('EXIT Script')
+            logger.info('EXIT Script')
