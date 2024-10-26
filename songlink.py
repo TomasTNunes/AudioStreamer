@@ -1,7 +1,5 @@
 import requests
 
-# make logger
-
 class Entity:
     def __init__(self, id, title, artistName, linksByPlatform):
         self.id = id
