@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>570</height>
+    <width>806</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -186,7 +186,7 @@ QPushButton:checked {
             <bool>true</bool>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="autoRepeat">
             <bool>false</bool>
@@ -651,7 +651,7 @@ QPushButton:checked {
               <x>0</x>
               <y>0</y>
               <width>290</width>
-              <height>247</height>
+              <height>260</height>
              </rect>
             </property>
            </widget>
@@ -928,8 +928,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>472</width>
-             <height>407</height>
+             <width>478</width>
+             <height>420</height>
             </rect>
            </property>
            <property name="styleSheet">

@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 570)
+        MainWindow.resize(806, 583)
         MainWindow.setMinimumSize(QSize(800, 570))
         MainWindow.setStyleSheet(u"background-color: rgb(0, 0, 0);\n"
 "")
@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         self.homeButton.setIcon(icon)
         self.homeButton.setIconSize(QSize(22, 22))
         self.homeButton.setCheckable(True)
-        self.homeButton.setChecked(True)
+        self.homeButton.setChecked(False)
         self.homeButton.setAutoRepeat(False)
         self.homeButton.setAutoDefault(False)
         self.homeButton.setFlat(False)
@@ -346,7 +346,7 @@ class Ui_MainWindow(object):
         self.libraryScrollArea.setWidgetResizable(True)
         self.libraryScrollAreaWidget = QWidget()
         self.libraryScrollAreaWidget.setObjectName(u"libraryScrollAreaWidget")
-        self.libraryScrollAreaWidget.setGeometry(QRect(0, 0, 290, 247))
+        self.libraryScrollAreaWidget.setGeometry(QRect(0, 0, 290, 260))
         self.libraryScrollArea.setWidget(self.libraryScrollAreaWidget)
 
         self.verticalLayout_3.addWidget(self.libraryScrollArea)
@@ -503,7 +503,7 @@ class Ui_MainWindow(object):
         self.RSWSscrollArea.setWidgetResizable(True)
         self.RSWSscrollAreaWidget = QWidget()
         self.RSWSscrollAreaWidget.setObjectName(u"RSWSscrollAreaWidget")
-        self.RSWSscrollAreaWidget.setGeometry(QRect(0, 0, 472, 407))
+        self.RSWSscrollAreaWidget.setGeometry(QRect(0, 0, 478, 420))
         self.RSWSscrollAreaWidget.setStyleSheet(u"")
         self.RSWSscrollVLayout = QVBoxLayout(self.RSWSscrollAreaWidget)
         self.RSWSscrollVLayout.setSpacing(0)
