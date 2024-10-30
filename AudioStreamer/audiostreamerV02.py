@@ -39,6 +39,7 @@ logger.addHandler(file_handler)
 
 class AudioStreamer:
     def __init__(self, chunk_size=1024, channels=2, sample_rate=48000, volume=10.):
+        logger.info('-'*20+' AudioStreamer Initialized '+'-'*20)
         # Audio Properties
         self.chunk_size = chunk_size
         self.channels = channels
@@ -74,7 +75,7 @@ class AudioStreamer:
         except Exception as e:
             logger.error(f"Error in Close Stream: {e}")
     
-    def terminate_audiostreamer(self):
+    def terminate_audiostreamer(self): # replace with stop as for sounddevice tehre is no need for terminate cause there is no initialization
         if self.is_playing:
             self.is_playing = False
         else:
@@ -250,6 +251,9 @@ class AudioStreamer:
         
 
 
+# ------------------------------------------------------------------------------------------------------#
+
+
 ########################################################################
 ############################### YDL URL ################################
 ########################################################################
@@ -301,8 +305,6 @@ def result_handler(async_results, streamer, pause_event, stop_event):
     logger.info('Result Handler Thread Exiting')
 
 if __name__ == "__main__":
-    logger.info('#'*40 + ' START Script ' + '#'*40)
-
     STREAMER = AudioStreamer()
 
     # Create a multiprocessing Pool for handling URL fetching

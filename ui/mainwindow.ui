@@ -60,6 +60,58 @@
       <property name="styleSheet">
        <string notr="true">/*background-color: rgb(170, 170, 127);*/</string>
       </property>
+      <widget class="HoverSlider" name="horizontalSlider">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>40</y>
+         <width>241</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSlider::groove:horizontal {
+                background: rgb(76, 76, 76); /* Grey for the background */
+                height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::add-page:horizontal  {
+                background: rgb(76, 76, 76);
+                        height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::sub-page:horizontal  {
+                background: rgb(255, 255, 255);
+                        height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::handle:horizontal  {
+                background: transparent; 
+                width: 12px;
+                height: 6px;
+                margin: -4px -5;
+                border-radius: 6px;
+                }</string>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="tracking">
+        <bool>true</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="0" column="0">
@@ -951,177 +1003,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <property name="bottomMargin">
              <number>16</number>
             </property>
-            <item>
-             <widget class="QWidget" name="widget" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>56</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>56</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QWidget{
-	background-color: rgb(18, 18, 18);
-	border-radius: 4px;
-}
-
-QWidget:hover{
-	background-color: rgb(36, 36, 36);
-}
-
-</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_2">
-               <property name="leftMargin">
-                <number>8</number>
-               </property>
-               <property name="topMargin">
-                <number>8</number>
-               </property>
-               <property name="rightMargin">
-                <number>16</number>
-               </property>
-               <property name="bottomMargin">
-                <number>8</number>
-               </property>
-               <property name="horizontalSpacing">
-                <number>8</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>0</number>
-               </property>
-               <item row="0" column="2">
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="label_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI Black</family>
-                   <pointsize>11</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(255, 255, 255);
-background-color: none;</string>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>40</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(0, 85, 0);</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_3">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <bold>true</bold>
-                   <underline>false</underline>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel {
-   color: rgb(180, 180, 180);
-	background-color: none;
-}
-
-
-QLabel:hover {
-	color: rgb(255, 255, 255);
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>TextLabel</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
            </layout>
           </widget>
          </widget>
@@ -1133,6 +1014,13 @@ QLabel:hover {
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HoverSlider</class>
+   <extends>QSlider</extends>
+   <header>hoverslider</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

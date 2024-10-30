@@ -10,13 +10,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         # Create an instance of SearchTrackWidget
-        track_widget = SearchTrackWidget("Artist Name", "Music Title")
+        track_widget = SearchTrackWidget("Artist Name", "Music Title", '', '')
         
         # Add the widget to the vertical layout
         self.RSWSscrollVLayout.addWidget(track_widget)
 
         for i in range(10):
-            track_widget = SearchTrackWidget(f'{i}', f'{i}')
+            track_widget = SearchTrackWidget(f'{i}', f'{i}', '', '')
             self.RSWSscrollVLayout.addWidget(track_widget)
 
 

@@ -16,9 +16,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QStackedWidget, QVBoxLayout, QWidget)
+    QHBoxLayout, QLineEdit, QMainWindow, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QStackedWidget,
+    QVBoxLayout, QWidget)
+
+from hoverslider import HoverSlider
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -45,6 +47,40 @@ class Ui_MainWindow(object):
         self.bottomWidget.setSizePolicy(sizePolicy)
         self.bottomWidget.setMinimumSize(QSize(0, 75))
         self.bottomWidget.setStyleSheet(u"/*background-color: rgb(170, 170, 127);*/")
+        self.horizontalSlider = HoverSlider(self.bottomWidget)
+        self.horizontalSlider.setObjectName(u"horizontalSlider")
+        self.horizontalSlider.setGeometry(QRect(270, 40, 241, 12))
+        self.horizontalSlider.setStyleSheet(u"QSlider::groove:horizontal {\n"
+"                background: rgb(76, 76, 76); /* Grey for the background */\n"
+"                height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::add-page:horizontal  {\n"
+"                background: rgb(76, 76, 76);\n"
+"                        height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::sub-page:horizontal  {\n"
+"                background: rgb(255, 255, 255);\n"
+"                        height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::handle:horizontal  {\n"
+"                background: transparent; \n"
+"                width: 12px;\n"
+"                height: 6px;\n"
+"                margin: -4px -5;\n"
+"                border-radius: 6px;\n"
+"   "
+                        "             }")
+        self.horizontalSlider.setMaximum(100)
+        self.horizontalSlider.setTracking(True)
+        self.horizontalSlider.setOrientation(Qt.Orientation.Horizontal)
+        self.horizontalSlider.setInvertedAppearance(False)
+        self.horizontalSlider.setInvertedControls(False)
 
         self.gridLayout.addWidget(self.bottomWidget, 1, 0, 1, 2)
 
@@ -509,89 +545,6 @@ class Ui_MainWindow(object):
         self.RSWSscrollVLayout.setSpacing(0)
         self.RSWSscrollVLayout.setObjectName(u"RSWSscrollVLayout")
         self.RSWSscrollVLayout.setContentsMargins(16, 0, 4, 16)
-        self.widget = QWidget(self.RSWSscrollAreaWidget)
-        self.widget.setObjectName(u"widget")
-        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
-        self.widget.setSizePolicy(sizePolicy)
-        self.widget.setMinimumSize(QSize(0, 56))
-        self.widget.setMaximumSize(QSize(16777215, 56))
-        self.widget.setStyleSheet(u"QWidget{\n"
-"	background-color: rgb(18, 18, 18);\n"
-"	border-radius: 4px;\n"
-"}\n"
-"\n"
-"QWidget:hover{\n"
-"	background-color: rgb(36, 36, 36);\n"
-"}\n"
-"\n"
-"")
-        self.gridLayout_2 = QGridLayout(self.widget)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.gridLayout_2.setHorizontalSpacing(8)
-        self.gridLayout_2.setVerticalSpacing(0)
-        self.gridLayout_2.setContentsMargins(8, 8, 16, 8)
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer, 0, 2, 1, 1)
-
-        self.label_2 = QLabel(self.widget)
-        self.label_2.setObjectName(u"label_2")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy5)
-        self.label_2.setMinimumSize(QSize(0, 22))
-        self.label_2.setMaximumSize(QSize(16777215, 22))
-        font7 = QFont()
-        font7.setFamilies([u"Segoe UI Black"])
-        font7.setPointSize(11)
-        font7.setBold(True)
-        self.label_2.setFont(font7)
-        self.label_2.setStyleSheet(u"color: rgb(255, 255, 255);\n"
-"background-color: none;")
-
-        self.gridLayout_2.addWidget(self.label_2, 0, 1, 1, 1)
-
-        self.label = QLabel(self.widget)
-        self.label.setObjectName(u"label")
-        sizePolicy3.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy3)
-        self.label.setMinimumSize(QSize(40, 40))
-        self.label.setStyleSheet(u"background-color: rgb(0, 85, 0);")
-
-        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
-
-        self.label_3 = QLabel(self.widget)
-        self.label_3.setObjectName(u"label_3")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy6)
-        self.label_3.setMinimumSize(QSize(0, 20))
-        self.label_3.setMaximumSize(QSize(16777215, 20))
-        font8 = QFont()
-        font8.setPointSize(10)
-        font8.setBold(True)
-        font8.setUnderline(False)
-        self.label_3.setFont(font8)
-        self.label_3.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.label_3.setStyleSheet(u"QLabel {\n"
-"   color: rgb(180, 180, 180);\n"
-"	background-color: none;\n"
-"}\n"
-"\n"
-"\n"
-"QLabel:hover {\n"
-"	color: rgb(255, 255, 255);\n"
-"}")
-
-        self.gridLayout_2.addWidget(self.label_3, 1, 1, 1, 1)
-
-
-        self.RSWSscrollVLayout.addWidget(self.widget)
-
         self.RSWSscrollArea.setWidget(self.RSWSscrollAreaWidget)
 
         self.verticalLayout.addWidget(self.RSWSscrollArea)
@@ -637,8 +590,5 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(accessibility)
         self.RSWSbackButton.setText("")
         self.RSWSsearchQLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"What do you want to play?", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.label.setText("")
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
     # retranslateUi
 

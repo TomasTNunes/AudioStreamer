@@ -22,7 +22,7 @@ class Ui_SearchTrackWidgetBase(object):
     def setupUi(self, SearchTrackWidgetBase):
         if not SearchTrackWidgetBase.objectName():
             SearchTrackWidgetBase.setObjectName(u"SearchTrackWidgetBase")
-        SearchTrackWidgetBase.resize(458, 56)
+        SearchTrackWidgetBase.resize(458, 58)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

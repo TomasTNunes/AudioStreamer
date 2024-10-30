@@ -1,3 +1,5 @@
 audiostreamer.log
 AudioStreamer.code-workspace
 __pycache__
+.cache
+.env
