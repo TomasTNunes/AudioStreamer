@@ -1,5 +1,22 @@
 <RCC>
   <qresource prefix="/">
+    <file>assets/buttons/shuffle_hover.png</file>
+    <file>assets/buttons/loop_checked.png</file>
+    <file>assets/buttons/loop_checked2.png</file>
+    <file>assets/buttons/loop_pressed.png</file>
+    <file>assets/buttons/loop_hover.png</file>
+    <file>assets/buttons/loop.png</file>
+    <file>assets/buttons/pause.png</file>
+    <file>assets/buttons/shuffle_pressed2.png</file>
+    <file>assets/buttons/shuffle_pressed.png</file>
+    <file>assets/buttons/shuffle.png</file>
+    <file>assets/buttons/nextTrack.png</file>
+    <file>assets/buttons/nextTrack_hover.png</file>
+    <file>assets/buttons/nextTrack_pressed.png</file>
+    <file>assets/buttons/previousTrack.png</file>
+    <file>assets/buttons/previousTrack_hover.png</file>
+    <file>assets/buttons/previousTrack_pressed.png</file>
+    <file>assets/buttons/play.png</file>
     <file>assets/buttons/search16x16_hover.png</file>
     <file>assets/buttons/search16x16.png</file>
     <file>assets/buttons/left.png</file>

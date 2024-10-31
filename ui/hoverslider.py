@@ -8,6 +8,10 @@ class HoverSlider(QSlider):
 
     def default_style(self):
         return """
+                QSlider {
+	        background-color: transparent;
+                }
+
                 QSlider::groove:horizontal {
                 background: rgb(76, 76, 76); /* Grey for the background */
                 height: 4px; /* Thickness of the slider */
@@ -30,7 +34,7 @@ class HoverSlider(QSlider):
                 background: transparent; 
                 width: 12px;
                 height: 6px;
-                margin: -4px -5;
+                margin: -4px -3;
                 border-radius: 6px;
                 }
 
@@ -38,6 +42,10 @@ class HoverSlider(QSlider):
 
     def hover_style(self):
         return """
+                QSlider {
+	        background-color: transparent;
+                }
+                
                 QSlider::groove:horizontal {
                 background: rgb(76, 76, 76); /* Grey for the background */
                 height: 4px; /* Thickness of the slider */
