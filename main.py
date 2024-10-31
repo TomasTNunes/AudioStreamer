@@ -26,9 +26,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.homeButton.setChecked(True)
         self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
 
-        # Connect buttons to functions
+        # Connect Home and Search buttons to functions
         self.homeButton.clicked.connect(self.homeButtonClick)
         self.searchButton.clicked.connect(self.searchButtonClick)
+
+        # Connect Player Buttons to functions
+        self.playButton.clicked.connect(self.playButtonClick)
 
         # Connect Enter key press in RSWSsearchQLineEdit to a function
         self.RSWSsearchQLineEdit.returnPressed.connect(self.onSearchEnter)
@@ -55,6 +58,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rightStackedWidget.setCurrentWidget(self.RSWsearchWidget)
         self.searchButton.setChecked(True)
         self.homeButton.setChecked(False)
+    
+    def playButtonClick(self):
+        if self.AS.active:
+            if self.AS.paused:
+                self.AS.resume()
+            else:
+                self.AS.pause()
+        else:
+            self.playButton.setChecked(False)
+        # total_seconds = int(self.AS.current_time)
+        # minutes = total_seconds // 60
+        # seconds = total_seconds % 60
+        # # Format seconds with leading zero if needed
+        # print(f"{minutes}:{seconds:02d}")
     
     def clearRSWSscrollVLayout(self):
         SearchTrackWidget.selected_widget = None

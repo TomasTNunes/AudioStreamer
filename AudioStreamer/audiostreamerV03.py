@@ -1,5 +1,4 @@
 import subprocess
-import yt_dlp
 import threading
 import numpy as np
 import time
@@ -7,7 +6,6 @@ import queue
 from contextlib import contextmanager
 import logging
 from logging.handlers import RotatingFileHandler
-import multiprocessing
 import sounddevice as sd
 from .audiostreamertrack import AudioStreamerTrack
 
@@ -39,8 +37,17 @@ logger.addHandler(file_handler)
 ########################################################################
 
 class AudioStreamer:
+    """
+    16-bit PCM audio - 2 Bytes per Sample
+    Sample Rate of 48,000 Hz, the system captures 48,000 samples per second for each audio channel.
+    Chunk Size, number of Bytes per iteration
+    -----------------------------------------------------------------------------------------------
+    ChunkSize/2 -> Total Number of Samples per iteration
+    ChunkSize/2/Channels -> Number of Samples per channel per iteration
+    ChunkSize/2/Channels/SampleRate = ChunkSize / (2 * Channels * SampleRate) -> Number of Seconds Per Chunk(iteration)
+    """
     def __init__(self, chunk_size=1024, channels=2, sample_rate=48000, volume=10.):
-        logger.info('-'*20+' AudioStreamer Initialized '+'-'*20)
+        logger.info('-'*20+' AudioStreamerV03 Initialized '+'-'*20)
         # Audio Properties
         self._chunk_size = chunk_size
         self._channels = channels
@@ -48,12 +55,14 @@ class AudioStreamer:
         self.set_volume(volume)
         # Initialize Stream
         self._stream = None
-        self._sec_per_chunk = chunk_size / (channels * sample_rate * 2) # 16-bit PCM audio - 2 Bytes per Sample
-        self._max_buffersize = 600/self._sec_per_chunk # number of chunks for 10 minutes (buffersize)
+        self._bytes_per_sample = 2 # 16-bit PCM audio - 2 Bytes per Sample
+        self._sec_per_chunk = chunk_size / (channels * sample_rate * self._bytes_per_sample) 
+        self._max_buffersize = 10*60/self._sec_per_chunk # number of chunks for 10 minutes (buffersize)
         # Status Variables
-        self._is_playing = False
-        self._is_paused = False
+        self._active = False
+        self._paused = False
         self._current_track = None
+        self._current_position = 0 # in seconds
 
 
     ########################################################################
@@ -61,24 +70,52 @@ class AudioStreamer:
     ########################################################################
     
     @property
-    def is_playing(self):
-        return self._is_playing
+    def active(self):
+        """
+        True if audiostreamer is active with, either playing or paused 
+        """
+        return self._active
 
     @property
-    def is_paused(self):
-        return self._is_paused
+    def paused(self):
+        """
+        True if audiostreamer is paused 
+        """
+        return self._paused
+    
+    @property
+    def playing(self):
+        """
+        True if audiostreamer is active and not paused 
+        """
+        return self._active and not self._paused
+
+    @property
+    def volume(self):
+        """
+        current audiostreamer volume
+        """
+        return self._volume
+
+    @property
+    def current_position(self):
+        """
+        current audiostreamer position in sseconds
+        """
+        return self._current_position
 
     ########################################################################
     ############################ MANAGE STREAM #############################
     ########################################################################
 
     def _open_stream(self):
-        self._stream = sd.OutputStream(samplerate=48000, channels=2, dtype='int16')
+        self._stream = sd.OutputStream(samplerate=self._sample_rate, channels=self._channels, dtype='int16')
         self._stream.start()
         logger.info('Stream Opened')
     
     def _close_stream(self):
-        self._is_playing = False
+        self._current_position = 0
+        self._active = False
         try:
             if self._stream:
                 self._stream.stop()
@@ -95,10 +132,10 @@ class AudioStreamer:
 
     def play(self, track, position=0):
         try:
-            if self._is_playing:
+            if self.active:
                 self.stop()
             self._current_track = track
-            self._is_paused = False
+            self._paused = False
             logger.info(f'Play Track')
             self._play(position)
         except Exception as e:
@@ -106,28 +143,26 @@ class AudioStreamer:
     
     def pause(self):
         try:
-            if self._is_playing:
-                if not self._is_paused:
-                    self._is_paused = True
-                    self._stream.stop()
-                    logger.info(f'Stream Paused')
+            if self.playing:
+                self._paused = True
+                self._stream.stop()
+                logger.info(f'Stream Paused')
         except Exception as e:
             logger.error(f"Error in Pause: {e}")
     
     def resume(self):
         try:
-            if self._is_playing:
-                if self._is_paused:
-                    self._stream.start()
-                    self._is_paused = False
-                    logger.info(f'Stream Resumed')
+            if self.active and self.paused:
+                self._stream.start()
+                self._paused = False
+                logger.info(f'Stream Resumed')
         except Exception as e:
             logger.error(f"Error in Resume: {e}")
     
     def stop(self):
         try:
             logger.info(f'Stop Player')
-            self._is_playing = False
+            self._active = False
             while self._stream:
                 time.sleep(0.2)
         except Exception as e:
@@ -140,15 +175,18 @@ class AudioStreamer:
         except Exception as e:
             logger.error(f"Error in Volume Setting: {e}")
     
-    def set_position(self, position):
-        duration = self._current_track.duration
-        if self._is_playing:
-            if position >= 0 and position <= duration:
-                self.stop()
-                self._play(position)
-                logger.info(f'Position set to {position}')
-            else:
-                logger.error(f"Error in Set Position: {position} outside of bounds - [0, {duration}]")
+    def seek(self, position):
+        try:
+            if self.active:
+                duration = self._current_track.duration
+                if position >= 0 and position <= duration:
+                    self.stop()
+                    self._play(position)
+                    logger.info(f'Position set to {position}')
+                else:
+                    logger.error(f"Error in Set Position: {position} outside of bounds - [0, {duration}]")
+        except Exception as e:
+            logger.error(f"Error in Seek Position: {e}")
     
 
     ########################################################################
@@ -156,7 +194,7 @@ class AudioStreamer:
     ########################################################################
 
     def _play(self, position):
-        if not self._is_playing:
+        if not self.active:
             threading.Thread(target=self.player_thread, args=(self._current_track,position,), daemon=True).start()
         else:
             logger.info(f'Player Already Playing')
@@ -179,7 +217,8 @@ class AudioStreamer:
 
     def player_thread(self, track, position):
         logger.info('Player Thread Start')
-        self._is_playing = True
+        self._active = True
+        self._current_position = position
         self._open_stream()
         chunk_buffer = queue.Queue(maxsize=self._max_buffersize)
         
@@ -213,9 +252,9 @@ class AudioStreamer:
         ffmpeg_thread.start()
 
         try:
-            while self._is_playing:
+            while self.active:
 
-                if self._is_paused:
+                if self.paused:
                     time.sleep(0.3)
                     continue
 
@@ -225,6 +264,7 @@ class AudioStreamer:
                     audio_data = np.clip(audio_data * self._volume, -32768, 32767).astype(np.int16)
                     audio_data = audio_data.reshape(-1,self._channels)
                     self._stream.write(audio_data)
+                    self._current_position += self._sec_per_chunk
                 else:
                     logger.info('End of audio stream reached')
                     break

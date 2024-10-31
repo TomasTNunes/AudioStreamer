@@ -1213,6 +1213,9 @@ QLabel:hover {
              </item>
              <item>
               <widget class="RoundButton" name="shuffleButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1271,6 +1274,10 @@ QPushButton:pressed  {
 
 QPushButton:checked  {
     icon: url(:/assets/buttons/shuffle_pressed.png);
+}
+
+QPushButton:disabled {
+    icon: url(:/assets/buttons/shuffle_disabled.png);
 }</string>
                </property>
                <property name="text">
@@ -1574,7 +1581,7 @@ QPushButton:pressed  {
              <item>
               <widget class="LoopButton" name="loopButton">
                <property name="enabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1631,6 +1638,9 @@ QPushButton:pressed  {
 }
 QPushButton:checked  {
     icon: url(:/assets/buttons/loop_checked.png);
+}
+QPushButton:disabled {
+    icon: url(:/assets/buttons/loop_disabled.png);
 }</string>
                </property>
                <property name="text">

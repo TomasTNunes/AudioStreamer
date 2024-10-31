@@ -106,7 +106,7 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
         super().mousePressEvent(event)
     
     def mouseDoubleClickEvent(self, event):
-        if self.AS.is_playing:
+        if self.AS.active:
             self.AS.stop()
         if not self.AStrack:
             self.get_AStrack()
