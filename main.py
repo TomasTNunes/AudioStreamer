@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 from PySide6.QtWidgets import QApplication, QMainWindow
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from AudioStreamer.audiostreamerV03 import AudioStreamer
+from AudioStreamer.audiostreamerV04 import AudioStreamer
+from AudioStreamer.audiostreamertrack import AudioStreamerTrack
+from AudioStreamer.events import TrackStartEvent, TrackEndEvent
 # Add the 'SongLink' directory to sys.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'SongLink'))
 from SongLink.songlink import SongLink
