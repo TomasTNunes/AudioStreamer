@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="/">
+    <file>assets/buttons/nextTrack_disabled.png</file>
     <file>assets/buttons/loop_disabled.png</file>
+    <file>assets/buttons/previousTrack_disabled.png</file>
     <file>assets/buttons/shuffle_hover.png</file>
     <file>assets/buttons/loop_checked.png</file>
     <file>assets/buttons/shuffle_disabled.png</file>

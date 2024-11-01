@@ -605,6 +605,7 @@ class Ui_MainWindow(object):
         self.BWcenterWidget.setObjectName(u"BWcenterWidget")
         sizePolicy.setHeightForWidth(self.BWcenterWidget.sizePolicy().hasHeightForWidth())
         self.BWcenterWidget.setSizePolicy(sizePolicy)
+        self.BWcenterWidget.setMaximumSize(QSize(706, 16777215))
         self.verticalLayout_4 = QVBoxLayout(self.BWcenterWidget)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -621,6 +622,7 @@ class Ui_MainWindow(object):
 
         self.shuffleButton = RoundButton(self.BWCtopWidget)
         self.shuffleButton.setObjectName(u"shuffleButton")
+        self.shuffleButton.setEnabled(False)
         sizePolicy2.setHeightForWidth(self.shuffleButton.sizePolicy().hasHeightForWidth())
         self.shuffleButton.setSizePolicy(sizePolicy2)
         self.shuffleButton.setMinimumSize(QSize(32, 32))
@@ -642,6 +644,10 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:checked  {\n"
 "    icon: url(:/assets/buttons/shuffle_pressed.png);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    icon: url(:/assets/buttons/shuffle_disabled.png);\n"
 "}")
         icon5 = QIcon()
         icon5.addFile(u":/assets/buttons/shuffle.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -653,6 +659,7 @@ class Ui_MainWindow(object):
 
         self.previousTrackButton = RoundButton(self.BWCtopWidget)
         self.previousTrackButton.setObjectName(u"previousTrackButton")
+        self.previousTrackButton.setEnabled(False)
         sizePolicy2.setHeightForWidth(self.previousTrackButton.sizePolicy().hasHeightForWidth())
         self.previousTrackButton.setSizePolicy(sizePolicy2)
         self.previousTrackButton.setMinimumSize(QSize(32, 32))
@@ -671,6 +678,10 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:pressed  {\n"
 "    icon: url(:/assets/buttons/previousTrack_pressed.png);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    icon: url(:/assets/buttons/previousTrack_disabled.png);\n"
 "}")
         icon6 = QIcon()
         icon6.addFile(u":/assets/buttons/previousTrack.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -685,6 +696,7 @@ class Ui_MainWindow(object):
 
         self.playButton = RoundButton(self.BWCtopWidget)
         self.playButton.setObjectName(u"playButton")
+        self.playButton.setEnabled(False)
         sizePolicy2.setHeightForWidth(self.playButton.sizePolicy().hasHeightForWidth())
         self.playButton.setSizePolicy(sizePolicy2)
         self.playButton.setMinimumSize(QSize(32, 32))
@@ -725,9 +737,15 @@ class Ui_MainWindow(object):
 "QPushButton:checked  {\n"
 "    icon: url(:/assets/buttons/pause.png);\n"
 "	padding-left: 0px;\n"
+"}\n"
+"\n"
+"QPushButton:disab"
+                        "led {\n"
+"    background-color: rgb(20, 20, 20);\n"
 "}")
         icon7 = QIcon()
         icon7.addFile(u":/assets/buttons/play.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon7.addFile(u":/assets/buttons/play.png", QSize(), QIcon.Mode.Disabled, QIcon.State.On)
         self.playButton.setIcon(icon7)
         self.playButton.setIconSize(QSize(16, 16))
         self.playButton.setCheckable(True)
@@ -740,6 +758,7 @@ class Ui_MainWindow(object):
 
         self.nextTrackButton = RoundButton(self.BWCtopWidget)
         self.nextTrackButton.setObjectName(u"nextTrackButton")
+        self.nextTrackButton.setEnabled(False)
         sizePolicy2.setHeightForWidth(self.nextTrackButton.sizePolicy().hasHeightForWidth())
         self.nextTrackButton.setSizePolicy(sizePolicy2)
         self.nextTrackButton.setMinimumSize(QSize(32, 32))
@@ -759,6 +778,10 @@ class Ui_MainWindow(object):
 "QPushButton:pressed  {\n"
 "    icon: url(:/assets/buttons/nextTrack_pressed.png);\n"
 "}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    icon: url(:/assets/buttons/nextTrack_disabled.png);\n"
+"}\n"
 "")
         icon8 = QIcon()
         icon8.addFile(u":/assets/buttons/nextTrack.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -769,6 +792,7 @@ class Ui_MainWindow(object):
 
         self.loopButton = LoopButton(self.BWCtopWidget)
         self.loopButton.setObjectName(u"loopButton")
+        self.loopButton.setEnabled(False)
         sizePolicy2.setHeightForWidth(self.loopButton.sizePolicy().hasHeightForWidth())
         self.loopButton.setSizePolicy(sizePolicy2)
         self.loopButton.setMinimumSize(QSize(32, 32))
@@ -787,6 +811,9 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:checked  {\n"
 "    icon: url(:/assets/buttons/loop_checked.png);\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    icon: url(:/assets/buttons/loop_disabled.png);\n"
 "}")
         icon9 = QIcon()
         icon9.addFile(u":/assets/buttons/loop.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -805,14 +832,18 @@ class Ui_MainWindow(object):
 
         self.BWCbottomWidget = QWidget(self.BWcenterWidget)
         self.BWCbottomWidget.setObjectName(u"BWCbottomWidget")
+        self.BWCbottomWidget.setStyleSheet(u"QLabel:disabled {\n"
+"    color: transparent;\n"
+"}")
         self.horizontalLayout_2 = QHBoxLayout(self.BWCbottomWidget)
         self.horizontalLayout_2.setSpacing(8)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(8, 0, 8, 10)
         self.timeLabel = QLabel(self.BWCbottomWidget)
         self.timeLabel.setObjectName(u"timeLabel")
-        sizePolicy2.setHeightForWidth(self.timeLabel.sizePolicy().hasHeightForWidth())
-        self.timeLabel.setSizePolicy(sizePolicy2)
+        self.timeLabel.setEnabled(True)
+        sizePolicy5.setHeightForWidth(self.timeLabel.sizePolicy().hasHeightForWidth())
+        self.timeLabel.setSizePolicy(sizePolicy5)
         self.timeLabel.setMinimumSize(QSize(0, 17))
         self.timeLabel.setStyleSheet(u"")
 
@@ -820,8 +851,9 @@ class Ui_MainWindow(object):
 
         self.playTimeSlider = HoverSlider(self.BWCbottomWidget)
         self.playTimeSlider.setObjectName(u"playTimeSlider")
+        self.playTimeSlider.setEnabled(False)
         self.playTimeSlider.setMinimumSize(QSize(0, 17))
-        self.playTimeSlider.setMaximumSize(QSize(16777215, 17))
+        self.playTimeSlider.setMaximumSize(QSize(630, 17))
         self.playTimeSlider.setStyleSheet(u"QSlider {\n"
 "	background-color: transparent;\n"
 "}\n"
@@ -851,7 +883,20 @@ class Ui_MainWindow(object):
 "                mar"
                         "gin: -4px -3px;\n"
 "                border-radius: 6px;\n"
-"                }")
+"				}\n"
+"				 QSlider::groove:horizontal:disabled {\n"
+"                background: rgb(20, 20, 20); /* Grey for the background */\n"
+"                }\n"
+"\n"
+"                QSlider::add-page:horizontal:disabled  {\n"
+"                background: rgb(20, 20, 20);\n"
+"                }\n"
+"\n"
+"                QSlider::sub-page:horizontal:disabled  {\n"
+"                background: rgb(20, 20, 20);\n"
+"                }\n"
+"\n"
+"")
         self.playTimeSlider.setMaximum(100)
         self.playTimeSlider.setTracking(True)
         self.playTimeSlider.setOrientation(Qt.Orientation.Horizontal)
@@ -862,9 +907,13 @@ class Ui_MainWindow(object):
 
         self.durationLabel = QLabel(self.BWCbottomWidget)
         self.durationLabel.setObjectName(u"durationLabel")
-        sizePolicy2.setHeightForWidth(self.durationLabel.sizePolicy().hasHeightForWidth())
-        self.durationLabel.setSizePolicy(sizePolicy2)
+        self.durationLabel.setEnabled(True)
+        sizePolicy5.setHeightForWidth(self.durationLabel.sizePolicy().hasHeightForWidth())
+        self.durationLabel.setSizePolicy(sizePolicy5)
         self.durationLabel.setMinimumSize(QSize(0, 17))
+        self.durationLabel.setStyleSheet(u"QLabel:disabled {\n"
+"    color: transparent;\n"
+"}")
 
         self.horizontalLayout_2.addWidget(self.durationLabel)
 
@@ -1006,7 +1055,7 @@ class Ui_MainWindow(object):
         self.loopButton.setAccessibleDescription("")
 #endif // QT_CONFIG(accessibility)
         self.loopButton.setText("")
-        self.timeLabel.setText(QCoreApplication.translate("MainWindow", u"3:45", None))
-        self.durationLabel.setText(QCoreApplication.translate("MainWindow", u"3:99", None))
+        self.timeLabel.setText(QCoreApplication.translate("MainWindow", u"0:00", None))
+        self.durationLabel.setText(QCoreApplication.translate("MainWindow", u"3:59", None))
     # retranslateUi
 

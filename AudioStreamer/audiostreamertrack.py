@@ -1,7 +1,8 @@
 class AudioStreamerTrack:
-    def __init__(self, url=None, duration=None):
+    def __init__(self, url=None, duration=None, extra=None):
         self.__url = url
         self.__duration = duration
+        self.__extra = {}
 
     @property
     def url(self):
@@ -10,6 +11,10 @@ class AudioStreamerTrack:
     @property
     def duration(self):
         return self.__duration
+    
+    @property
+    def extra(self):
+        return self.__extra
 
     def set_url(self, new_url):
         self.__url = new_url
@@ -19,3 +24,6 @@ class AudioStreamerTrack:
             self.__duration = new_duration
         else:
             raise ValueError("Duration must be positive.")
+    
+    def set_extra(self, extra):
+        self.__extra = extra

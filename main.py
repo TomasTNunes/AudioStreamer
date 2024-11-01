@@ -2,6 +2,7 @@ import sys
 import os
 from dotenv import load_dotenv
 from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtCore import QTimer
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from AudioStreamer.audiostreamerV04 import AudioStreamer
@@ -32,11 +33,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.homeButton.clicked.connect(self.homeButtonClick)
         self.searchButton.clicked.connect(self.searchButtonClick)
 
+        # Connect Enter key press in RSWSsearchQLineEdit to a function
+        self.RSWSsearchQLineEdit.returnPressed.connect(self.onSearchEnter)
+
         # Connect Player Buttons to functions
         self.playButton.clicked.connect(self.playButtonClick)
 
-        # Connect Enter key press in RSWSsearchQLineEdit to a function
-        self.RSWSsearchQLineEdit.returnPressed.connect(self.onSearchEnter)
+        # Create and Connect track timer to a function for playTimeSlider
+        self.trackTimer = QTimer()
+        self.trackTimer.setInterval(1000)  # Update every second
+        self.trackTimer.timeout.connect(self.trackTimerUpdate)
+
+        # Connect playTimeSlider slider functions
+        self.playTimeSlider.sliderPressed.connect(self.trackTimer.stop)
+        self.playTimeSlider.sliderReleased.connect(self.playTimeSliderRelease)
+
+        # Connect timeLabel to playTimeSlider
+        self.playTimeSlider.valueChanged.connect(self.playTimeSliderValueChange)
 
         # Set Utilities
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFYCLIENTID'),
@@ -48,7 +61,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.SL = SongLink()
         SearchTrackWidget.set_SongLink(self.SL)
 
+        # Add AudioStreamer Events
+        self.AS.add_event_hook(self.onTrackStartEvent, event=TrackStartEvent)
+        self.AS.add_event_hook(self.onTrackEndEvent, event=TrackEndEvent)
 
+    # ------------------------ Home&Search Buttons ------------------------#
     def homeButtonClick(self):
         # Switch to the home page by specifying the widget
         self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
@@ -61,20 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.searchButton.setChecked(True)
         self.homeButton.setChecked(False)
     
-    def playButtonClick(self):
-        if self.AS.active:
-            if self.AS.paused:
-                self.AS.resume()
-            else:
-                self.AS.pause()
-        else:
-            self.playButton.setChecked(False)
-        # total_seconds = int(self.AS.current_time)
-        # minutes = total_seconds // 60
-        # seconds = total_seconds % 60
-        # # Format seconds with leading zero if needed
-        # print(f"{minutes}:{seconds:02d}")
-    
+    # ------------------------ Search Bar ------------------------#
     def clearRSWSscrollVLayout(self):
         SearchTrackWidget.selected_widget = None
         # Loop through and remove each widget from the layout
@@ -99,7 +103,55 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Create an instance of SearchTrackWidget
             track_widget = SearchTrackWidget(track, artists_str, cover_url, spotify_uri)
             self.RSWSscrollVLayout.addWidget(track_widget)
+
+    # ------------------------ Media Buttons ------------------------#
+    def playButtonClick(self):
+        if self.AS.active:
+            if self.AS.paused:
+                self.AS.resume()
+            else:
+                self.AS.pause()
+        else:
+            self.playButton.setChecked(False)
     
+    def playTimeSliderRelease(self):
+        new_position  = self.playTimeSlider.value()
+        self.AS.seek(new_position)
+        self.trackTimer.start()
+    
+    def playTimeSliderValueChange(self):
+        slider_time = self.playTimeSlider.value()
+        self.timeLabel.setText(self.get_formated_time(slider_time))
+
+    def trackTimerUpdate(self):
+        current_position = int(self.AS.current_position)
+        self.playTimeSlider.setValue(current_position)
+    
+    # ------------------------ AudioStreamer Events ------------------------#
+    def onTrackStartEvent(self):
+        # Enable Media Buttons
+        self.playButton.setChecked(True)
+        self.playButton.setEnabled(True)
+        self.nextTrackButton.setEnabled(True)
+        self.previousTrackButton.setEnabled(True)
+        self.loopButton.setEnabled(True)
+        self.shuffleButton.setEnabled(True)
+        self.playTimeSlider.setRange(0, self.AS.duration)
+        self.playTimeSlider.setValue(0)
+        self.playTimeSlider.setEnabled(True)
+        self.timeLabel.setText('0:00')
+        self.timeLabel.setEnabled(True)
+        self.durationLabel.setText(self.get_formated_time(self.AS.duration))
+        self.durationLabel.setEnabled(True)
+        # Start trackTimer
+        self.trackTimer.start()
+    
+    def onTrackEndEvent(self):
+        # Set playTimeSlider to 0
+        self.playTimeSlider.setValue(0)
+        pass
+
+    # ------------------------ UI Events ------------------------#
     def mousePressEvent(self, event):
         # Check if the click was outside any SearchTrackWidget
         if SearchTrackWidget.selected_widget:
@@ -111,6 +163,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def closeEvent(self, event):
         self.AS.stop()
         super().closeEvent(event)
+    
+    # ------------------------ Auxiliar Functions ------------------------#
+    @staticmethod
+    def get_formated_time(total_seconds):
+        total_seconds = int(total_seconds)
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        return f'{minutes}:{seconds:02d}'
+
         
 
 if __name__ == "__main__":

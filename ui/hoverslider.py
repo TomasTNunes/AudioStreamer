@@ -38,6 +38,17 @@ class HoverSlider(QSlider):
                 border-radius: 6px;
                 }
 
+                QSlider::groove:horizontal:disabled {
+                background: rgb(20, 20, 20); /* Grey for the background */
+                }
+
+                QSlider::add-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::sub-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
         """
 
     def hover_style(self):
@@ -72,6 +83,29 @@ class HoverSlider(QSlider):
                 border-radius: 6px;
                 }
 
+                QSlider::groove:horizontal:disabled {
+                background: rgb(20, 20, 20); /* Grey for the background */
+                }
+
+                QSlider::add-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::sub-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::handle:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::handle:horizontal:disabled  {
+                background: transparent; 
+                width: 12px;
+                height: 6px;
+                margin: -4px -3;
+                border-radius: 6px;
+                }
         """
 
     def enterEvent(self, event):

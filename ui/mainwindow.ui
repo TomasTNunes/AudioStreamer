@@ -1164,6 +1164,12 @@ QLabel:hover {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>706</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
            <number>0</number>
@@ -1300,6 +1306,9 @@ QPushButton:disabled {
              </item>
              <item>
               <widget class="RoundButton" name="previousTrackButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1355,6 +1364,10 @@ QPushButton:hover {
 
 QPushButton:pressed  {
     icon: url(:/assets/buttons/previousTrack_pressed.png);
+}
+
+QPushButton:disabled {
+    icon: url(:/assets/buttons/previousTrack_disabled.png);
 }</string>
                </property>
                <property name="text">
@@ -1390,6 +1403,9 @@ QPushButton:pressed  {
              </item>
              <item>
               <widget class="RoundButton" name="playButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1467,6 +1483,10 @@ QPushButton:pressed  {
 QPushButton:checked  {
     icon: url(:/assets/buttons/pause.png);
 	padding-left: 0px;
+}
+
+QPushButton:disabled {
+    background-color: rgb(20, 20, 20);
 }</string>
                </property>
                <property name="text">
@@ -1474,7 +1494,8 @@ QPushButton:checked  {
                </property>
                <property name="icon">
                 <iconset resource="resources.qrc">
-                 <normaloff>:/assets/buttons/play.png</normaloff>:/assets/buttons/play.png</iconset>
+                 <normaloff>:/assets/buttons/play.png</normaloff>
+                 <disabledon>:/assets/buttons/play.png</disabledon>:/assets/buttons/play.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1505,6 +1526,9 @@ QPushButton:checked  {
              </item>
              <item>
               <widget class="RoundButton" name="nextTrackButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1560,6 +1584,10 @@ QPushButton:hover {
 
 QPushButton:pressed  {
     icon: url(:/assets/buttons/nextTrack_pressed.png);
+}
+
+QPushButton:disabled {
+    icon: url(:/assets/buttons/nextTrack_disabled.png);
 }
 </string>
                </property>
@@ -1679,6 +1707,11 @@ QPushButton:disabled {
           </item>
           <item>
            <widget class="QWidget" name="BWCbottomWidget" native="true">
+            <property name="styleSheet">
+             <string notr="true">QLabel:disabled {
+    color: transparent;
+}</string>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <property name="spacing">
               <number>8</number>
@@ -1697,6 +1730,9 @@ QPushButton:disabled {
              </property>
              <item>
               <widget class="QLabel" name="timeLabel">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1719,6 +1755,9 @@ QPushButton:disabled {
              </item>
              <item>
               <widget class="HoverSlider" name="playTimeSlider">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -1727,7 +1766,7 @@ QPushButton:disabled {
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>630</width>
                  <height>17</height>
                 </size>
                </property>
@@ -1760,7 +1799,20 @@ QSlider::groove:horizontal {
                 height: 6px;
                 margin: -4px -3px;
                 border-radius: 6px;
-                }</string>
+				}
+				 QSlider::groove:horizontal:disabled {
+                background: rgb(20, 20, 20); /* Grey for the background */
+                }
+
+                QSlider::add-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::sub-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+</string>
                </property>
                <property name="maximum">
                 <number>100</number>
@@ -1781,6 +1833,9 @@ QSlider::groove:horizontal {
              </item>
              <item>
               <widget class="QLabel" name="durationLabel">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1792,6 +1847,11 @@ QSlider::groove:horizontal {
                  <width>0</width>
                  <height>17</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel:disabled {
+    color: transparent;
+}</string>
                </property>
                <property name="text">
                 <string>3:59</string>

@@ -38,6 +38,7 @@ class AudioStreamer:
         self._paused = False
         self._current_track = None
         self._current_position = 0 # in seconds
+        self._new_position = False
         # Events dictionary to store all events
         self._events = {
             TrackStartEvent: TrackStartEvent(),
@@ -72,8 +73,16 @@ class AudioStreamer:
 
     @property
     def current_position(self):
-        """current audiostreamer position in sseconds."""
+        """current audiostreamer position in seconds."""
         return self._current_position
+    
+    @property
+    def duration(self):
+        """duration in seconds of current track if available, otherwise None."""
+        if self._current_track:
+            return self._current_track.duration
+        else:
+            return None
     
 
     ########################################################################
@@ -168,7 +177,7 @@ class AudioStreamer:
             logger.info(f'Stop Player')
             self._active = False
             while self._stream:
-                time.sleep(0.2)
+                time.sleep(0.1)
         except Exception as e:
             logger.error(f"Error in Stop: {e}")
     
@@ -184,7 +193,10 @@ class AudioStreamer:
             if self.active:
                 duration = self._current_track.duration
                 if position >= 0 and position <= duration:
+                    current_track = self._current_track
+                    self._new_position = True
                     self.stop()
+                    self._current_track = current_track
                     self._play(position)
                     logger.info(f'Position set to {position}')
                 else:
@@ -281,7 +293,10 @@ class AudioStreamer:
             self._events[TrackExceptionEvent].emit()
         finally:
             self._close_stream()
-            self._events[TrackEndEvent].emit()
+            if self._new_position:
+                self._new_position = False
+            else:
+                self._events[TrackEndEvent].emit()
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
