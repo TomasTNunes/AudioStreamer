@@ -50,7 +50,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.volumeButton.clicked.connect(self.volumeButtonClick)
 
         # Connect volumeSlider slider functions
-        self.volumeSlider.sliderReleased.connect(self.volumeSliderRelease)
+        self.volumeSlider.sliderPressed.connect(self.volumeSliderPressed)
 
         # Connect volumeButton to volumeSlider
         self.volumeSlider.valueChanged.connect(self.volumeSliderValueChange)
@@ -73,6 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.homeButton.setChecked(True)
         self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
         self.disableMediaButtons()
+        self.volumeSlider.setRange(0, 75) # max Volume
         self.volumeSlider.setValue(self.AS.volume)
 
 
@@ -156,26 +157,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def volumeButtonClick(self):
         if self.volumeButton.isChecked():
-            self.volumeSlider.setValue(0)
             self.volumeButton.set_lastVolume(self.AS.volume)
-            self.AS.set_volume(0)
+            self.volumeSlider.setValue(0)
         else:
             self.volumeSlider.setValue(self.volumeButton.lastVolume)
-            self.AS.set_volume(self.volumeButton.lastVolume)
 
-    def volumeSliderRelease(self):
-        new_volume = self.volumeSlider.value()
-        if new_volume == 0:
-            self.volumeButtonClick()
-        else:
-            self.AS.set_volume(new_volume)
-    
+    def volumeSliderPressed(self):
+        volume = self.volumeSlider.value() 
+        if volume != 0:
+            self.volumeButton.set_lastVolume(volume)
+
     def volumeSliderValueChange(self):
         volume = self.volumeSlider.value()
         if volume == 0:
             self.volumeButton.setChecked(True)
         else:
             self.volumeButton.setChecked(False)
+        self.AS.set_volume(volume)
         self.volumeButton.update_volume_style(volume)
     
     #------------------------ AudioStreamer Events ------------------------#

@@ -79,9 +79,10 @@ class VolumeButton(RoundButton):
         self._lastVolume = volume
 
     def update_volume_style(self, volume):
-        if volume < 34:
+        maximum = self._mainwindow.volumeSlider.maximum()
+        if volume < maximum/3:
             self.setStyleSheet(self.icons["lowVolume"])
-        elif volume < 67:
+        elif volume < maximum*2/3:
             self.setStyleSheet(self.icons["mediumVolume"])
         else:
             self.setStyleSheet(self.icons["highVolume"])
