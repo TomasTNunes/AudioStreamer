@@ -22,12 +22,13 @@ class Ui_SearchTrackWidgetBase(object):
     def setupUi(self, SearchTrackWidgetBase):
         if not SearchTrackWidgetBase.objectName():
             SearchTrackWidgetBase.setObjectName(u"SearchTrackWidgetBase")
-        SearchTrackWidgetBase.resize(458, 58)
+        SearchTrackWidgetBase.resize(458, 56)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(SearchTrackWidgetBase.sizePolicy().hasHeightForWidth())
         SearchTrackWidgetBase.setSizePolicy(sizePolicy)
+        SearchTrackWidgetBase.setMaximumSize(QSize(16777215, 56))
         SearchTrackWidgetBase.setStyleSheet(u"border-radius: 4px;")
         self.gridLayout = QGridLayout(SearchTrackWidgetBase)
         self.gridLayout.setSpacing(0)
@@ -42,7 +43,7 @@ class Ui_SearchTrackWidgetBase(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setHorizontalSpacing(8)
         self.gridLayout_2.setVerticalSpacing(0)
-        self.gridLayout_2.setContentsMargins(8, 8, 16, 8)
+        self.gridLayout_2.setContentsMargins(9, 8, 16, 8)
         self.iconLabel = QLabel(self.SearchTrackWidget)
         self.iconLabel.setObjectName(u"iconLabel")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
@@ -51,7 +52,8 @@ class Ui_SearchTrackWidgetBase(object):
         sizePolicy1.setHeightForWidth(self.iconLabel.sizePolicy().hasHeightForWidth())
         self.iconLabel.setSizePolicy(sizePolicy1)
         self.iconLabel.setMinimumSize(QSize(40, 40))
-        self.iconLabel.setStyleSheet(u"background-color: rgb(0, 170, 0);\n"
+        self.iconLabel.setMaximumSize(QSize(40, 40))
+        self.iconLabel.setStyleSheet(u"background-color: none;\n"
 "border-radius: 4px;")
 
         self.gridLayout_2.addWidget(self.iconLabel, 0, 0, 2, 1)
@@ -63,8 +65,8 @@ class Ui_SearchTrackWidgetBase(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
         self.musicLabel.setSizePolicy(sizePolicy2)
-        self.musicLabel.setMinimumSize(QSize(0, 22))
-        self.musicLabel.setMaximumSize(QSize(16777215, 22))
+        self.musicLabel.setMinimumSize(QSize(0, 21))
+        self.musicLabel.setMaximumSize(QSize(16777215, 21))
         font = QFont()
         font.setFamilies([u"Segoe UI Black"])
         font.setPointSize(11)
@@ -75,10 +77,6 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addWidget(self.musicLabel, 0, 1, 1, 1)
 
-        self.Hspacer = QSpacerItem(302, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gridLayout_2.addItem(self.Hspacer, 0, 2, 2, 1)
-
         self.artistLabel = QLabel(self.SearchTrackWidget)
         self.artistLabel.setObjectName(u"artistLabel")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
@@ -86,8 +84,8 @@ class Ui_SearchTrackWidgetBase(object):
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
         self.artistLabel.setSizePolicy(sizePolicy3)
-        self.artistLabel.setMinimumSize(QSize(0, 20))
-        self.artistLabel.setMaximumSize(QSize(16777215, 20))
+        self.artistLabel.setMinimumSize(QSize(0, 19))
+        self.artistLabel.setMaximumSize(QSize(16777215, 19))
         font1 = QFont()
         font1.setPointSize(10)
         font1.setBold(True)
@@ -105,6 +103,10 @@ class Ui_SearchTrackWidgetBase(object):
 "}")
 
         self.gridLayout_2.addWidget(self.artistLabel, 1, 1, 1, 1)
+
+        self.Hspacer = QSpacerItem(302, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_2.addItem(self.Hspacer, 0, 2, 2, 1)
 
 
         self.gridLayout.addWidget(self.SearchTrackWidget, 0, 0, 1, 1)

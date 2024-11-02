@@ -1,7 +1,23 @@
 <RCC>
   <qresource prefix="/">
+    <file>assets/buttons/queue.png</file>
+    <file>assets/buttons/queue_clicked.png</file>
+    <file>assets/buttons/queue_hover.png</file>
+    <file>assets/buttons/queue_pressed.png</file>
     <file>assets/buttons/nextTrack_disabled.png</file>
+    <file>assets/buttons/volumeHigh.png</file>
+    <file>assets/buttons/volumeHigh_hover.png</file>
+    <file>assets/buttons/volumeHigh_pressed.png</file>
+    <file>assets/buttons/volumeLow.png</file>
+    <file>assets/buttons/volumeLow_hover.png</file>
+    <file>assets/buttons/volumeLow_pressed.png</file>
+    <file>assets/buttons/volumeMute.png</file>
+    <file>assets/buttons/volumeMute_hover.png</file>
+    <file>assets/buttons/volumeMute_pressed.png</file>
     <file>assets/buttons/loop_disabled.png</file>
+    <file>assets/buttons/volumeMedium.png</file>
+    <file>assets/buttons/volumeMedium_hover.png</file>
+    <file>assets/buttons/volumeMedium_pressed.png</file>
     <file>assets/buttons/previousTrack_disabled.png</file>
     <file>assets/buttons/shuffle_hover.png</file>
     <file>assets/buttons/loop_checked.png</file>

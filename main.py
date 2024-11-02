@@ -1,12 +1,12 @@
 import sys
 import os
+import requests
 from dotenv import load_dotenv
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer, QMetaObject, Qt
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from AudioStreamer.audiostreamerV04 import AudioStreamer
-from AudioStreamer.audiostreamertrack import AudioStreamerTrack
 from AudioStreamer.events import TrackStartEvent, TrackEndEvent
 # Add the 'SongLink' directory to sys.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'SongLink'))
@@ -19,15 +19,10 @@ from ui.searchtrackwidget import SearchTrackWidget
 # Load Environment Variables
 load_dotenv(os.path.join(os.getcwd(), '.env'))
 
-
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
-        # Set Intial Conditions
-        self.homeButton.setChecked(True)
-        self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
 
         # Connect Home and Search buttons to functions
         self.homeButton.clicked.connect(self.homeButtonClick)
@@ -51,6 +46,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Connect timeLabel to playTimeSlider
         self.playTimeSlider.valueChanged.connect(self.playTimeSliderValueChange)
 
+        # Connect volumeButton to function
+        self.volumeButton.clicked.connect(self.volumeButtonClick)
+
+        # Connect volumeSlider slider functions
+        self.volumeSlider.sliderReleased.connect(self.volumeSliderRelease)
+
+        # Connect volumeButton to volumeSlider
+        self.volumeSlider.valueChanged.connect(self.volumeSliderValueChange)
+
         # Set Utilities
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFYCLIENTID'),
                                                client_secret=os.getenv('SPOTIFYCLIENTSECRET'),
@@ -65,7 +69,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.AS.add_event_hook(self.onTrackStartEvent, event=TrackStartEvent)
         self.AS.add_event_hook(self.onTrackEndEvent, event=TrackEndEvent)
 
-    # ------------------------ Home&Search Buttons ------------------------#
+        # Set Intial Conditions
+        self.homeButton.setChecked(True)
+        self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
+        self.disableMediaButtons()
+        self.volumeSlider.setValue(self.AS.volume)
+
+
+    #------------------------ Home&Search Buttons ------------------------#
     def homeButtonClick(self):
         # Switch to the home page by specifying the widget
         self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
@@ -78,12 +89,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.searchButton.setChecked(True)
         self.homeButton.setChecked(False)
     
-    # ------------------------ Search Bar ------------------------#
+    #------------------------ Search Bar ------------------------#
     def clearRSWSscrollVLayout(self):
         SearchTrackWidget.selected_widget = None
-        # Loop through and remove each widget from the layout
-        while self.RSWSscrollVLayout.count():
-            item = self.RSWSscrollVLayout.takeAt(0)
+        # Loop through and remove each widget from the layout 
+        # except last widget which is the spacer
+        for i in range(self.RSWSscrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSscrollVLayout.takeAt(i)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()  # Delete the widget from memory
@@ -98,13 +110,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for item in results['tracks']['items']:
             artists_str = ', '.join(artist['name'] for artist in item['artists'])
             track = item['name']
-            cover_url = item['album']['images'][0]['url']
+            cover_content = requests.get(item['album']['images'][0]['url']).content
             spotify_uri = item['uri']
             # Create an instance of SearchTrackWidget
-            track_widget = SearchTrackWidget(track, artists_str, cover_url, spotify_uri)
-            self.RSWSscrollVLayout.addWidget(track_widget)
+            track_widget = SearchTrackWidget(track, artists_str, cover_content, spotify_uri)
+            self.RSWSscrollVLayout.insertWidget(self.RSWSscrollVLayout.count()-1,track_widget)
 
-    # ------------------------ Media Buttons ------------------------#
+    #------------------------ Media Buttons ------------------------#
+    def disableMediaButtons(self):
+        # Disable Media Buttons
+        self.playButton.setChecked(False)
+        self.playButton.setEnabled(False)
+        self.nextTrackButton.setEnabled(False)
+        self.previousTrackButton.setEnabled(False)
+        self.loopButton.setEnabled(False)
+        self.shuffleButton.setEnabled(False)
+        self.playTimeSlider.setValue(0)
+        self.playTimeSlider.setEnabled(False)
+        self.timeLabel.setStyleSheet('color: rgb(20, 20, 20);')
+        self.timeLabel.setText('--:--')
+        self.durationLabel.setStyleSheet('color: rgb(20, 20, 20);')
+        self.durationLabel.setText('--:--')
+
     def playButtonClick(self):
         if self.AS.active:
             if self.AS.paused:
@@ -127,7 +154,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         current_position = int(self.AS.current_position)
         self.playTimeSlider.setValue(current_position)
     
-    # ------------------------ AudioStreamer Events ------------------------#
+    def volumeButtonClick(self):
+        if self.volumeButton.isChecked():
+            self.volumeSlider.setValue(0)
+            self.volumeButton.set_lastVolume(self.AS.volume)
+            self.AS.set_volume(0)
+        else:
+            self.volumeSlider.setValue(self.volumeButton.lastVolume)
+            self.AS.set_volume(self.volumeButton.lastVolume)
+
+    def volumeSliderRelease(self):
+        new_volume = self.volumeSlider.value()
+        if new_volume == 0:
+            self.volumeButtonClick()
+        else:
+            self.AS.set_volume(new_volume)
+    
+    def volumeSliderValueChange(self):
+        volume = self.volumeSlider.value()
+        if volume == 0:
+            self.volumeButton.setChecked(True)
+        else:
+            self.volumeButton.setChecked(False)
+        self.volumeButton.update_volume_style(volume)
+    
+    #------------------------ AudioStreamer Events ------------------------#
     def onTrackStartEvent(self):
         # Enable Media Buttons
         self.playButton.setChecked(True)
@@ -139,19 +190,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.playTimeSlider.setRange(0, self.AS.duration)
         self.playTimeSlider.setValue(0)
         self.playTimeSlider.setEnabled(True)
+        self.timeLabel.setStyleSheet('color: rgb(255, 255, 255);')
         self.timeLabel.setText('0:00')
-        self.timeLabel.setEnabled(True)
+        self.durationLabel.setStyleSheet('color: rgb(255, 255, 255);')
         self.durationLabel.setText(self.get_formated_time(self.AS.duration))
-        self.durationLabel.setEnabled(True)
         # Start trackTimer
         self.trackTimer.start()
     
     def onTrackEndEvent(self):
-        # Set playTimeSlider to 0
-        self.playTimeSlider.setValue(0)
-        pass
+        # Stop trackTimer - Use QMetaObject.invokeMethod to call self.trackTimer.stop on the main thread (it's required) 
+        QMetaObject.invokeMethod(self.trackTimer, "stop", Qt.QueuedConnection)
+        # Disable Media Buttons NOTE: make condition if queue empty?
+        self.disableMediaButtons()
 
-    # ------------------------ UI Events ------------------------#
+    #------------------------ UI Events ------------------------#
     def mousePressEvent(self, event):
         # Check if the click was outside any SearchTrackWidget
         if SearchTrackWidget.selected_widget:
@@ -164,7 +216,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.AS.stop()
         super().closeEvent(event)
     
-    # ------------------------ Auxiliar Functions ------------------------#
+    #------------------------ Auxiliar Functions ------------------------#
     @staticmethod
     def get_formated_time(total_seconds):
         total_seconds = int(total_seconds)
@@ -172,7 +224,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         seconds = total_seconds % 60
         return f'{minutes}:{seconds:02d}'
 
-        
+
 
 if __name__ == "__main__":
     # Run application

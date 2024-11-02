@@ -20,7 +20,7 @@ class AudioStreamer:
     ChunkSize/2/Channels -> Number of Samples per channel per iteration
     ChunkSize/2/Channels/SampleRate = ChunkSize / (2 * Channels * SampleRate) -> Number of Seconds Per Chunk(iteration)
     """
-    def __init__(self, chunk_size=1024, channels=2, sample_rate=48000, volume=10.):
+    def __init__(self, chunk_size=1024, channels=2, sample_rate=48000, volume=10):
         logger.info('-'*20+' AudioStreamerV04 Initialized '+'-'*20)
         # Audio Properties
         self._chunk_size = chunk_size
@@ -69,7 +69,7 @@ class AudioStreamer:
     @property
     def volume(self):
         """current audiostreamer volume."""
-        return self._volume
+        return int(self._volume*100)
 
     @property
     def current_position(self):
@@ -146,7 +146,10 @@ class AudioStreamer:
         try:
             if self.active:
                 self.stop()
-            self._current_track = track
+            if isinstance(track, AudioStreamerTrack):
+                self._current_track = track
+            else:
+                raise TypeError(f'Track must be of type {AudioStreamerTrack.__name__} or a subclass of it.')
             self._paused = False
             self._events[TrackStartEvent].emit()
             logger.info(f'Play Track')
@@ -173,6 +176,9 @@ class AudioStreamer:
             logger.error(f"Error in Resume: {e}")
     
     def stop(self):
+        # NOTE: In case it happens that TrackStartEvent is emited before
+        # TrackStartEvent, instead of waiting for stream to be None
+        # wait for previous play_thread to end
         try:
             logger.info(f'Stop Player')
             self._active = False
@@ -293,12 +299,12 @@ class AudioStreamer:
             self._events[TrackExceptionEvent].emit()
         finally:
             self._close_stream()
-            if self._new_position:
-                self._new_position = False
-            else:
-                self._events[TrackEndEvent].emit()
             stop_event_ffmpeg_thread.set()
             if chunk_buffer.full():
                 chunk_buffer.get()
             ffmpeg_thread.join()
+        if self._new_position:
+                self._new_position = False
+        else:
+            self._events[TrackEndEvent].emit()
         logger.info('Player Thread Exiting')

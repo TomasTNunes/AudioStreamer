@@ -632,7 +632,7 @@ QPushButton:checked {
               <x>0</x>
               <y>0</y>
               <width>290</width>
-              <height>247</height>
+              <height>250</height>
              </rect>
             </property>
            </widget>
@@ -673,6 +673,9 @@ background-color: rgb(18, 18, 18);
       </property>
       <widget class="QWidget" name="RSWhomeWidget"/>
       <widget class="QWidget" name="RSWsearchWidget">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
@@ -860,7 +863,7 @@ QLineEdit::clear-button {
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>120</width>
+              <width>100</width>
               <height>20</height>
              </size>
             </property>
@@ -869,7 +872,7 @@ QLineEdit::clear-button {
          </layout>
         </item>
         <item>
-         <widget class="QScrollArea" name="RSWSscrollArea">
+         <widget class="CustomScrollArea" name="RSWSscrollArea">
           <property name="styleSheet">
            <string notr="true">QScrollBar:vertical {
     width: 12px;
@@ -889,7 +892,7 @@ QScrollBar::handle:vertical:hover {
 
 /* Handle color when pressed */
 QScrollBar::handle:vertical:pressed {
-    background: rgb(160, 160, 160);
+    background: rgb(180, 180, 180);
 }
 
 /* Background color for the area above and below the handle */
@@ -899,7 +902,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 </string>
           </property>
           <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+           <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
           </property>
           <property name="horizontalScrollBarPolicy">
            <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
@@ -915,9 +918,15 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>472</width>
-             <height>407</height>
+             <width>484</width>
+             <height>410</height>
             </rect>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::LeftToRight</enum>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
@@ -938,6 +947,19 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <property name="bottomMargin">
              <number>16</number>
             </property>
+            <item>
+             <spacer name="RSWSscrollAreaSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -957,13 +979,19 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>75</height>
+        <height>72</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>72</height>
        </size>
       </property>
       <property name="styleSheet">
        <string notr="true">/*background-color: rgb(170, 170, 127);*/</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0">
        <property name="spacing">
         <number>16</number>
        </property>
@@ -982,7 +1010,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <item>
         <widget class="QWidget" name="BWleftWidget" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -999,6 +1027,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>75</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <property name="spacing">
            <number>12</number>
@@ -1007,13 +1038,13 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <number>8</number>
           </property>
           <property name="topMargin">
-           <number>8</number>
+           <number>6</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>11</number>
+           <number>10</number>
           </property>
           <item>
            <widget class="QLabel" name="iconLabel">
@@ -1166,7 +1197,7 @@ QLabel:hover {
          </property>
          <property name="maximumSize">
           <size>
-           <width>706</width>
+           <width>700</width>
            <height>16777215</height>
           </size>
          </property>
@@ -1220,7 +1251,7 @@ QLabel:hover {
              <item>
               <widget class="RoundButton" name="shuffleButton">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1307,7 +1338,7 @@ QPushButton:disabled {
              <item>
               <widget class="RoundButton" name="previousTrackButton">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1404,7 +1435,7 @@ QPushButton:disabled {
              <item>
               <widget class="RoundButton" name="playButton">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1527,7 +1558,7 @@ QPushButton:disabled {
              <item>
               <widget class="RoundButton" name="nextTrackButton">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1609,7 +1640,7 @@ QPushButton:disabled {
              <item>
               <widget class="LoopButton" name="loopButton">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1749,14 +1780,14 @@ QPushButton:disabled {
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>0:00</string>
+                <string>--:--</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="HoverSlider" name="playTimeSlider">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1766,7 +1797,7 @@ QPushButton:disabled {
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>630</width>
+                 <width>700</width>
                  <height>17</height>
                 </size>
                </property>
@@ -1854,7 +1885,7 @@ QSlider::groove:horizontal {
 }</string>
                </property>
                <property name="text">
-                <string>3:59</string>
+                <string>--:--</string>
                </property>
               </widget>
              </item>
@@ -1867,7 +1898,7 @@ QSlider::groove:horizontal {
        <item>
         <widget class="QWidget" name="BWrightWidget" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -1884,6 +1915,286 @@ QSlider::groove:horizontal {
            <height>75</height>
           </size>
          </property>
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::LeftToRight</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>8</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>16</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="RoundButton" name="queueButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <fontweight>DemiBold</fontweight>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="whatsThis">
+             <string/>
+            </property>
+            <property name="accessibleName">
+             <string/>
+            </property>
+            <property name="accessibleDescription">
+             <string/>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: trasnparent;
+	border-radius: 0px;
+}
+
+QPushButton:hover {
+    icon: url(:/assets/buttons/queue_hover.png);
+}
+
+QPushButton:pressed  {
+    icon: url(:/assets/buttons/queue_pressed.png);
+}
+
+QPushButton:checked  {
+    icon: url(:/assets/buttons/queue_clicked.png);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/assets/buttons/queue.png</normaloff>:/assets/buttons/queue.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="VolumeButton" name="volumeButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <fontweight>DemiBold</fontweight>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="whatsThis">
+             <string/>
+            </property>
+            <property name="accessibleName">
+             <string/>
+            </property>
+            <property name="accessibleDescription">
+             <string/>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: transparent;
+	border-radius: 0px;
+}
+QPushButton:hover {
+    icon: url(:/assets/buttons/volumeLow_hover.png);
+}
+QPushButton:pressed  {
+    icon: url(:/assets/buttons/volumeLow_pressed.png);
+}
+QPushButton:checked  {
+    icon: url(:/assets/buttons/volumeMute.png);
+}
+QPushButton:checked:hover  {
+    icon: url(:/assets/buttons/volumeMute_hover.png);
+}
+QPushButton:checked:pressed  {
+    icon: url(:/assets/buttons/volumeMute_pressed.png);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/assets/buttons/volumeLow.png</normaloff>:/assets/buttons/volumeLow.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="HoverSlider" name="volumeSlider">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider {
+	background-color: transparent;
+}
+
+QSlider::groove:horizontal {
+                background: rgb(76, 76, 76); /* Grey for the background */
+                height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::add-page:horizontal  {
+                background: rgb(76, 76, 76);
+                        height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::sub-page:horizontal  {
+                background: rgb(255, 255, 255);
+                        height: 4px; /* Thickness of the slider */
+                border-radius: 2px; /* Rounded edges */
+                }
+
+                QSlider::handle:horizontal  {
+                background: transparent; 
+                width: 12px;
+                height: 6px;
+                margin: -4px -3px;
+                border-radius: 6px;
+				}
+				 QSlider::groove:horizontal:disabled {
+                background: rgb(20, 20, 20); /* Grey for the background */
+                }
+
+                QSlider::add-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+                QSlider::sub-page:horizontal:disabled  {
+                background: rgb(20, 20, 20);
+                }
+
+</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="tracking">
+             <bool>true</bool>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -1907,6 +2218,17 @@ QSlider::groove:horizontal {
    <class>LoopButton</class>
    <extends>QPushButton</extends>
    <header>loopbutton</header>
+  </customwidget>
+  <customwidget>
+   <class>CustomScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>customscrollarea</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VolumeButton</class>
+   <extends>QPushButton</extends>
+   <header>volumebutton</header>
   </customwidget>
  </customwidgets>
  <resources>

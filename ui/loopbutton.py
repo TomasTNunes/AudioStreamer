@@ -1,4 +1,3 @@
-from PySide6.QtGui import QIcon
 from roundbutton import RoundButton
 
 class LoopButton(RoundButton):

@@ -20,9 +20,11 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridL
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
     QStackedWidget, QVBoxLayout, QWidget)
 
+from customscrollarea import CustomScrollArea
 from hoverslider import HoverSlider
 from loopbutton import LoopButton
 from roundbutton import RoundButton
+from volumebutton import VolumeButton
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -338,7 +340,7 @@ class Ui_MainWindow(object):
         self.libraryScrollArea.setWidgetResizable(True)
         self.libraryScrollAreaWidget = QWidget()
         self.libraryScrollAreaWidget.setObjectName(u"libraryScrollAreaWidget")
-        self.libraryScrollAreaWidget.setGeometry(QRect(0, 0, 290, 247))
+        self.libraryScrollAreaWidget.setGeometry(QRect(0, 0, 290, 250))
         self.libraryScrollArea.setWidget(self.libraryScrollAreaWidget)
 
         self.verticalLayout_3.addWidget(self.libraryScrollArea)
@@ -367,6 +369,7 @@ class Ui_MainWindow(object):
         self.rightStackedWidget.addWidget(self.RSWhomeWidget)
         self.RSWsearchWidget = QWidget()
         self.RSWsearchWidget.setObjectName(u"RSWsearchWidget")
+        self.RSWsearchWidget.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(self.RSWsearchWidget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -457,7 +460,7 @@ class Ui_MainWindow(object):
 
         self.RSWSsearchHLayout.addWidget(self.RSWSsearchQLineEdit)
 
-        self.RSWSsearchHSpacer = QSpacerItem(120, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.RSWSsearchHSpacer = QSpacerItem(100, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.RSWSsearchHLayout.addItem(self.RSWSsearchHSpacer)
 
@@ -465,7 +468,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.RSWSsearchHLayout)
 
-        self.RSWSscrollArea = QScrollArea(self.RSWsearchWidget)
+        self.RSWSscrollArea = CustomScrollArea(self.RSWsearchWidget)
         self.RSWSscrollArea.setObjectName(u"RSWSscrollArea")
         self.RSWSscrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
 "    width: 12px;\n"
@@ -485,7 +488,7 @@ class Ui_MainWindow(object):
 "\n"
 "/* Handle color when pressed */\n"
 "QScrollBar::handle:vertical:pressed {\n"
-"    background: rgb(160, 160, 160);\n"
+"    background: rgb(180, 180, 180);\n"
 "}\n"
 "\n"
 "/* Background color for the area above and below the handle */\n"
@@ -493,18 +496,24 @@ class Ui_MainWindow(object):
 "    background: rgb(18, 18, 18);\n"
 "}\n"
 "")
-        self.RSWSscrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.RSWSscrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.RSWSscrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.RSWSscrollArea.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
         self.RSWSscrollArea.setWidgetResizable(True)
         self.RSWSscrollAreaWidget = QWidget()
         self.RSWSscrollAreaWidget.setObjectName(u"RSWSscrollAreaWidget")
-        self.RSWSscrollAreaWidget.setGeometry(QRect(0, 0, 472, 407))
+        self.RSWSscrollAreaWidget.setGeometry(QRect(0, 0, 484, 410))
+        self.RSWSscrollAreaWidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.RSWSscrollAreaWidget.setAutoFillBackground(False)
         self.RSWSscrollAreaWidget.setStyleSheet(u"")
         self.RSWSscrollVLayout = QVBoxLayout(self.RSWSscrollAreaWidget)
         self.RSWSscrollVLayout.setSpacing(0)
         self.RSWSscrollVLayout.setObjectName(u"RSWSscrollVLayout")
         self.RSWSscrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSscrollAreaSpacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.RSWSscrollVLayout.addItem(self.RSWSscrollAreaSpacer)
+
         self.RSWSscrollArea.setWidget(self.RSWSscrollAreaWidget)
 
         self.verticalLayout.addWidget(self.RSWSscrollArea)
@@ -517,7 +526,8 @@ class Ui_MainWindow(object):
         self.bottomWidget.setObjectName(u"bottomWidget")
         sizePolicy4.setHeightForWidth(self.bottomWidget.sizePolicy().hasHeightForWidth())
         self.bottomWidget.setSizePolicy(sizePolicy4)
-        self.bottomWidget.setMinimumSize(QSize(0, 75))
+        self.bottomWidget.setMinimumSize(QSize(0, 72))
+        self.bottomWidget.setMaximumSize(QSize(16777215, 72))
         self.bottomWidget.setStyleSheet(u"/*background-color: rgb(170, 170, 127);*/")
         self.horizontalLayout_3 = QHBoxLayout(self.bottomWidget)
         self.horizontalLayout_3.setSpacing(16)
@@ -525,14 +535,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.BWleftWidget = QWidget(self.bottomWidget)
         self.BWleftWidget.setObjectName(u"BWleftWidget")
-        sizePolicy.setHeightForWidth(self.BWleftWidget.sizePolicy().hasHeightForWidth())
-        self.BWleftWidget.setSizePolicy(sizePolicy)
+        sizePolicy4.setHeightForWidth(self.BWleftWidget.sizePolicy().hasHeightForWidth())
+        self.BWleftWidget.setSizePolicy(sizePolicy4)
         self.BWleftWidget.setMinimumSize(QSize(230, 0))
         self.BWleftWidget.setMaximumSize(QSize(16777215, 75))
+        self.BWleftWidget.setStyleSheet(u"")
         self.horizontalLayout_4 = QHBoxLayout(self.BWleftWidget)
         self.horizontalLayout_4.setSpacing(12)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(8, 8, 0, 11)
+        self.horizontalLayout_4.setContentsMargins(8, 6, 0, 10)
         self.iconLabel = QLabel(self.BWleftWidget)
         self.iconLabel.setObjectName(u"iconLabel")
         sizePolicy2.setHeightForWidth(self.iconLabel.sizePolicy().hasHeightForWidth())
@@ -605,7 +616,7 @@ class Ui_MainWindow(object):
         self.BWcenterWidget.setObjectName(u"BWcenterWidget")
         sizePolicy.setHeightForWidth(self.BWcenterWidget.sizePolicy().hasHeightForWidth())
         self.BWcenterWidget.setSizePolicy(sizePolicy)
-        self.BWcenterWidget.setMaximumSize(QSize(706, 16777215))
+        self.BWcenterWidget.setMaximumSize(QSize(700, 16777215))
         self.verticalLayout_4 = QVBoxLayout(self.BWcenterWidget)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -622,7 +633,7 @@ class Ui_MainWindow(object):
 
         self.shuffleButton = RoundButton(self.BWCtopWidget)
         self.shuffleButton.setObjectName(u"shuffleButton")
-        self.shuffleButton.setEnabled(False)
+        self.shuffleButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.shuffleButton.sizePolicy().hasHeightForWidth())
         self.shuffleButton.setSizePolicy(sizePolicy2)
         self.shuffleButton.setMinimumSize(QSize(32, 32))
@@ -659,7 +670,7 @@ class Ui_MainWindow(object):
 
         self.previousTrackButton = RoundButton(self.BWCtopWidget)
         self.previousTrackButton.setObjectName(u"previousTrackButton")
-        self.previousTrackButton.setEnabled(False)
+        self.previousTrackButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.previousTrackButton.sizePolicy().hasHeightForWidth())
         self.previousTrackButton.setSizePolicy(sizePolicy2)
         self.previousTrackButton.setMinimumSize(QSize(32, 32))
@@ -696,7 +707,7 @@ class Ui_MainWindow(object):
 
         self.playButton = RoundButton(self.BWCtopWidget)
         self.playButton.setObjectName(u"playButton")
-        self.playButton.setEnabled(False)
+        self.playButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.playButton.sizePolicy().hasHeightForWidth())
         self.playButton.setSizePolicy(sizePolicy2)
         self.playButton.setMinimumSize(QSize(32, 32))
@@ -758,7 +769,7 @@ class Ui_MainWindow(object):
 
         self.nextTrackButton = RoundButton(self.BWCtopWidget)
         self.nextTrackButton.setObjectName(u"nextTrackButton")
-        self.nextTrackButton.setEnabled(False)
+        self.nextTrackButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.nextTrackButton.sizePolicy().hasHeightForWidth())
         self.nextTrackButton.setSizePolicy(sizePolicy2)
         self.nextTrackButton.setMinimumSize(QSize(32, 32))
@@ -792,7 +803,7 @@ class Ui_MainWindow(object):
 
         self.loopButton = LoopButton(self.BWCtopWidget)
         self.loopButton.setObjectName(u"loopButton")
-        self.loopButton.setEnabled(False)
+        self.loopButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.loopButton.sizePolicy().hasHeightForWidth())
         self.loopButton.setSizePolicy(sizePolicy2)
         self.loopButton.setMinimumSize(QSize(32, 32))
@@ -851,9 +862,9 @@ class Ui_MainWindow(object):
 
         self.playTimeSlider = HoverSlider(self.BWCbottomWidget)
         self.playTimeSlider.setObjectName(u"playTimeSlider")
-        self.playTimeSlider.setEnabled(False)
+        self.playTimeSlider.setEnabled(True)
         self.playTimeSlider.setMinimumSize(QSize(0, 17))
-        self.playTimeSlider.setMaximumSize(QSize(630, 17))
+        self.playTimeSlider.setMaximumSize(QSize(700, 17))
         self.playTimeSlider.setStyleSheet(u"QSlider {\n"
 "	background-color: transparent;\n"
 "}\n"
@@ -925,13 +936,148 @@ class Ui_MainWindow(object):
 
         self.BWrightWidget = QWidget(self.bottomWidget)
         self.BWrightWidget.setObjectName(u"BWrightWidget")
-        sizePolicy.setHeightForWidth(self.BWrightWidget.sizePolicy().hasHeightForWidth())
-        self.BWrightWidget.setSizePolicy(sizePolicy)
+        sizePolicy4.setHeightForWidth(self.BWrightWidget.sizePolicy().hasHeightForWidth())
+        self.BWrightWidget.setSizePolicy(sizePolicy4)
         self.BWrightWidget.setMinimumSize(QSize(230, 75))
         self.BWrightWidget.setMaximumSize(QSize(16777215, 75))
+        self.BWrightWidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.horizontalLayout_5 = QHBoxLayout(self.BWrightWidget)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(8, 0, 16, 0)
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_5)
+
+        self.queueButton = RoundButton(self.BWrightWidget)
+        self.queueButton.setObjectName(u"queueButton")
+        self.queueButton.setEnabled(True)
+        sizePolicy2.setHeightForWidth(self.queueButton.sizePolicy().hasHeightForWidth())
+        self.queueButton.setSizePolicy(sizePolicy2)
+        self.queueButton.setMinimumSize(QSize(32, 32))
+        self.queueButton.setMaximumSize(QSize(32, 32))
+        self.queueButton.setFont(font5)
+        self.queueButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.queueButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: trasnparent;\n"
+"	border-radius: 0px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    icon: url(:/assets/buttons/queue_hover.png);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"    icon: url(:/assets/buttons/queue_pressed.png);\n"
+"}\n"
+"\n"
+"QPushButton:checked  {\n"
+"    icon: url(:/assets/buttons/queue_clicked.png);\n"
+"}")
+        icon10 = QIcon()
+        icon10.addFile(u":/assets/buttons/queue.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.queueButton.setIcon(icon10)
+        self.queueButton.setIconSize(QSize(32, 32))
+        self.queueButton.setCheckable(True)
+
+        self.horizontalLayout_5.addWidget(self.queueButton)
+
+        self.volumeButton = VolumeButton(self.BWrightWidget)
+        self.volumeButton.setObjectName(u"volumeButton")
+        self.volumeButton.setEnabled(True)
+        sizePolicy2.setHeightForWidth(self.volumeButton.sizePolicy().hasHeightForWidth())
+        self.volumeButton.setSizePolicy(sizePolicy2)
+        self.volumeButton.setMinimumSize(QSize(32, 32))
+        self.volumeButton.setMaximumSize(QSize(32, 32))
+        self.volumeButton.setFont(font5)
+        self.volumeButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.volumeButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: transparent;\n"
+"	border-radius: 0px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    icon: url(:/assets/buttons/volumeLow_hover.png);\n"
+"}\n"
+"QPushButton:pressed  {\n"
+"    icon: url(:/assets/buttons/volumeLow_pressed.png);\n"
+"}\n"
+"QPushButton:checked  {\n"
+"    icon: url(:/assets/buttons/volumeMute.png);\n"
+"}\n"
+"QPushButton:checked:hover  {\n"
+"    icon: url(:/assets/buttons/volumeMute_hover.png);\n"
+"}\n"
+"QPushButton:checked:pressed  {\n"
+"    icon: url(:/assets/buttons/volumeMute_pressed.png);\n"
+"}")
+        icon11 = QIcon()
+        icon11.addFile(u":/assets/buttons/volumeLow.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.volumeButton.setIcon(icon11)
+        self.volumeButton.setIconSize(QSize(32, 32))
+        self.volumeButton.setCheckable(True)
+
+        self.horizontalLayout_5.addWidget(self.volumeButton)
+
+        self.volumeSlider = HoverSlider(self.BWrightWidget)
+        self.volumeSlider.setObjectName(u"volumeSlider")
+        self.volumeSlider.setEnabled(True)
+        self.volumeSlider.setMinimumSize(QSize(0, 17))
+        self.volumeSlider.setMaximumSize(QSize(100, 17))
+        self.volumeSlider.setStyleSheet(u"QSlider {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QSlider::groove:horizontal {\n"
+"                background: rgb(76, 76, 76); /* Grey for the background */\n"
+"                height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::add-page:horizontal  {\n"
+"                background: rgb(76, 76, 76);\n"
+"                        height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::sub-page:horizontal  {\n"
+"                background: rgb(255, 255, 255);\n"
+"                        height: 4px; /* Thickness of the slider */\n"
+"                border-radius: 2px; /* Rounded edges */\n"
+"                }\n"
+"\n"
+"                QSlider::handle:horizontal  {\n"
+"                background: transparent; \n"
+"                width: 12px;\n"
+"                height: 6px;\n"
+"                mar"
+                        "gin: -4px -3px;\n"
+"                border-radius: 6px;\n"
+"				}\n"
+"				 QSlider::groove:horizontal:disabled {\n"
+"                background: rgb(20, 20, 20); /* Grey for the background */\n"
+"                }\n"
+"\n"
+"                QSlider::add-page:horizontal:disabled  {\n"
+"                background: rgb(20, 20, 20);\n"
+"                }\n"
+"\n"
+"                QSlider::sub-page:horizontal:disabled  {\n"
+"                background: rgb(20, 20, 20);\n"
+"                }\n"
+"\n"
+"")
+        self.volumeSlider.setMaximum(100)
+        self.volumeSlider.setTracking(True)
+        self.volumeSlider.setOrientation(Qt.Orientation.Horizontal)
+        self.volumeSlider.setInvertedAppearance(False)
+        self.volumeSlider.setInvertedControls(False)
+
+        self.horizontalLayout_5.addWidget(self.volumeSlider)
+
 
         self.horizontalLayout_3.addWidget(self.BWrightWidget)
 
+        self.horizontalLayout_3.setStretch(1, 1)
 
         self.gridLayout.addWidget(self.bottomWidget, 1, 0, 1, 2)
 
@@ -1055,7 +1201,39 @@ class Ui_MainWindow(object):
         self.loopButton.setAccessibleDescription("")
 #endif // QT_CONFIG(accessibility)
         self.loopButton.setText("")
-        self.timeLabel.setText(QCoreApplication.translate("MainWindow", u"0:00", None))
-        self.durationLabel.setText(QCoreApplication.translate("MainWindow", u"3:59", None))
+        self.timeLabel.setText(QCoreApplication.translate("MainWindow", u"--:--", None))
+        self.durationLabel.setText(QCoreApplication.translate("MainWindow", u"--:--", None))
+#if QT_CONFIG(tooltip)
+        self.queueButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        self.queueButton.setStatusTip("")
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(whatsthis)
+        self.queueButton.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+#if QT_CONFIG(accessibility)
+        self.queueButton.setAccessibleName("")
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(accessibility)
+        self.queueButton.setAccessibleDescription("")
+#endif // QT_CONFIG(accessibility)
+        self.queueButton.setText("")
+#if QT_CONFIG(tooltip)
+        self.volumeButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        self.volumeButton.setStatusTip("")
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(whatsthis)
+        self.volumeButton.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+#if QT_CONFIG(accessibility)
+        self.volumeButton.setAccessibleName("")
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(accessibility)
+        self.volumeButton.setAccessibleDescription("")
+#endif // QT_CONFIG(accessibility)
+        self.volumeButton.setText("")
     # retranslateUi
 
