@@ -1,7 +1,5 @@
 from PySide6.QtWidgets import QWidget
-from PySide6.QtCore import Property, Qt, Signal, QObject
-from PySide6.QtGui import QPixmap, QPainter, QPainterPath
-import requests
+from PySide6.QtCore import Property
 import yt_dlp
 from AudioStreamer.audiostreamertrack import AudioStreamerTrack
 from searchtrackwidget_ui import Ui_SearchTrackWidgetBase
@@ -18,7 +16,7 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
         self.setupUi(self)
         self.artistLabel.setText(artist)
         self.musicLabel.setText(track)
-        self.setCoverImage(cover_content)
+        self.iconLabel.setCover(cover_content)
         # Audio URL
         self.spotify_uri = spotify_uri
         self.youtube_url = None
@@ -36,24 +34,6 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
     def set_SongLink(cls, song_link):
         """Set the shared SongLink instance for all SearchTrackWidget instances."""
         cls.SL = song_link
-    
-    def setCoverImage(self, cover_content):
-        image = QPixmap()
-        image.loadFromData(cover_content)
-        # Scale the image to the QLabel size while keeping aspect ratio
-        scaled_image = image.scaled(self.iconLabel.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-        # Create a mask with rounded corners
-        rounded_pixmap = QPixmap(self.iconLabel.size())
-        rounded_pixmap.fill(Qt.GlobalColor.transparent)  # Start with a transparent pixmap
-        painter = QPainter(rounded_pixmap)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        path = QPainterPath()
-        path.addRoundedRect(rounded_pixmap.rect(), 4, 4)  # Set the radius to 4px
-        painter.setClipPath(path)
-        painter.drawPixmap(0, 0, scaled_image)
-        painter.end()
-        # Set the rounded pixmap to the QLabel
-        self.iconLabel.setPixmap(rounded_pixmap)
 
     def getChecked(self):
         return self._checked

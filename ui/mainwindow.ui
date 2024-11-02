@@ -1047,7 +1047,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <number>10</number>
           </property>
           <item>
-           <widget class="QLabel" name="iconLabel">
+           <widget class="CoverLabel" name="iconLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2229,6 +2229,11 @@ QSlider::groove:horizontal {
    <class>VolumeButton</class>
    <extends>QPushButton</extends>
    <header>volumebutton</header>
+  </customwidget>
+  <customwidget>
+   <class>CoverLabel</class>
+   <extends>QLabel</extends>
+   <header>coverlabel</header>
   </customwidget>
  </customwidgets>
  <resources>

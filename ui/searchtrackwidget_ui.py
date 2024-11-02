@@ -18,6 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QSizePolicy,
     QSpacerItem, QWidget)
 
+from coverlabel import CoverLabel
+
 class Ui_SearchTrackWidgetBase(object):
     def setupUi(self, SearchTrackWidgetBase):
         if not SearchTrackWidgetBase.objectName():
@@ -44,7 +46,7 @@ class Ui_SearchTrackWidgetBase(object):
         self.gridLayout_2.setHorizontalSpacing(8)
         self.gridLayout_2.setVerticalSpacing(0)
         self.gridLayout_2.setContentsMargins(9, 8, 16, 8)
-        self.iconLabel = QLabel(self.SearchTrackWidget)
+        self.iconLabel = CoverLabel(self.SearchTrackWidget)
         self.iconLabel.setObjectName(u"iconLabel")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)

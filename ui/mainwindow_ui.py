@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridL
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
     QStackedWidget, QVBoxLayout, QWidget)
 
+from coverlabel import CoverLabel
 from customscrollarea import CustomScrollArea
 from hoverslider import HoverSlider
 from loopbutton import LoopButton
@@ -544,7 +545,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setSpacing(12)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(8, 6, 0, 10)
-        self.iconLabel = QLabel(self.BWleftWidget)
+        self.iconLabel = CoverLabel(self.BWleftWidget)
         self.iconLabel.setObjectName(u"iconLabel")
         sizePolicy2.setHeightForWidth(self.iconLabel.sizePolicy().hasHeightForWidth())
         self.iconLabel.setSizePolicy(sizePolicy2)

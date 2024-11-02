@@ -75,7 +75,7 @@
        <number>0</number>
       </property>
       <item row="0" column="0" rowspan="2">
-       <widget class="QLabel" name="iconLabel">
+       <widget class="CoverLabel" name="iconLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -203,6 +203,13 @@ QLabel:hover {
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CoverLabel</class>
+   <extends>QLabel</extends>
+   <header>coverlabel</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
