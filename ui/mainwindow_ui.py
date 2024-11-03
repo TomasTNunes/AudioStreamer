@@ -359,7 +359,7 @@ class Ui_MainWindow(object):
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.rightStackedWidget.sizePolicy().hasHeightForWidth())
         self.rightStackedWidget.setSizePolicy(sizePolicy3)
-        self.rightStackedWidget.setMinimumSize(QSize(0, 470))
+        self.rightStackedWidget.setMinimumSize(QSize(484, 470))
         self.rightStackedWidget.setStyleSheet(u"border-radius: 10px;\n"
 "background-color: rgb(18, 18, 18);\n"
 "")
@@ -469,9 +469,169 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.RSWSsearchHLayout)
 
-        self.RSWSscrollArea = CustomScrollArea(self.RSWsearchWidget)
-        self.RSWSscrollArea.setObjectName(u"RSWSscrollArea")
-        self.RSWSscrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
+        self.RSWSselectHLauout = QHBoxLayout()
+        self.RSWSselectHLauout.setSpacing(8)
+        self.RSWSselectHLauout.setObjectName(u"RSWSselectHLauout")
+        self.RSWSselectHLauout.setContentsMargins(16, -1, 8, 6)
+        self.RSWSallButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSallButton.setObjectName(u"RSWSallButton")
+        self.RSWSallButton.setEnabled(True)
+        sizePolicy2.setHeightForWidth(self.RSWSallButton.sizePolicy().hasHeightForWidth())
+        self.RSWSallButton.setSizePolicy(sizePolicy2)
+        self.RSWSallButton.setMinimumSize(QSize(40, 32))
+        self.RSWSallButton.setFont(font4)
+        self.RSWSallButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.RSWSallButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(36, 36, 36);\n"
+"	color: rgb(244, 244, 244);\n"
+"	border-radius: 16.4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(42, 42, 42);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"")
+        self.RSWSallButton.setIconSize(QSize(22, 22))
+        self.RSWSallButton.setCheckable(True)
+
+        self.RSWSselectHLauout.addWidget(self.RSWSallButton)
+
+        self.RSWSsongsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSsongsButton.setObjectName(u"RSWSsongsButton")
+        sizePolicy2.setHeightForWidth(self.RSWSsongsButton.sizePolicy().hasHeightForWidth())
+        self.RSWSsongsButton.setSizePolicy(sizePolicy2)
+        self.RSWSsongsButton.setMinimumSize(QSize(65, 32))
+        self.RSWSsongsButton.setFont(font4)
+        self.RSWSsongsButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.RSWSsongsButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(36, 36, 36);\n"
+"	color: rgb(244, 244, 244);\n"
+"	border-radius: 16.4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(42, 42, 42);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"")
+        self.RSWSsongsButton.setIconSize(QSize(22, 22))
+        self.RSWSsongsButton.setCheckable(True)
+
+        self.RSWSselectHLauout.addWidget(self.RSWSsongsButton)
+
+        self.RSWSplaylistsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSplaylistsButton.setObjectName(u"RSWSplaylistsButton")
+        sizePolicy2.setHeightForWidth(self.RSWSplaylistsButton.sizePolicy().hasHeightForWidth())
+        self.RSWSplaylistsButton.setSizePolicy(sizePolicy2)
+        self.RSWSplaylistsButton.setMinimumSize(QSize(76, 32))
+        self.RSWSplaylistsButton.setFont(font4)
+        self.RSWSplaylistsButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.RSWSplaylistsButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(36, 36, 36);\n"
+"	color: rgb(244, 244, 244);\n"
+"	border-radius: 16.4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(42, 42, 42);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"")
+        self.RSWSplaylistsButton.setIconSize(QSize(22, 22))
+        self.RSWSplaylistsButton.setCheckable(True)
+
+        self.RSWSselectHLauout.addWidget(self.RSWSplaylistsButton)
+
+        self.RSWSalbumsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSalbumsButton.setObjectName(u"RSWSalbumsButton")
+        sizePolicy2.setHeightForWidth(self.RSWSalbumsButton.sizePolicy().hasHeightForWidth())
+        self.RSWSalbumsButton.setSizePolicy(sizePolicy2)
+        self.RSWSalbumsButton.setMinimumSize(QSize(72, 32))
+        self.RSWSalbumsButton.setMaximumSize(QSize(16777215, 16777215))
+        self.RSWSalbumsButton.setFont(font4)
+        self.RSWSalbumsButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.RSWSalbumsButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(36, 36, 36);\n"
+"	color: rgb(244, 244, 244);\n"
+"	border-radius: 16.4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(42, 42, 42);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"")
+        self.RSWSalbumsButton.setIconSize(QSize(14, 14))
+        self.RSWSalbumsButton.setCheckable(True)
+
+        self.RSWSselectHLauout.addWidget(self.RSWSalbumsButton)
+
+        self.RSWSartistsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSartistsButton.setObjectName(u"RSWSartistsButton")
+        sizePolicy2.setHeightForWidth(self.RSWSartistsButton.sizePolicy().hasHeightForWidth())
+        self.RSWSartistsButton.setSizePolicy(sizePolicy2)
+        self.RSWSartistsButton.setMinimumSize(QSize(66, 32))
+        self.RSWSartistsButton.setFont(font4)
+        self.RSWSartistsButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.RSWSartistsButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(36, 36, 36);\n"
+"	color: rgb(244, 244, 244);\n"
+"	border-radius: 16.4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(42, 42, 42);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"")
+        self.RSWSartistsButton.setCheckable(True)
+
+        self.RSWSselectHLauout.addWidget(self.RSWSartistsButton)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 10, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.RSWSselectHLauout.addItem(self.horizontalSpacer_6)
+
+
+        self.verticalLayout.addLayout(self.RSWSselectHLauout)
+
+        self.RSWSstackedWidget = QStackedWidget(self.RSWsearchWidget)
+        self.RSWSstackedWidget.setObjectName(u"RSWSstackedWidget")
+        self.RSWSSWallWidget = QWidget()
+        self.RSWSSWallWidget.setObjectName(u"RSWSSWallWidget")
+        self.gridLayout_2 = QGridLayout(self.RSWSSWallWidget)
+        self.gridLayout_2.setSpacing(0)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.RSWSSWallScrollArea = CustomScrollArea(self.RSWSSWallWidget)
+        self.RSWSSWallScrollArea.setObjectName(u"RSWSSWallScrollArea")
+        self.RSWSSWallScrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
 "    width: 12px;\n"
 "}\n"
 "\n"
@@ -497,27 +657,34 @@ class Ui_MainWindow(object):
 "    background: rgb(18, 18, 18);\n"
 "}\n"
 "")
-        self.RSWSscrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.RSWSscrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.RSWSscrollArea.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
-        self.RSWSscrollArea.setWidgetResizable(True)
-        self.RSWSscrollAreaWidget = QWidget()
-        self.RSWSscrollAreaWidget.setObjectName(u"RSWSscrollAreaWidget")
-        self.RSWSscrollAreaWidget.setGeometry(QRect(0, 0, 484, 410))
-        self.RSWSscrollAreaWidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.RSWSscrollAreaWidget.setAutoFillBackground(False)
-        self.RSWSscrollAreaWidget.setStyleSheet(u"")
-        self.RSWSscrollVLayout = QVBoxLayout(self.RSWSscrollAreaWidget)
-        self.RSWSscrollVLayout.setSpacing(0)
-        self.RSWSscrollVLayout.setObjectName(u"RSWSscrollVLayout")
-        self.RSWSscrollVLayout.setContentsMargins(16, 0, 4, 16)
-        self.RSWSscrollAreaSpacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.RSWSSWallScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.RSWSSWallScrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.RSWSSWallScrollArea.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.RSWSSWallScrollArea.setWidgetResizable(True)
+        self.RSWSSWallScrollAreaWidget = QWidget()
+        self.RSWSSWallScrollAreaWidget.setObjectName(u"RSWSSWallScrollAreaWidget")
+        self.RSWSSWallScrollAreaWidget.setGeometry(QRect(0, 0, 484, 371))
+        self.RSWSSWallScrollAreaWidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.RSWSSWallScrollAreaWidget.setAutoFillBackground(False)
+        self.RSWSSWallScrollAreaWidget.setStyleSheet(u"")
+        self.RSWSSWallScrollVLayout = QVBoxLayout(self.RSWSSWallScrollAreaWidget)
+        self.RSWSSWallScrollVLayout.setSpacing(0)
+        self.RSWSSWallScrollVLayout.setObjectName(u"RSWSSWallScrollVLayout")
+        self.RSWSSWallScrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSSWallScrollAreaSpacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.RSWSscrollVLayout.addItem(self.RSWSscrollAreaSpacer)
+        self.RSWSSWallScrollVLayout.addItem(self.RSWSSWallScrollAreaSpacer)
 
-        self.RSWSscrollArea.setWidget(self.RSWSscrollAreaWidget)
+        self.RSWSSWallScrollArea.setWidget(self.RSWSSWallScrollAreaWidget)
 
-        self.verticalLayout.addWidget(self.RSWSscrollArea)
+        self.gridLayout_2.addWidget(self.RSWSSWallScrollArea, 0, 0, 1, 1)
+
+        self.RSWSstackedWidget.addWidget(self.RSWSSWallWidget)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        self.RSWSstackedWidget.addWidget(self.page_2)
+
+        self.verticalLayout.addWidget(self.RSWSstackedWidget)
 
         self.rightStackedWidget.addWidget(self.RSWsearchWidget)
 
@@ -1119,6 +1286,11 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(accessibility)
         self.RSWSbackButton.setText("")
         self.RSWSsearchQLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"What do you want to play?", None))
+        self.RSWSallButton.setText(QCoreApplication.translate("MainWindow", u"All", None))
+        self.RSWSsongsButton.setText(QCoreApplication.translate("MainWindow", u"Songs", None))
+        self.RSWSplaylistsButton.setText(QCoreApplication.translate("MainWindow", u"Playlists", None))
+        self.RSWSalbumsButton.setText(QCoreApplication.translate("MainWindow", u"Albums", None))
+        self.RSWSartistsButton.setText(QCoreApplication.translate("MainWindow", u"Artists", None))
         self.iconLabel.setText("")
         self.musicLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.artistLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

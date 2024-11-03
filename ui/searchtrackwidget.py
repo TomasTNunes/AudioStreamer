@@ -9,31 +9,23 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
     # Class Variables (Global)
     selected_widget = None  # Class variable to track the currently selected widget
     AS = None  # Class variable for the AudioStreamer instance
-    SL = None  # Class variable for the SongLink instance
     
-    def __init__(self, track, artist, cover_content, spotify_uri, parent=None):
+    def __init__(self, track, parent=None):
         super(SearchTrackWidget, self).__init__(parent)
         self.setupUi(self)
-        self.artistLabel.setText(artist)
-        self.musicLabel.setText(track)
-        self.iconLabel.setCover(cover_content)
-        # Audio URL
-        self.spotify_uri = spotify_uri
-        self.youtube_url = None
-        self.AStrack = None
+        self._track = track
+        # Set Widget UI
+        self.artistLabel.setText(track.artists)
+        self.musicLabel.setText(track.name)
+        self.iconLabel.setCover(track.cover)
         # Custom Properties for Widget
         self._checked = False
         self.updateStylesheet()
     
     @classmethod
-    def set_AudioStreamer(cls, audio_streamer):
+    def setAudioStreamer(cls, audio_streamer):
         """Set the shared AudioStreamer instance for all SearchTrackWidget instances."""
         cls.AS = audio_streamer
-    
-    @classmethod
-    def set_SongLink(cls, song_link):
-        """Set the shared SongLink instance for all SearchTrackWidget instances."""
-        cls.SL = song_link
 
     def getChecked(self):
         return self._checked
@@ -68,26 +60,6 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
 
     checked = Property(bool, getChecked, setChecked)
 
-    def get_AStrack(self):
-        try:
-            self.youtube_url = self.SL.getByUrl(self.spotify_uri).entitiesByProvider['youtube'].linksByPlatform['youtubeMusic']
-            ydl_opts = {
-                'format': 'bestaudio',
-                'noplaylist': True,
-                'quiet': True,
-                'no_warnings': True,
-                'extract_flat': 'in_playlist',
-                }
-        
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info_dict = ydl.extract_info(self.youtube_url, download=False)
-                audio_url = info_dict['url']
-                duration = int(info_dict['duration'])
-            self.AStrack = AudioStreamerTrack(audio_url, duration)
-        except Exception as e:
-            print(f'Fail to get AS Track: {e}')
-            return None
-
     def mousePressEvent(self, event):
         if not self.getChecked():
             # If there's a currently selected widget and it's not this one, deselect it
@@ -100,9 +72,9 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
     def mouseDoubleClickEvent(self, event):
         if self.AS.active:
             self.AS.stop()
-        if not self.AStrack:
-            self.get_AStrack()
-        if self.AStrack:
-            self.AS.play(self.AStrack)
+        if not self._track.url:
+            self._track.getYoutubeAudio()
+        if self._track.url:
+            self.AS.play(self._track)
         super().mouseDoubleClickEvent(event)
     

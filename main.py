@@ -8,6 +8,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from AudioStreamer.audiostreamerV04 import AudioStreamer
 from AudioStreamer.events import TrackStartEvent, TrackEndEvent
+from track import Track
 # Add the 'SongLink' directory to sys.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'SongLink'))
 from SongLink.songlink import SongLink
@@ -61,13 +62,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                redirect_uri=os.getenv('SPOTIFYREDIRECTURI'),
                                                scope="user-library-read"))
         self.AS = AudioStreamer()
-        SearchTrackWidget.set_AudioStreamer(self.AS)
+        SearchTrackWidget.setAudioStreamer(self.AS)
         self.SL = SongLink()
-        SearchTrackWidget.set_SongLink(self.SL)
+        Track.setSongLink(self.SL)
 
         # Add AudioStreamer Events
         self.AS.add_event_hook(self.onTrackStartEvent, event=TrackStartEvent)
         self.AS.add_event_hook(self.onTrackEndEvent, event=TrackEndEvent)
+
+        # Additional variables
+        self.lastSearch = None
 
         # Set Intial Conditions
         self.homeButton.setChecked(True)
@@ -91,31 +95,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.homeButton.setChecked(False)
     
     #------------------------ Search Bar ------------------------#
-    def clearRSWSscrollVLayout(self):
+    def clearRSWsearchWidget(self):
         SearchTrackWidget.selected_widget = None
         # Loop through and remove each widget from the layout 
         # except last widget which is the spacer
-        for i in range(self.RSWSscrollVLayout.count() - 2, -1, -1):
-            item = self.RSWSscrollVLayout.takeAt(i)
+        for i in range(self.RSWSSWallScrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSSWallScrollVLayout.takeAt(i)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()  # Delete the widget from memory
     
     def onSearchEnter(self):
         # Clear all existing track widgets before adding new ones
-        self.clearRSWSscrollVLayout()
+        self.clearRSWsearchWidget()
         # Get text from RSWSsearchQLineEdit when Enter is pressed
         search_text = self.RSWSsearchQLineEdit.text()
-        # Spotify API ### MUDAR REQUESTS TODOS PARA .get('','')
-        results = self.sp.search(q=search_text, type='track', limit=10)
-        for item in results['tracks']['items']:
-            artists_str = ', '.join(artist['name'] for artist in item['artists'])
-            track = item['name']
-            cover_content = requests.get(item['album']['images'][0]['url']).content
-            spotify_uri = item['uri']
-            # Create an instance of SearchTrackWidget
-            track_widget = SearchTrackWidget(track, artists_str, cover_content, spotify_uri)
-            self.RSWSscrollVLayout.insertWidget(self.RSWSscrollVLayout.count()-1,track_widget)
+        if search_text.strip():
+            self.lastSearch = self.sp.search(q=search_text, type='track,playlist,album,artist', limit=10)
+            for item in self.lastSearch['tracks']['items']:
+                track = Track(item)
+                # Create an instance of SearchTrackWidget
+                track_widget = SearchTrackWidget(track)
+                self.RSWSSWallScrollVLayout.insertWidget(self.RSWSSWallScrollVLayout.count()-1,track_widget)
 
     #------------------------ Media Buttons ------------------------#
     def disableMediaButtons(self):

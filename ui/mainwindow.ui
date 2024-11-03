@@ -653,7 +653,7 @@ QPushButton:checked {
       </property>
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>484</width>
         <height>470</height>
        </size>
       </property>
@@ -695,7 +695,7 @@ background-color: rgb(18, 18, 18);
         <item>
          <layout class="QHBoxLayout" name="RSWSsearchHLayout" stretch="0,1,0">
           <property name="spacing">
-           <number>6</number>
+           <number>8</number>
           </property>
           <property name="leftMargin">
            <number>16</number>
@@ -858,9 +858,6 @@ QLineEdit::clear-button {
             <property name="orientation">
              <enum>Qt::Orientation::Horizontal</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Policy::Expanding</enum>
-            </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>100</width>
@@ -872,9 +869,343 @@ QLineEdit::clear-button {
          </layout>
         </item>
         <item>
-         <widget class="CustomScrollArea" name="RSWSscrollArea">
-          <property name="styleSheet">
-           <string notr="true">QScrollBar:vertical {
+         <layout class="QHBoxLayout" name="RSWSselectHLauout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <property name="leftMargin">
+           <number>16</number>
+          </property>
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="RSWSallButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(36, 36, 36);
+	color: rgb(244, 244, 244);
+	border-radius: 16.4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(42, 42, 42);
+}
+
+QPushButton:checked {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string>All</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RSWSsongsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>65</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(36, 36, 36);
+	color: rgb(244, 244, 244);
+	border-radius: 16.4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(42, 42, 42);
+}
+
+QPushButton:checked {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string>Songs</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RSWSplaylistsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>76</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(36, 36, 36);
+	color: rgb(244, 244, 244);
+	border-radius: 16.4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(42, 42, 42);
+}
+
+QPushButton:checked {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string>Playlists</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RSWSalbumsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>72</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(36, 36, 36);
+	color: rgb(244, 244, 244);
+	border-radius: 16.4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(42, 42, 42);
+}
+
+QPushButton:checked {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string>Albums</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>14</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RSWSartistsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>66</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(36, 36, 36);
+	color: rgb(244, 244, 244);
+	border-radius: 16.4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(42, 42, 42);
+}
+
+QPushButton:checked {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string>Artists</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>10</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QStackedWidget" name="RSWSstackedWidget">
+          <property name="currentIndex">
+           <number>2</number>
+          </property>
+          <widget class="QWidget" name="RSWSSWallWidget">
+           <layout class="QGridLayout" name="gridLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CustomScrollArea" name="RSWSSWallScrollArea">
+              <property name="styleSheet">
+               <string notr="true">QScrollBar:vertical {
     width: 12px;
 }
 
@@ -900,65 +1231,442 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: rgb(18, 18, 18);
 }
 </string>
-          </property>
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
-          </property>
-          <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="RSWSscrollAreaWidget">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>484</width>
-             <height>410</height>
-            </rect>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LayoutDirection::LeftToRight</enum>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <layout class="QVBoxLayout" name="RSWSscrollVLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="RSWSSWallScrollAreaWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>484</width>
+                 <height>371</height>
+                </rect>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LayoutDirection::LeftToRight</enum>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QVBoxLayout" name="RSWSSWallScrollVLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>16</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>16</number>
+                </property>
+                <item>
+                 <spacer name="RSWSSWallScrollAreaSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="RSWSSWsongsWidget">
+           <layout class="QGridLayout" name="gridLayout_4">
             <property name="leftMargin">
-             <number>16</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>4</number>
+             <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>16</number>
+             <number>0</number>
             </property>
-            <item>
-             <spacer name="RSWSscrollAreaSpacer">
-              <property name="orientation">
-               <enum>Qt::Orientation::Vertical</enum>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CustomScrollArea" name="RSWSSWsongsScrollArea">
+              <property name="styleSheet">
+               <string notr="true">QScrollBar:vertical {
+    width: 12px;
+}
+
+/* Style for the scrollbar handle */
+QScrollBar::handle:vertical {
+    background: rgb(90, 90, 90);
+    min-height: 20px;
+	border-radius: 5px;
+}
+
+/* Handle color when hovered */
+QScrollBar::handle:vertical:hover {
+    background: rgb(120, 120, 120);
+}
+
+/* Handle color when pressed */
+QScrollBar::handle:vertical:pressed {
+    background: rgb(180, 180, 180);
+}
+
+/* Background color for the area above and below the handle */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: rgb(18, 18, 18);
+}
+</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
+              <property name="widgetResizable">
+               <bool>true</bool>
               </property>
-             </spacer>
+              <widget class="QWidget" name="RSWSSWsongsScrollAreaWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>484</width>
+                 <height>371</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="RSWSSWsongsScrollVLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>16</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>16</number>
+                </property>
+                <item>
+                 <spacer name="RSWSSWsongsScrollAreaSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>352</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="RSWSSWplaylistsWidget">
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CustomScrollArea" name="RSWSSWplaylistsScrollArea">
+              <property name="styleSheet">
+               <string notr="true">QScrollBar:vertical {
+    width: 12px;
+}
+
+/* Style for the scrollbar handle */
+QScrollBar::handle:vertical {
+    background: rgb(90, 90, 90);
+    min-height: 20px;
+	border-radius: 5px;
+}
+
+/* Handle color when hovered */
+QScrollBar::handle:vertical:hover {
+    background: rgb(120, 120, 120);
+}
+
+/* Handle color when pressed */
+QScrollBar::handle:vertical:pressed {
+    background: rgb(180, 180, 180);
+}
+
+/* Background color for the area above and below the handle */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: rgb(18, 18, 18);
+}
+</string>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="RSWSSWplaylistsScrollAreaWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>484</width>
+                 <height>371</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="RSWSSWplaylistsScrollVLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>16</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>16</number>
+                </property>
+                <item>
+                 <spacer name="RSWSSWplaylistsScrollAreaSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>352</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="RSWSSWalbumsWidget">
+           <layout class="QGridLayout" name="gridLayout_5">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CustomScrollArea" name="RSWSSWalbumsScrollArea">
+              <property name="styleSheet">
+               <string notr="true">QScrollBar:vertical {
+    width: 12px;
+}
+
+/* Style for the scrollbar handle */
+QScrollBar::handle:vertical {
+    background: rgb(90, 90, 90);
+    min-height: 20px;
+	border-radius: 5px;
+}
+
+/* Handle color when hovered */
+QScrollBar::handle:vertical:hover {
+    background: rgb(120, 120, 120);
+}
+
+/* Handle color when pressed */
+QScrollBar::handle:vertical:pressed {
+    background: rgb(180, 180, 180);
+}
+
+/* Background color for the area above and below the handle */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: rgb(18, 18, 18);
+}
+</string>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="RSWSSWalbumsScrollAreaWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>475</width>
+                 <height>371</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="RSWSSWalbumsScrollVLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>16</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>16</number>
+                </property>
+                <item>
+                 <spacer name="RSWSSWalbumsScrollAreaSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>352</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="RSWSSWartistsWidget">
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="CustomScrollArea" name="RSWSSWartistsScrollArea">
+              <property name="styleSheet">
+               <string notr="true">QScrollBar:vertical {
+    width: 12px;
+}
+
+/* Style for the scrollbar handle */
+QScrollBar::handle:vertical {
+    background: rgb(90, 90, 90);
+    min-height: 20px;
+	border-radius: 5px;
+}
+
+/* Handle color when hovered */
+QScrollBar::handle:vertical:hover {
+    background: rgb(120, 120, 120);
+}
+
+/* Handle color when pressed */
+QScrollBar::handle:vertical:pressed {
+    background: rgb(180, 180, 180);
+}
+
+/* Background color for the area above and below the handle */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: rgb(18, 18, 18);
+}
+</string>
+              </property>
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="RSWSSWartistsScrollAreaWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>484</width>
+                 <height>371</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="RSWSSWartistsScrollVLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>16</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>16</number>
+                </property>
+                <item>
+                 <spacer name="RSWSSWartistsScrollAreaSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>352</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </widget>
             </item>
            </layout>
           </widget>
