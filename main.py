@@ -73,7 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.homeButton.setChecked(True)
         self.rightStackedWidget.setCurrentWidget(self.RSWhomeWidget)
         self.disableMediaButtons()
-        self.volumeSlider.setRange(0, 75) # max Volume
+        self.volumeSlider.setRange(0, 50) # max Volume
         self.volumeSlider.setValue(self.AS.volume)
 
 
@@ -197,7 +197,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def onTrackEndEvent(self):
         # Stop trackTimer - Use QMetaObject.invokeMethod to call self.trackTimer.stop on the main thread (it's required) 
-        QMetaObject.invokeMethod(self.trackTimer, "stop", Qt.QueuedConnection)
+        # QMetaObject.invokeMethod(self.trackTimer, "stop", Qt.BlockingQueuedConnection)
         # Disable Media Buttons NOTE: make condition if queue empty?
         self.disableMediaButtons()
 

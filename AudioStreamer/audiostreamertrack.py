@@ -16,10 +16,10 @@ class AudioStreamerTrack:
     def extra(self):
         return self.__extra
 
-    def set_url(self, new_url):
+    def setUrl(self, new_url):
         self.__url = new_url
 
-    def set_duration(self, new_duration):
+    def setDuration(self, new_duration):
         if new_duration > 0:
             self.__duration = new_duration
         else:
