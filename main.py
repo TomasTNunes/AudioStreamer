@@ -79,7 +79,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.disableMediaButtons()
         self.volumeSlider.setRange(0, 50) # max Volume
         self.volumeSlider.setValue(self.AS.volume)
-
+        # Initialize "all" as initial selected Search Filter Button
+        self.RSWSallButton.click()
 
     #------------------------ Home&Search Buttons ------------------------#
     def homeButtonClick(self):

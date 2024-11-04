@@ -425,7 +425,7 @@ QPushButton:pressed {
             <number>8</number>
            </property>
            <item>
-            <widget class="QPushButton" name="playlistsButton">
+            <widget class="LibraryFilterButton" name="playlistsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -464,7 +464,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
              </property>
              <property name="text">
               <string>Playlists</string>
@@ -481,7 +488,7 @@ QPushButton:checked {
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="albumsButton">
+            <widget class="LibraryFilterButton" name="albumsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -526,7 +533,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
              </property>
              <property name="text">
               <string>Albums</string>
@@ -543,7 +557,7 @@ QPushButton:checked {
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="artistsButton">
+            <widget class="LibraryFilterButton" name="artistsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -582,7 +596,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
              </property>
              <property name="text">
               <string>Artists</string>
@@ -883,7 +904,7 @@ QLineEdit::clear-button {
            <number>6</number>
           </property>
           <item>
-           <widget class="QPushButton" name="RSWSallButton">
+           <widget class="SearchFilterButton" name="RSWSallButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -925,6 +946,16 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}
+
+
 </string>
             </property>
             <property name="text">
@@ -939,10 +970,13 @@ QPushButton:checked {
             <property name="checkable">
              <bool>true</bool>
             </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RSWSsongsButton">
+           <widget class="SearchFilterButton" name="RSWSsongsButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -981,7 +1015,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
             </property>
             <property name="text">
              <string>Songs</string>
@@ -998,7 +1039,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RSWSplaylistsButton">
+           <widget class="SearchFilterButton" name="RSWSplaylistsButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1036,7 +1077,14 @@ QPushButton:checked {
 	background-color: rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
 }
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
 
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}
 </string>
             </property>
             <property name="text">
@@ -1054,7 +1102,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RSWSalbumsButton">
+           <widget class="SearchFilterButton" name="RSWSalbumsButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1099,7 +1147,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
             </property>
             <property name="text">
              <string>Albums</string>
@@ -1116,7 +1171,7 @@ QPushButton:checked {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RSWSartistsButton">
+           <widget class="SearchFilterButton" name="RSWSartistsButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1155,7 +1210,14 @@ QPushButton:checked {
 	color: rgb(0, 0, 0);
 }
 
-</string>
+QPushButton:pressed {
+	background-color: rgb(30, 30, 30);
+}
+
+QPushButton:checked:pressed {
+	background-color: rgb(200, 200, 200);
+	color: rgb(0, 0, 0);
+}</string>
             </property>
             <property name="text">
              <string>Artists</string>
@@ -1249,8 +1311,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>484</width>
-                 <height>371</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <property name="layoutDirection">
@@ -1352,8 +1414,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>484</width>
-                 <height>371</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="RSWSSWsongsScrollVLayout">
@@ -1537,8 +1599,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>475</width>
-                 <height>371</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="RSWSSWalbumsScrollVLayout">
@@ -1631,8 +1693,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>484</width>
-                 <height>371</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="RSWSSWartistsScrollVLayout">
@@ -2942,6 +3004,16 @@ QSlider::groove:horizontal {
    <class>CoverLabel</class>
    <extends>QLabel</extends>
    <header>coverlabel</header>
+  </customwidget>
+  <customwidget>
+   <class>SearchFilterButton</class>
+   <extends>QPushButton</extends>
+   <header>filterbutton</header>
+  </customwidget>
+  <customwidget>
+   <class>LibraryFilterButton</class>
+   <extends>QPushButton</extends>
+   <header>filterbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources>

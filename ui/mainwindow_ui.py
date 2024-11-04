@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridL
 
 from coverlabel import CoverLabel
 from customscrollarea import CustomScrollArea
+from filterbutton import (LibraryFilterButton, SearchFilterButton)
 from hoverslider import HoverSlider
 from loopbutton import LoopButton
 from roundbutton import RoundButton
@@ -236,7 +237,7 @@ class Ui_MainWindow(object):
         self.playlistsButtonsHLayout.setSpacing(8)
         self.playlistsButtonsHLayout.setObjectName(u"playlistsButtonsHLayout")
         self.playlistsButtonsHLayout.setContentsMargins(16, 8, 0, 8)
-        self.playlistsButton = QPushButton(self.libraryBackgroundWidget)
+        self.playlistsButton = LibraryFilterButton(self.libraryBackgroundWidget)
         self.playlistsButton.setObjectName(u"playlistsButton")
         sizePolicy2.setHeightForWidth(self.playlistsButton.sizePolicy().hasHeightForWidth())
         self.playlistsButton.setSizePolicy(sizePolicy2)
@@ -262,13 +263,20 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.playlistsButton.setIconSize(QSize(22, 22))
         self.playlistsButton.setCheckable(True)
 
         self.playlistsButtonsHLayout.addWidget(self.playlistsButton)
 
-        self.albumsButton = QPushButton(self.libraryBackgroundWidget)
+        self.albumsButton = LibraryFilterButton(self.libraryBackgroundWidget)
         self.albumsButton.setObjectName(u"albumsButton")
         sizePolicy2.setHeightForWidth(self.albumsButton.sizePolicy().hasHeightForWidth())
         self.albumsButton.setSizePolicy(sizePolicy2)
@@ -291,13 +299,20 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.albumsButton.setIconSize(QSize(14, 14))
         self.albumsButton.setCheckable(True)
 
         self.playlistsButtonsHLayout.addWidget(self.albumsButton)
 
-        self.artistsButton = QPushButton(self.libraryBackgroundWidget)
+        self.artistsButton = LibraryFilterButton(self.libraryBackgroundWidget)
         self.artistsButton.setObjectName(u"artistsButton")
         sizePolicy2.setHeightForWidth(self.artistsButton.sizePolicy().hasHeightForWidth())
         self.artistsButton.setSizePolicy(sizePolicy2)
@@ -319,7 +334,14 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.artistsButton.setCheckable(True)
 
         self.playlistsButtonsHLayout.addWidget(self.artistsButton)
@@ -376,7 +398,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.RSWSsearchHLayout = QHBoxLayout()
-        self.RSWSsearchHLayout.setSpacing(6)
+        self.RSWSsearchHLayout.setSpacing(8)
         self.RSWSsearchHLayout.setObjectName(u"RSWSsearchHLayout")
         self.RSWSsearchHLayout.setContentsMargins(16, 8, 8, 6)
         self.RSWSbackButton = RoundButton(self.RSWsearchWidget)
@@ -473,7 +495,7 @@ class Ui_MainWindow(object):
         self.RSWSselectHLauout.setSpacing(8)
         self.RSWSselectHLauout.setObjectName(u"RSWSselectHLauout")
         self.RSWSselectHLauout.setContentsMargins(16, -1, 8, 6)
-        self.RSWSallButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSallButton = SearchFilterButton(self.RSWsearchWidget)
         self.RSWSallButton.setObjectName(u"RSWSallButton")
         self.RSWSallButton.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.RSWSallButton.sizePolicy().hasHeightForWidth())
@@ -496,13 +518,24 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"\n"
 "")
         self.RSWSallButton.setIconSize(QSize(22, 22))
         self.RSWSallButton.setCheckable(True)
+        self.RSWSallButton.setChecked(False)
 
         self.RSWSselectHLauout.addWidget(self.RSWSallButton)
 
-        self.RSWSsongsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSsongsButton = SearchFilterButton(self.RSWsearchWidget)
         self.RSWSsongsButton.setObjectName(u"RSWSsongsButton")
         sizePolicy2.setHeightForWidth(self.RSWSsongsButton.sizePolicy().hasHeightForWidth())
         self.RSWSsongsButton.setSizePolicy(sizePolicy2)
@@ -524,13 +557,20 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.RSWSsongsButton.setIconSize(QSize(22, 22))
         self.RSWSsongsButton.setCheckable(True)
 
         self.RSWSselectHLauout.addWidget(self.RSWSsongsButton)
 
-        self.RSWSplaylistsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSplaylistsButton = SearchFilterButton(self.RSWsearchWidget)
         self.RSWSplaylistsButton.setObjectName(u"RSWSplaylistsButton")
         sizePolicy2.setHeightForWidth(self.RSWSplaylistsButton.sizePolicy().hasHeightForWidth())
         self.RSWSplaylistsButton.setSizePolicy(sizePolicy2)
@@ -551,14 +591,21 @@ class Ui_MainWindow(object):
 "	background-color: rgb(255, 255, 255);\n"
 "	color: rgb(0, 0, 0);\n"
 "}\n"
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
 "\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}\n"
 "")
         self.RSWSplaylistsButton.setIconSize(QSize(22, 22))
         self.RSWSplaylistsButton.setCheckable(True)
 
         self.RSWSselectHLauout.addWidget(self.RSWSplaylistsButton)
 
-        self.RSWSalbumsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSalbumsButton = SearchFilterButton(self.RSWsearchWidget)
         self.RSWSalbumsButton.setObjectName(u"RSWSalbumsButton")
         sizePolicy2.setHeightForWidth(self.RSWSalbumsButton.sizePolicy().hasHeightForWidth())
         self.RSWSalbumsButton.setSizePolicy(sizePolicy2)
@@ -581,13 +628,20 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.RSWSalbumsButton.setIconSize(QSize(14, 14))
         self.RSWSalbumsButton.setCheckable(True)
 
         self.RSWSselectHLauout.addWidget(self.RSWSalbumsButton)
 
-        self.RSWSartistsButton = QPushButton(self.RSWsearchWidget)
+        self.RSWSartistsButton = SearchFilterButton(self.RSWsearchWidget)
         self.RSWSartistsButton.setObjectName(u"RSWSartistsButton")
         sizePolicy2.setHeightForWidth(self.RSWSartistsButton.sizePolicy().hasHeightForWidth())
         self.RSWSartistsButton.setSizePolicy(sizePolicy2)
@@ -609,7 +663,14 @@ class Ui_MainWindow(object):
 "	color: rgb(0, 0, 0);\n"
 "}\n"
 "\n"
-"")
+"QPushButton:pressed {\n"
+"	background-color: rgb(30, 30, 30);\n"
+"}\n"
+"\n"
+"QPushButton:checked:pressed {\n"
+"	background-color: rgb(200, 200, 200);\n"
+"	color: rgb(0, 0, 0);\n"
+"}")
         self.RSWSartistsButton.setCheckable(True)
 
         self.RSWSselectHLauout.addWidget(self.RSWSartistsButton)
@@ -663,7 +724,7 @@ class Ui_MainWindow(object):
         self.RSWSSWallScrollArea.setWidgetResizable(True)
         self.RSWSSWallScrollAreaWidget = QWidget()
         self.RSWSSWallScrollAreaWidget.setObjectName(u"RSWSSWallScrollAreaWidget")
-        self.RSWSSWallScrollAreaWidget.setGeometry(QRect(0, 0, 484, 371))
+        self.RSWSSWallScrollAreaWidget.setGeometry(QRect(0, 0, 100, 30))
         self.RSWSSWallScrollAreaWidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.RSWSSWallScrollAreaWidget.setAutoFillBackground(False)
         self.RSWSSWallScrollAreaWidget.setStyleSheet(u"")
@@ -680,9 +741,210 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.RSWSSWallScrollArea, 0, 0, 1, 1)
 
         self.RSWSstackedWidget.addWidget(self.RSWSSWallWidget)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.RSWSstackedWidget.addWidget(self.page_2)
+        self.RSWSSWsongsWidget = QWidget()
+        self.RSWSSWsongsWidget.setObjectName(u"RSWSSWsongsWidget")
+        self.gridLayout_4 = QGridLayout(self.RSWSSWsongsWidget)
+        self.gridLayout_4.setSpacing(0)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.RSWSSWsongsScrollArea = CustomScrollArea(self.RSWSSWsongsWidget)
+        self.RSWSSWsongsScrollArea.setObjectName(u"RSWSSWsongsScrollArea")
+        self.RSWSSWsongsScrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
+"    width: 12px;\n"
+"}\n"
+"\n"
+"/* Style for the scrollbar handle */\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(90, 90, 90);\n"
+"    min-height: 20px;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* Handle color when hovered */\n"
+"QScrollBar::handle:vertical:hover {\n"
+"    background: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"/* Handle color when pressed */\n"
+"QScrollBar::handle:vertical:pressed {\n"
+"    background: rgb(180, 180, 180);\n"
+"}\n"
+"\n"
+"/* Background color for the area above and below the handle */\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: rgb(18, 18, 18);\n"
+"}\n"
+"")
+        self.RSWSSWsongsScrollArea.setWidgetResizable(True)
+        self.RSWSSWsongsScrollAreaWidget = QWidget()
+        self.RSWSSWsongsScrollAreaWidget.setObjectName(u"RSWSSWsongsScrollAreaWidget")
+        self.RSWSSWsongsScrollAreaWidget.setGeometry(QRect(0, 0, 100, 30))
+        self.RSWSSWsongsScrollVLayout = QVBoxLayout(self.RSWSSWsongsScrollAreaWidget)
+        self.RSWSSWsongsScrollVLayout.setSpacing(0)
+        self.RSWSSWsongsScrollVLayout.setObjectName(u"RSWSSWsongsScrollVLayout")
+        self.RSWSSWsongsScrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSSWsongsScrollAreaSpacer = QSpacerItem(0, 352, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.RSWSSWsongsScrollVLayout.addItem(self.RSWSSWsongsScrollAreaSpacer)
+
+        self.RSWSSWsongsScrollArea.setWidget(self.RSWSSWsongsScrollAreaWidget)
+
+        self.gridLayout_4.addWidget(self.RSWSSWsongsScrollArea, 0, 0, 1, 1)
+
+        self.RSWSstackedWidget.addWidget(self.RSWSSWsongsWidget)
+        self.RSWSSWplaylistsWidget = QWidget()
+        self.RSWSSWplaylistsWidget.setObjectName(u"RSWSSWplaylistsWidget")
+        self.gridLayout_6 = QGridLayout(self.RSWSSWplaylistsWidget)
+        self.gridLayout_6.setSpacing(0)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.RSWSSWplaylistsScrollArea = CustomScrollArea(self.RSWSSWplaylistsWidget)
+        self.RSWSSWplaylistsScrollArea.setObjectName(u"RSWSSWplaylistsScrollArea")
+        self.RSWSSWplaylistsScrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
+"    width: 12px;\n"
+"}\n"
+"\n"
+"/* Style for the scrollbar handle */\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(90, 90, 90);\n"
+"    min-height: 20px;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* Handle color when hovered */\n"
+"QScrollBar::handle:vertical:hover {\n"
+"    background: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"/* Handle color when pressed */\n"
+"QScrollBar::handle:vertical:pressed {\n"
+"    background: rgb(180, 180, 180);\n"
+"}\n"
+"\n"
+"/* Background color for the area above and below the handle */\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: rgb(18, 18, 18);\n"
+"}\n"
+"")
+        self.RSWSSWplaylistsScrollArea.setWidgetResizable(True)
+        self.RSWSSWplaylistsScrollAreaWidget = QWidget()
+        self.RSWSSWplaylistsScrollAreaWidget.setObjectName(u"RSWSSWplaylistsScrollAreaWidget")
+        self.RSWSSWplaylistsScrollAreaWidget.setGeometry(QRect(0, 0, 484, 371))
+        self.RSWSSWplaylistsScrollVLayout = QVBoxLayout(self.RSWSSWplaylistsScrollAreaWidget)
+        self.RSWSSWplaylistsScrollVLayout.setSpacing(0)
+        self.RSWSSWplaylistsScrollVLayout.setObjectName(u"RSWSSWplaylistsScrollVLayout")
+        self.RSWSSWplaylistsScrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSSWplaylistsScrollAreaSpacer = QSpacerItem(0, 352, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.RSWSSWplaylistsScrollVLayout.addItem(self.RSWSSWplaylistsScrollAreaSpacer)
+
+        self.RSWSSWplaylistsScrollArea.setWidget(self.RSWSSWplaylistsScrollAreaWidget)
+
+        self.gridLayout_6.addWidget(self.RSWSSWplaylistsScrollArea, 0, 0, 1, 1)
+
+        self.RSWSstackedWidget.addWidget(self.RSWSSWplaylistsWidget)
+        self.RSWSSWalbumsWidget = QWidget()
+        self.RSWSSWalbumsWidget.setObjectName(u"RSWSSWalbumsWidget")
+        self.gridLayout_5 = QGridLayout(self.RSWSSWalbumsWidget)
+        self.gridLayout_5.setSpacing(0)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.gridLayout_5.setContentsMargins(-1, 0, 0, 0)
+        self.RSWSSWalbumsScrollArea = CustomScrollArea(self.RSWSSWalbumsWidget)
+        self.RSWSSWalbumsScrollArea.setObjectName(u"RSWSSWalbumsScrollArea")
+        self.RSWSSWalbumsScrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
+"    width: 12px;\n"
+"}\n"
+"\n"
+"/* Style for the scrollbar handle */\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(90, 90, 90);\n"
+"    min-height: 20px;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* Handle color when hovered */\n"
+"QScrollBar::handle:vertical:hover {\n"
+"    background: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"/* Handle color when pressed */\n"
+"QScrollBar::handle:vertical:pressed {\n"
+"    background: rgb(180, 180, 180);\n"
+"}\n"
+"\n"
+"/* Background color for the area above and below the handle */\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: rgb(18, 18, 18);\n"
+"}\n"
+"")
+        self.RSWSSWalbumsScrollArea.setWidgetResizable(True)
+        self.RSWSSWalbumsScrollAreaWidget = QWidget()
+        self.RSWSSWalbumsScrollAreaWidget.setObjectName(u"RSWSSWalbumsScrollAreaWidget")
+        self.RSWSSWalbumsScrollAreaWidget.setGeometry(QRect(0, 0, 100, 30))
+        self.RSWSSWalbumsScrollVLayout = QVBoxLayout(self.RSWSSWalbumsScrollAreaWidget)
+        self.RSWSSWalbumsScrollVLayout.setSpacing(0)
+        self.RSWSSWalbumsScrollVLayout.setObjectName(u"RSWSSWalbumsScrollVLayout")
+        self.RSWSSWalbumsScrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSSWalbumsScrollAreaSpacer = QSpacerItem(0, 352, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.RSWSSWalbumsScrollVLayout.addItem(self.RSWSSWalbumsScrollAreaSpacer)
+
+        self.RSWSSWalbumsScrollArea.setWidget(self.RSWSSWalbumsScrollAreaWidget)
+
+        self.gridLayout_5.addWidget(self.RSWSSWalbumsScrollArea, 0, 0, 1, 1)
+
+        self.RSWSstackedWidget.addWidget(self.RSWSSWalbumsWidget)
+        self.RSWSSWartistsWidget = QWidget()
+        self.RSWSSWartistsWidget.setObjectName(u"RSWSSWartistsWidget")
+        self.gridLayout_3 = QGridLayout(self.RSWSSWartistsWidget)
+        self.gridLayout_3.setSpacing(0)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.RSWSSWartistsScrollArea = CustomScrollArea(self.RSWSSWartistsWidget)
+        self.RSWSSWartistsScrollArea.setObjectName(u"RSWSSWartistsScrollArea")
+        self.RSWSSWartistsScrollArea.setStyleSheet(u"QScrollBar:vertical {\n"
+"    width: 12px;\n"
+"}\n"
+"\n"
+"/* Style for the scrollbar handle */\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(90, 90, 90);\n"
+"    min-height: 20px;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* Handle color when hovered */\n"
+"QScrollBar::handle:vertical:hover {\n"
+"    background: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"/* Handle color when pressed */\n"
+"QScrollBar::handle:vertical:pressed {\n"
+"    background: rgb(180, 180, 180);\n"
+"}\n"
+"\n"
+"/* Background color for the area above and below the handle */\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: rgb(18, 18, 18);\n"
+"}\n"
+"")
+        self.RSWSSWartistsScrollArea.setWidgetResizable(True)
+        self.RSWSSWartistsScrollAreaWidget = QWidget()
+        self.RSWSSWartistsScrollAreaWidget.setObjectName(u"RSWSSWartistsScrollAreaWidget")
+        self.RSWSSWartistsScrollAreaWidget.setGeometry(QRect(0, 0, 100, 30))
+        self.RSWSSWartistsScrollVLayout = QVBoxLayout(self.RSWSSWartistsScrollAreaWidget)
+        self.RSWSSWartistsScrollVLayout.setSpacing(0)
+        self.RSWSSWartistsScrollVLayout.setObjectName(u"RSWSSWartistsScrollVLayout")
+        self.RSWSSWartistsScrollVLayout.setContentsMargins(16, 0, 4, 16)
+        self.RSWSSWartistsScrollAreaSpacer = QSpacerItem(0, 352, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.RSWSSWartistsScrollVLayout.addItem(self.RSWSSWartistsScrollAreaSpacer)
+
+        self.RSWSSWartistsScrollArea.setWidget(self.RSWSSWartistsScrollAreaWidget)
+
+        self.gridLayout_3.addWidget(self.RSWSSWartistsScrollArea, 0, 0, 1, 1)
+
+        self.RSWSstackedWidget.addWidget(self.RSWSSWartistsWidget)
 
         self.verticalLayout.addWidget(self.RSWSstackedWidget)
 
@@ -1255,6 +1517,7 @@ class Ui_MainWindow(object):
 
         self.homeButton.setDefault(False)
         self.rightStackedWidget.setCurrentIndex(1)
+        self.RSWSstackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
