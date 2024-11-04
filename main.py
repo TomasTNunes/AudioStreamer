@@ -56,6 +56,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Connect volumeButton to volumeSlider
         self.volumeSlider.valueChanged.connect(self.volumeSliderValueChange)
 
+        # Initialize and Connect Search Filter Buttons
+        self.RSWSallButton.clicked.connect(self.RSWSallButtonClick)
+        self.RSWSallButton.click() # Initialize "all" as initial selected Search Filter Button
+        self.RSWSsongsButton.clicked.connect(self.RSWSsongsButtonClick)
+        self.RSWSplaylistsButton.clicked.connect(self.RSWSplaylistsButtonClick)
+        self.RSWSalbumsButton.clicked.connect(self.RSWSalbumsButtonClick)
+        self.RSWSartistsButton.clicked.connect(self.RSWSartistsButtonClick)
+
         # Set Utilities
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFYCLIENTID'),
                                                client_secret=os.getenv('SPOTIFYCLIENTSECRET'),
@@ -79,8 +87,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.disableMediaButtons()
         self.volumeSlider.setRange(0, 50) # max Volume
         self.volumeSlider.setValue(self.AS.volume)
-        # Initialize "all" as initial selected Search Filter Button
-        self.RSWSallButton.click()
 
     #------------------------ Home&Search Buttons ------------------------#
     def homeButtonClick(self):
@@ -98,10 +104,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #------------------------ Search Bar ------------------------#
     def clearRSWsearchWidget(self):
         SearchTrackWidget.selected_widget = None
-        # Loop through and remove each widget from the layout 
+        # Loop through and remove each widget from the all search layout s
         # except last widget which is the spacer
+        # All
         for i in range(self.RSWSSWallScrollVLayout.count() - 2, -1, -1):
             item = self.RSWSSWallScrollVLayout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()  # Delete the widget from memory
+        # Songs
+        for i in range(self.RSWSSWsongsScrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSSWsongsScrollVLayout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()  # Delete the widget from memory
+        # Playlists
+        for i in range(self.RSWSSWplaylistsScrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSSWplaylistsScrollVLayout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()  # Delete the widget from memory
+        # Albums
+        for i in range(self.RSWSSWalbumsScrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSSWalbumsScrollVLayout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()  # Delete the widget from memory
+        # Artists
+        for i in range(self.RSWSSWartistsScrollVLayout.count() - 2, -1, -1):
+            item = self.RSWSSWartistsScrollVLayout.takeAt(i)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()  # Delete the widget from memory
@@ -112,8 +143,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Get text from RSWSsearchQLineEdit when Enter is pressed
         search_text = self.RSWSsearchQLineEdit.text()
         if search_text.strip():
-            self.lastSearch = self.sp.search(q=search_text, type='track,playlist,album,artist', limit=10)
-            for item in self.lastSearch['tracks']['items']:
+            self.lastSearch = self.sp.search(q=search_text, type='track,playlist,album,artist', limit=20)
+            for i,item in enumerate(self.lastSearch['tracks']['items']):
                 track = Track(item)
                 # Create an instance of SearchTrackWidget
                 track_widget = SearchTrackWidget(track)
@@ -177,6 +208,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.volumeButton.setChecked(False)
         self.AS.set_volume(volume)
         self.volumeButton.update_volume_style(volume)
+    
+    #----------------------- Search Filter Buttons ------------------------#
+    def RSWSallButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWallWidget)
+    
+    def RSWSsongsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWsongsWidget)
+    
+    def RSWSplaylistsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWplaylistsWidget)
+    
+    def RSWSalbumsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWalbumsWidget)
+    
+    def RSWSartistsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWartistsWidget)
     
     #------------------------ AudioStreamer Events ------------------------#
     def onTrackStartEvent(self):

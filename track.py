@@ -14,7 +14,7 @@ class Track(AudioStreamerTrack):
         self._name = itemResult.get('name', '')
         self._artists = [(artist.get('id', ''), artist.get('name', '')) for artist in itemResult.get('artists', [])]
         self._album = (itemResult['album']['id'],itemResult['album']['name'])
-        self._cover = requests.get(itemResult.get('album', {}).get('images', [{}])[0].get('url', '')).content if itemResult.get('album', {}).get('images', [{}])[0].get('url', '') else b''
+        self._cover = itemResult.get('album', {}).get('images', [{}])[0].get('url', '')
         self._spotifyDuration = itemResult.get('duration_ms', 0) * 1000
         self._sl = None
     
