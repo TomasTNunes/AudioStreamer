@@ -3,7 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QTimer, QMetaObject, Qt
+from PySide6.QtCore import QTimer
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from AudioStreamer.audiostreamerV04 import AudioStreamer
@@ -148,7 +148,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 track = Track(item)
                 # Create an instance of SearchTrackWidget
                 track_widget = SearchTrackWidget(track)
-                self.RSWSSWallScrollVLayout.insertWidget(self.RSWSSWallScrollVLayout.count()-1,track_widget)
+                self.RSWSSWallScrollVLayout.insertWidget(self.RSWSSWallScrollVLayout.count()-1,track_widget)        
+    
+    #----------------------- Search Filter Buttons ------------------------#
+    def RSWSallButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWallWidget)
+    
+    def RSWSsongsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWsongsWidget)
+    
+    def RSWSplaylistsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWplaylistsWidget)
+    
+    def RSWSalbumsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWalbumsWidget)
+    
+    def RSWSartistsButtonClick(self):
+        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWartistsWidget)
+    
+    # def getActiveSearchLayout(self):
+    #     if self.RSWSallButton.isChecked():
+    #         return self.RSWSSWallScrollVLayout
+    #     elif self.RSWSsongsButton.isChecked():
+    #         return self.RSWSSWsongsScrollVLayout
+    #     elif self.RSWSplaylistsButton.isChecked():
+    #         return self.RSWSSWplaylistsScrollVLayout
+    #     elif self.RSWSalbumsButton.isChecked():
+    #         return self.RSWSSWalbumsScrollVLayout
+    #     elif self.RSWSartistsButton.isChecked():
+    #         return self.RSWSSWartistsScrollVLayout
 
     #------------------------ Media Buttons ------------------------#
     def disableMediaButtons(self):
@@ -209,22 +237,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.AS.set_volume(volume)
         self.volumeButton.update_volume_style(volume)
     
-    #----------------------- Search Filter Buttons ------------------------#
-    def RSWSallButtonClick(self):
-        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWallWidget)
-    
-    def RSWSsongsButtonClick(self):
-        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWsongsWidget)
-    
-    def RSWSplaylistsButtonClick(self):
-        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWplaylistsWidget)
-    
-    def RSWSalbumsButtonClick(self):
-        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWalbumsWidget)
-    
-    def RSWSartistsButtonClick(self):
-        self.RSWSstackedWidget.setCurrentWidget(self.RSWSSWartistsWidget)
-    
     #------------------------ AudioStreamer Events ------------------------#
     def onTrackStartEvent(self):
         # Enable Media Buttons
@@ -249,6 +261,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # QMetaObject.invokeMethod(self.trackTimer, "stop", Qt.BlockingQueuedConnection)
         # Disable Media Buttons NOTE: make condition if queue empty?
         self.disableMediaButtons()
+        # Remove green text from playing SearchTrackWidget
+        if SearchTrackWidget.playing_widget:
+                SearchTrackWidget.playing_widget.toggleLabelColor()
+                SearchTrackWidget.playing_widget = None
 
     #------------------------ UI Events ------------------------#
     def mousePressEvent(self, event):

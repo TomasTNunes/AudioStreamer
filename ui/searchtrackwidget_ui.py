@@ -15,10 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QSizePolicy,
-    QSpacerItem, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSpacerItem, QWidget)
 
 from coverlabel import CoverLabel
+import resources_rc
 
 class Ui_SearchTrackWidgetBase(object):
     def setupUi(self, SearchTrackWidgetBase):
@@ -79,20 +80,72 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addWidget(self.musicLabel, 0, 1, 1, 1)
 
-        self.artistLabel = QLabel(self.SearchTrackWidget)
-        self.artistLabel.setObjectName(u"artistLabel")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
+        self.STWHLayout = QHBoxLayout()
+        self.STWHLayout.setSpacing(16)
+        self.STWHLayout.setObjectName(u"STWHLayout")
+        self.STWHLayout.setContentsMargins(0, -1, -1, -1)
+        self.durationLabel = QLabel(self.SearchTrackWidget)
+        self.durationLabel.setObjectName(u"durationLabel")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
-        self.artistLabel.setSizePolicy(sizePolicy3)
+        sizePolicy3.setHeightForWidth(self.durationLabel.sizePolicy().hasHeightForWidth())
+        self.durationLabel.setSizePolicy(sizePolicy3)
+        self.durationLabel.setMinimumSize(QSize(0, 19))
+        self.durationLabel.setMaximumSize(QSize(16777215, 19))
+        font1 = QFont()
+        font1.setPointSize(9)
+        font1.setBold(True)
+        self.durationLabel.setFont(font1)
+        self.durationLabel.setStyleSheet(u"QLabel {\n"
+"   color: rgb(180, 180, 180);\n"
+"	background-color: none;\n"
+"}")
+
+        self.STWHLayout.addWidget(self.durationLabel)
+
+        self.optiosnsButton = QPushButton(self.SearchTrackWidget)
+        self.optiosnsButton.setObjectName(u"optiosnsButton")
+        self.optiosnsButton.setEnabled(True)
+        sizePolicy1.setHeightForWidth(self.optiosnsButton.sizePolicy().hasHeightForWidth())
+        self.optiosnsButton.setSizePolicy(sizePolicy1)
+        self.optiosnsButton.setMinimumSize(QSize(16, 32))
+        self.optiosnsButton.setMaximumSize(QSize(16, 32))
+        self.optiosnsButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.optiosnsButton.setStyleSheet(u"QPushButton {\n"
+"	background-color: transparent;\n"
+"	border-radius: 0px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    icon: url(:/assets/buttons/options_hover.png);\n"
+"}\n"
+"QPushButton:pressed  {\n"
+"    icon: url(:/assets/buttons/options_pressed.png);\n"
+"}")
+        icon = QIcon()
+        icon.addFile(u":/assets/buttons/options.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.optiosnsButton.setIcon(icon)
+        self.optiosnsButton.setIconSize(QSize(16, 32))
+
+        self.STWHLayout.addWidget(self.optiosnsButton)
+
+
+        self.gridLayout_2.addLayout(self.STWHLayout, 0, 8, 2, 1)
+
+        self.artistLabel = QLabel(self.SearchTrackWidget)
+        self.artistLabel.setObjectName(u"artistLabel")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
+        self.artistLabel.setSizePolicy(sizePolicy4)
         self.artistLabel.setMinimumSize(QSize(0, 19))
         self.artistLabel.setMaximumSize(QSize(16777215, 19))
-        font1 = QFont()
-        font1.setPointSize(10)
-        font1.setBold(True)
-        font1.setUnderline(False)
-        self.artistLabel.setFont(font1)
+        font2 = QFont()
+        font2.setPointSize(10)
+        font2.setBold(True)
+        font2.setUnderline(False)
+        self.artistLabel.setFont(font2)
         self.artistLabel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.artistLabel.setStyleSheet(u"QLabel {\n"
 "   color: rgb(180, 180, 180);\n"
@@ -123,6 +176,8 @@ class Ui_SearchTrackWidgetBase(object):
         SearchTrackWidgetBase.setWindowTitle(QCoreApplication.translate("SearchTrackWidgetBase", u"Form", None))
         self.iconLabel.setText("")
         self.musicLabel.setText(QCoreApplication.translate("SearchTrackWidgetBase", u"TextLabel", None))
+        self.durationLabel.setText(QCoreApplication.translate("SearchTrackWidgetBase", u"--:--", None))
+        self.optiosnsButton.setText("")
         self.artistLabel.setText(QCoreApplication.translate("SearchTrackWidgetBase", u"TextLabel", None))
     # retranslateUi
 

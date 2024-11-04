@@ -15,7 +15,7 @@ class Track(AudioStreamerTrack):
         self._artists = [(artist.get('id', ''), artist.get('name', '')) for artist in itemResult.get('artists', [])]
         self._album = (itemResult['album']['id'],itemResult['album']['name'])
         self._cover = itemResult.get('album', {}).get('images', [{}])[0].get('url', '')
-        self._spotifyDuration = itemResult.get('duration_ms', 0) * 1000
+        self._spotifyDuration = itemResult.get('duration_ms', 0) / 1000
         self._sl = None
     
     @classmethod
@@ -38,6 +38,13 @@ class Track(AudioStreamerTrack):
     @property
     def spotifyDuration(self):
         return self._spotifyDuration
+    
+    @property
+    def SpotifyDurationFormat(self):
+        total_seconds = int(self._spotifyDuration)
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        return f'{minutes}:{seconds:02d}'
     
     def getYoutubeAudio(self):
         if not self.url:

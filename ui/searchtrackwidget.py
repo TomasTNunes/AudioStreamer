@@ -1,13 +1,14 @@
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Property
-import yt_dlp
-from AudioStreamer.audiostreamertrack import AudioStreamerTrack
 from searchtrackwidget_ui import Ui_SearchTrackWidgetBase
+from AudioStreamer.events import TrackStartEvent, TrackEndEvent
+
 
 # Search Track Widget
 class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
     # Class Variables (Global)
     selected_widget = None  # Class variable to track the currently selected widget
+    playing_widget = None
     AS = None  # Class variable for the AudioStreamer instance
     
     def __init__(self, track, parent=None):
@@ -17,6 +18,7 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
         # Set Widget UI
         self.artistLabel.setText(track.artists)
         self.musicLabel.setText(track.name)
+        self.durationLabel.setText(track.SpotifyDurationFormat)
         self.iconLabel.setCover(track.cover)
         # Custom Properties for Widget
         self._checked = False
@@ -60,6 +62,13 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
 
     checked = Property(bool, getChecked, setChecked)
 
+    def toggleLabelColor(self):
+        currentStyleSheet = self.musicLabel.styleSheet()
+        if 'rgb(255, 255, 255)' in currentStyleSheet:
+            self.musicLabel.setStyleSheet('color: rgb(26, 216, 103); background-color: none;')
+        else:
+            self.musicLabel.setStyleSheet('color: rgb(255, 255, 255); background-color: none;')
+
     def mousePressEvent(self, event):
         if not self.getChecked():
             # If there's a currently selected widget and it's not this one, deselect it
@@ -76,5 +85,8 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
             self._track.getYoutubeAudio()
         if self._track.url:
             self.AS.play(self._track)
+            if SearchTrackWidget.playing_widget != self:
+                SearchTrackWidget.playing_widget = self
+                self.toggleLabelColor()
         super().mouseDoubleClickEvent(event)
     

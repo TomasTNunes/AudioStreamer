@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="/">
+    <file>assets/buttons/options.png</file>
+    <file>assets/buttons/options_hover.png</file>
+    <file>assets/buttons/options_pressed.png</file>
     <file>assets/buttons/queue.png</file>
     <file>assets/buttons/queue_clicked.png</file>
     <file>assets/buttons/queue_hover.png</file>
