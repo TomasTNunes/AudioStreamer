@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget
-from PySide6.QtCore import Property
+from PySide6.QtCore import Property, Qt
 from searchtrackwidget_ui import Ui_SearchTrackWidgetBase
 
 # Search Track Widget
@@ -77,15 +77,16 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
         super().mousePressEvent(event)
     
     def mouseDoubleClickEvent(self, event):
-        if self.AS.active:
-            self.AS.stop()
-        if not self._track.url:
-            self._track.getYoutubeAudio()
-        if self._track.url:
-            self.AS.play(self._track)
-            if SearchTrackWidget.playing_widget != self:
-                SearchTrackWidget.playing_widget = self
-                self.toggleLabelColor()
+        if event.button() == Qt.LeftButton:
+            if self.AS.active:
+                self.AS.stop()
+            if not self._track.url:
+                self._track.getYoutubeAudio()
+            if self._track.url:
+                self.AS.play(self._track)
+                if SearchTrackWidget.playing_widget != self:
+                    SearchTrackWidget.playing_widget = self
+                    self.toggleLabelColor()
         super().mouseDoubleClickEvent(event)
  
     def resizeEvent(self, event):

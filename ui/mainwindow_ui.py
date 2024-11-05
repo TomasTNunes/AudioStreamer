@@ -977,6 +977,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(8, 6, 0, 10)
         self.iconLabel = CoverLabel(self.BWleftWidget)
         self.iconLabel.setObjectName(u"iconLabel")
+        self.iconLabel.setEnabled(True)
         sizePolicy2.setHeightForWidth(self.iconLabel.sizePolicy().hasHeightForWidth())
         self.iconLabel.setSizePolicy(sizePolicy2)
         self.iconLabel.setMinimumSize(QSize(56, 56))
