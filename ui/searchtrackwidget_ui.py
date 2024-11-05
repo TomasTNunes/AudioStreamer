@@ -162,7 +162,7 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addItem(self.Hspacer, 0, 2, 2, 1)
 
-        self.gridLayout_2.setColumnStretch(1, 2)
+        self.gridLayout_2.setColumnStretch(1, 7)
         self.gridLayout_2.setColumnStretch(2, 1)
 
         self.gridLayout.addWidget(self.SearchTrackWidget, 0, 0, 1, 1)

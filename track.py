@@ -38,10 +38,18 @@ class Track(AudioStreamerTrack):
     @property
     def spotifyDuration(self):
         return self._spotifyDuration
+
+    @property
+    def spotifyDurationFormat(self):
+        return self.getDurationFormat(self.spotifyDuration)
     
     @property
-    def SpotifyDurationFormat(self):
-        total_seconds = int(self._spotifyDuration)
+    def durationFormat(self):
+        return self.getDurationFormat(self.duration)
+    
+    @staticmethod
+    def getDurationFormat(time):
+        total_seconds = int(time)
         minutes = total_seconds // 60
         seconds = total_seconds % 60
         return f'{minutes}:{seconds:02d}'

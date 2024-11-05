@@ -1245,7 +1245,7 @@ QPushButton:checked:pressed {
         <item>
          <widget class="QStackedWidget" name="RSWSstackedWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="RSWSSWallWidget">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1693,8 +1693,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>100</width>
-                 <height>30</height>
+                 <width>484</width>
+                 <height>371</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="RSWSSWartistsScrollVLayout">
@@ -1761,7 +1761,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="styleSheet">
        <string notr="true">/*background-color: rgb(170, 170, 127);*/</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,2,1">
        <property name="spacing">
         <number>16</number>
        </property>
@@ -1818,6 +1818,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           </property>
           <item>
            <widget class="CoverLabel" name="iconLabel">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1837,7 +1840,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 170, 0);
+             <string notr="true">background-color: None;
 border-radius: 4px;</string>
             </property>
             <property name="text">
@@ -1852,6 +1855,9 @@ border-radius: 4px;</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: None;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
@@ -1871,6 +1877,9 @@ border-radius: 4px;</string>
              </property>
              <item>
               <widget class="ElidedLabel" name="musicLabel">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1897,8 +1906,17 @@ border-radius: 4px;</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);
-background-color: none;</string>
+                <string notr="true">QLabel {
+    color: rgb(255, 255, 255);
+	background-color: None;
+}
+
+QLabel:disabled {
+    color: transparent;
+	background-color: None;
+}
+
+</string>
                </property>
                <property name="text">
                 <string>TextLabel</string>
@@ -1907,6 +1925,9 @@ background-color: none;</string>
              </item>
              <item>
               <widget class="ElidedLabel" name="artistLabel">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1937,10 +1958,14 @@ background-color: none;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QLabel {
-   color: rgb(180, 180, 180);
-	background-color: none;
+    color: rgb(180, 180, 180);
+	background-color: None;
 }
 
+QLabel:disabled {
+    color: transparent;
+	background-color: None;
+}
 
 QLabel:hover {
 	color: rgb(255, 255, 255)

@@ -72,7 +72,7 @@ class AudioStreamer:
         return int(self._volume*100)
 
     @property
-    def current_position(self):
+    def currentPosition(self):
         """current audiostreamer position in seconds."""
         return self._current_position
     
@@ -83,6 +83,11 @@ class AudioStreamer:
             return self._current_track.duration
         else:
             return None
+    
+    @property
+    def track(self):
+        """current active track."""
+        return self._current_track
     
 
     ########################################################################

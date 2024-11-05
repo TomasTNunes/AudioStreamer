@@ -87,6 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.disableMediaButtons()
         self.volumeSlider.setRange(0, 50) # max Volume
         self.volumeSlider.setValue(self.AS.volume)
+        self.prev_BWleftWidget_width = self.BWleftWidget.width()
 
     #------------------------ Home&Search Buttons ------------------------#
     def homeButtonClick(self):
@@ -179,6 +180,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #         return self.RSWSSWartistsScrollVLayout
 
     #------------------------ Media Buttons ------------------------#
+    def enableMediaButtons(self):
+        track = self.AS.track
+        # Enable Media Buttons
+        self.playButton.setChecked(True)
+        self.playButton.setEnabled(True)
+        self.nextTrackButton.setEnabled(True)
+        self.previousTrackButton.setEnabled(True)
+        self.loopButton.setEnabled(True)
+        self.shuffleButton.setEnabled(True)
+        self.playTimeSlider.setRange(0, track.duration)
+        self.playTimeSlider.setValue(0)
+        self.playTimeSlider.setEnabled(True)
+        self.timeLabel.setStyleSheet('color: rgb(255, 255, 255);')
+        self.timeLabel.setText('0:00')
+        self.durationLabel.setStyleSheet('color: rgb(255, 255, 255);')
+        self.durationLabel.setText(track.durationFormat)
+        # Set UI of playing track
+        self.iconLabel.setCover(track.cover)
+        self.iconLabel.setEnabled(True)
+        self.musicLabel.setText(track.name)
+        self.musicLabel.setEnabled(True)
+        self.artistLabel.setText(track.artists)
+        self.artistLabel.setEnabled(True)
+        self.resizeActiveTrackLabels()
+
     def disableMediaButtons(self):
         # Disable Media Buttons
         self.playButton.setChecked(False)
@@ -193,6 +219,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timeLabel.setText('--:--')
         self.durationLabel.setStyleSheet('color: rgb(20, 20, 20);')
         self.durationLabel.setText('--:--')
+        # Remove UI of playing track
+        self.iconLabel.setEnabled(False)
+        self.iconLabel.clear()
+        self.musicLabel.setEnabled(False)
+        self.musicLabel.setText('')
+        self.artistLabel.setEnabled(False)
+        self.artistLabel.setText('')
 
     def playButtonClick(self):
         if self.AS.active:
@@ -210,11 +243,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def playTimeSliderValueChange(self):
         slider_time = self.playTimeSlider.value()
-        self.timeLabel.setText(self.get_formated_time(slider_time))
+        self.timeLabel.setText(Track.getDurationFormat(slider_time))
 
     def trackTimerUpdate(self):
-        current_position = int(self.AS.current_position)
-        self.playTimeSlider.setValue(current_position)
+        currentPosition = int(self.AS.currentPosition)
+        self.playTimeSlider.setValue(currentPosition)
     
     def volumeButtonClick(self):
         if self.volumeButton.isChecked():
@@ -239,20 +272,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     #------------------------ AudioStreamer Events ------------------------#
     def onTrackStartEvent(self):
-        # Enable Media Buttons
-        self.playButton.setChecked(True)
-        self.playButton.setEnabled(True)
-        self.nextTrackButton.setEnabled(True)
-        self.previousTrackButton.setEnabled(True)
-        self.loopButton.setEnabled(True)
-        self.shuffleButton.setEnabled(True)
-        self.playTimeSlider.setRange(0, self.AS.duration)
-        self.playTimeSlider.setValue(0)
-        self.playTimeSlider.setEnabled(True)
-        self.timeLabel.setStyleSheet('color: rgb(255, 255, 255);')
-        self.timeLabel.setText('0:00')
-        self.durationLabel.setStyleSheet('color: rgb(255, 255, 255);')
-        self.durationLabel.setText(self.get_formated_time(self.AS.duration))
+        self.enableMediaButtons()
         # Start trackTimer
         self.trackTimer.start()
     
@@ -275,17 +295,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 widget.setChecked(False)  # Uncheck the currently selected widget
         super().mousePressEvent(event)
     
+    def resizeEvent(self, event):
+        # Check if the size of BWleftWidget has changed
+        if self.BWleftWidget.width() != self.prev_BWleftWidget_width:
+            self.resizeActiveTrackLabels()
+            self.prev_BWleftWidget_width = self.BWleftWidget.width()
+        super().resizeEvent(event)
+    
+    def resizeActiveTrackLabels(self):
+        # Adjust width dynamically
+        padding = 76
+        available_width = self.BWleftWidget.width() - padding
+        # Set the maximum width for the track title
+        self.musicLabel.setMaximumWidth(available_width)
+        self.artistLabel.setMaximumWidth(available_width)
+    
     def closeEvent(self, event):
         self.AS.stop()
         super().closeEvent(event)
     
     #------------------------ Auxiliar Functions ------------------------#
-    @staticmethod
-    def get_formated_time(total_seconds):
-        total_seconds = int(total_seconds)
-        minutes = total_seconds // 60
-        seconds = total_seconds % 60
-        return f'{minutes}:{seconds:02d}'
 
 
 

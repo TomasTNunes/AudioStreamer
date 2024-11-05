@@ -16,7 +16,7 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
         # Set Widget UI
         self.artistLabel.setText(track.artists)
         self.musicLabel.setText(track.name)
-        self.durationLabel.setText(track.SpotifyDurationFormat)
+        self.durationLabel.setText(track.spotifyDurationFormat)
         self.iconLabel.setCover(track.cover)
         # Custom Properties for Widget
         self._checked = False
@@ -90,9 +90,8 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
  
     def resizeEvent(self, event):
         # Adjust width dynamically
-        total_width = self.width()
         padding = 225
-        available_width = total_width - padding
+        available_width = self.width() - padding
         # Set the maximum width for the track title
         self.musicLabel.setMaximumWidth(available_width)
         self.artistLabel.setMaximumWidth(available_width)

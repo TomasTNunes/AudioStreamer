@@ -932,7 +932,7 @@ class Ui_MainWindow(object):
         self.RSWSSWartistsScrollArea.setWidgetResizable(True)
         self.RSWSSWartistsScrollAreaWidget = QWidget()
         self.RSWSSWartistsScrollAreaWidget.setObjectName(u"RSWSSWartistsScrollAreaWidget")
-        self.RSWSSWartistsScrollAreaWidget.setGeometry(QRect(0, 0, 100, 30))
+        self.RSWSSWartistsScrollAreaWidget.setGeometry(QRect(0, 0, 484, 371))
         self.RSWSSWartistsScrollVLayout = QVBoxLayout(self.RSWSSWartistsScrollAreaWidget)
         self.RSWSSWartistsScrollVLayout.setSpacing(0)
         self.RSWSSWartistsScrollVLayout.setObjectName(u"RSWSSWartistsScrollVLayout")
@@ -981,7 +981,7 @@ class Ui_MainWindow(object):
         self.iconLabel.setSizePolicy(sizePolicy2)
         self.iconLabel.setMinimumSize(QSize(56, 56))
         self.iconLabel.setMaximumSize(QSize(56, 56))
-        self.iconLabel.setStyleSheet(u"background-color: rgb(0, 170, 0);\n"
+        self.iconLabel.setStyleSheet(u"background-color: None;\n"
 "border-radius: 4px;")
 
         self.horizontalLayout_4.addWidget(self.iconLabel)
@@ -990,12 +990,14 @@ class Ui_MainWindow(object):
         self.BWLrightWidget.setObjectName(u"BWLrightWidget")
         sizePolicy.setHeightForWidth(self.BWLrightWidget.sizePolicy().hasHeightForWidth())
         self.BWLrightWidget.setSizePolicy(sizePolicy)
+        self.BWLrightWidget.setStyleSheet(u"background-color: None;")
         self.verticalLayout_5 = QVBoxLayout(self.BWLrightWidget)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 10, 0, 4)
         self.musicLabel = ElidedLabel(self.BWLrightWidget)
         self.musicLabel.setObjectName(u"musicLabel")
+        self.musicLabel.setEnabled(True)
         sizePolicy4.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
         self.musicLabel.setSizePolicy(sizePolicy4)
         self.musicLabel.setMinimumSize(QSize(0, 22))
@@ -1005,13 +1007,23 @@ class Ui_MainWindow(object):
         font7.setPointSize(11)
         font7.setBold(True)
         self.musicLabel.setFont(font7)
-        self.musicLabel.setStyleSheet(u"color: rgb(255, 255, 255);\n"
-"background-color: none;")
+        self.musicLabel.setStyleSheet(u"QLabel {\n"
+"    color: rgb(255, 255, 255);\n"
+"	background-color: None;\n"
+"}\n"
+"\n"
+"QLabel:disabled {\n"
+"    color: transparent;\n"
+"	background-color: None;\n"
+"}\n"
+"\n"
+"")
 
         self.verticalLayout_5.addWidget(self.musicLabel)
 
         self.artistLabel = ElidedLabel(self.BWLrightWidget)
         self.artistLabel.setObjectName(u"artistLabel")
+        self.artistLabel.setEnabled(True)
         sizePolicy4.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
         self.artistLabel.setSizePolicy(sizePolicy4)
         self.artistLabel.setMinimumSize(QSize(0, 20))
@@ -1023,10 +1035,14 @@ class Ui_MainWindow(object):
         self.artistLabel.setFont(font8)
         self.artistLabel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.artistLabel.setStyleSheet(u"QLabel {\n"
-"   color: rgb(180, 180, 180);\n"
-"	background-color: none;\n"
+"    color: rgb(180, 180, 180);\n"
+"	background-color: None;\n"
 "}\n"
 "\n"
+"QLabel:disabled {\n"
+"    color: transparent;\n"
+"	background-color: None;\n"
+"}\n"
 "\n"
 "QLabel:hover {\n"
 "	color: rgb(255, 255, 255)\n"
@@ -1508,7 +1524,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.BWrightWidget)
 
-        self.horizontalLayout_3.setStretch(1, 1)
+        self.horizontalLayout_3.setStretch(0, 1)
+        self.horizontalLayout_3.setStretch(1, 2)
+        self.horizontalLayout_3.setStretch(2, 1)
 
         self.gridLayout.addWidget(self.bottomWidget, 1, 0, 1, 2)
 
@@ -1518,7 +1536,7 @@ class Ui_MainWindow(object):
 
         self.homeButton.setDefault(False)
         self.rightStackedWidget.setCurrentIndex(1)
-        self.RSWSstackedWidget.setCurrentIndex(2)
+        self.RSWSstackedWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
