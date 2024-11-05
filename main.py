@@ -271,12 +271,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.volumeButton.update_volume_style(volume)
     
     #------------------------ AudioStreamer Events ------------------------#
-    def onTrackStartEvent(self):
+    def onTrackStartEvent(self, event):
         self.enableMediaButtons()
         # Start trackTimer
         self.trackTimer.start()
     
-    def onTrackEndEvent(self):
+    def onTrackEndEvent(self, event):
         # Stop trackTimer - Use QMetaObject.invokeMethod to call self.trackTimer.stop on the main thread (it's required) 
         # QMetaObject.invokeMethod(self.trackTimer, "stop", Qt.BlockingQueuedConnection)
         # Disable Media Buttons NOTE: make condition if queue empty?

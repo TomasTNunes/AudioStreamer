@@ -16,7 +16,7 @@ class Event:
     def emit(self):
         """Emit the event, calling all registered hooks."""
         for hook in self._hooks:
-            hook()
+            hook(self)
 
 
 class TrackStartEvent(Event):
