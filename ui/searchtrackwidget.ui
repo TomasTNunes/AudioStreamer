@@ -55,7 +55,7 @@
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,2,1,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>9</number>
       </property>
@@ -104,9 +104,9 @@ border-radius: 4px;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="musicLabel">
+       <widget class="ElidedLabel" name="musicLabel">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -132,7 +132,8 @@ border-radius: 4px;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 255, 255);
-background-color: none;</string>
+background-color: None;
+</string>
         </property>
         <property name="text">
          <string>TextLabel</string>
@@ -240,9 +241,9 @@ QPushButton:pressed  {
        </layout>
       </item>
       <item row="1" column="1">
-       <widget class="QLabel" name="artistLabel">
+       <widget class="ElidedLabel" name="artistLabel">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -308,6 +309,11 @@ QLabel:hover {
    <class>CoverLabel</class>
    <extends>QLabel</extends>
    <header>coverlabel</header>
+  </customwidget>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header>elidedlabel</header>
   </customwidget>
  </customwidgets>
  <resources>

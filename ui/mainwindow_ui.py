@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridL
 
 from coverlabel import CoverLabel
 from customscrollarea import CustomScrollArea
+from elidedlabel import ElidedLabel
 from filterbutton import (LibraryFilterButton, SearchFilterButton)
 from hoverslider import HoverSlider
 from loopbutton import LoopButton
@@ -993,13 +994,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 10, 0, 4)
-        self.musicLabel = QLabel(self.BWLrightWidget)
+        self.musicLabel = ElidedLabel(self.BWLrightWidget)
         self.musicLabel.setObjectName(u"musicLabel")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
-        self.musicLabel.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
+        self.musicLabel.setSizePolicy(sizePolicy4)
         self.musicLabel.setMinimumSize(QSize(0, 22))
         self.musicLabel.setMaximumSize(QSize(16777215, 22))
         font7 = QFont()
@@ -1012,10 +1010,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.musicLabel)
 
-        self.artistLabel = QLabel(self.BWLrightWidget)
+        self.artistLabel = ElidedLabel(self.BWLrightWidget)
         self.artistLabel.setObjectName(u"artistLabel")
-        sizePolicy5.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
-        self.artistLabel.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
+        self.artistLabel.setSizePolicy(sizePolicy4)
         self.artistLabel.setMinimumSize(QSize(0, 20))
         self.artistLabel.setMaximumSize(QSize(16777215, 20))
         font8 = QFont()
@@ -1283,6 +1281,9 @@ class Ui_MainWindow(object):
         self.timeLabel = QLabel(self.BWCbottomWidget)
         self.timeLabel.setObjectName(u"timeLabel")
         self.timeLabel.setEnabled(True)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.timeLabel.sizePolicy().hasHeightForWidth())
         self.timeLabel.setSizePolicy(sizePolicy5)
         self.timeLabel.setMinimumSize(QSize(0, 17))

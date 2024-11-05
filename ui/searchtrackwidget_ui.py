@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
     QPushButton, QSizePolicy, QSpacerItem, QWidget)
 
 from coverlabel import CoverLabel
+from elidedlabel import ElidedLabel
 import resources_rc
 
 class Ui_SearchTrackWidgetBase(object):
@@ -61,13 +62,10 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addWidget(self.iconLabel, 0, 0, 2, 1)
 
-        self.musicLabel = QLabel(self.SearchTrackWidget)
+        self.musicLabel = ElidedLabel(self.SearchTrackWidget)
         self.musicLabel.setObjectName(u"musicLabel")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
-        self.musicLabel.setSizePolicy(sizePolicy2)
+        sizePolicy.setHeightForWidth(self.musicLabel.sizePolicy().hasHeightForWidth())
+        self.musicLabel.setSizePolicy(sizePolicy)
         self.musicLabel.setMinimumSize(QSize(0, 21))
         self.musicLabel.setMaximumSize(QSize(16777215, 21))
         font = QFont()
@@ -76,7 +74,8 @@ class Ui_SearchTrackWidgetBase(object):
         font.setBold(True)
         self.musicLabel.setFont(font)
         self.musicLabel.setStyleSheet(u"color: rgb(255, 255, 255);\n"
-"background-color: none;")
+"background-color: None;\n"
+"")
 
         self.gridLayout_2.addWidget(self.musicLabel, 0, 1, 1, 1)
 
@@ -86,11 +85,11 @@ class Ui_SearchTrackWidgetBase(object):
         self.STWHLayout.setContentsMargins(0, -1, -1, -1)
         self.durationLabel = QLabel(self.SearchTrackWidget)
         self.durationLabel.setObjectName(u"durationLabel")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.durationLabel.sizePolicy().hasHeightForWidth())
-        self.durationLabel.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.durationLabel.sizePolicy().hasHeightForWidth())
+        self.durationLabel.setSizePolicy(sizePolicy2)
         self.durationLabel.setMinimumSize(QSize(0, 19))
         self.durationLabel.setMaximumSize(QSize(16777215, 19))
         font1 = QFont()
@@ -132,13 +131,13 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addLayout(self.STWHLayout, 0, 8, 2, 1)
 
-        self.artistLabel = QLabel(self.SearchTrackWidget)
+        self.artistLabel = ElidedLabel(self.SearchTrackWidget)
         self.artistLabel.setObjectName(u"artistLabel")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
-        self.artistLabel.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.artistLabel.sizePolicy().hasHeightForWidth())
+        self.artistLabel.setSizePolicy(sizePolicy3)
         self.artistLabel.setMinimumSize(QSize(0, 19))
         self.artistLabel.setMaximumSize(QSize(16777215, 19))
         font2 = QFont()
@@ -163,6 +162,8 @@ class Ui_SearchTrackWidgetBase(object):
 
         self.gridLayout_2.addItem(self.Hspacer, 0, 2, 2, 1)
 
+        self.gridLayout_2.setColumnStretch(1, 2)
+        self.gridLayout_2.setColumnStretch(2, 1)
 
         self.gridLayout.addWidget(self.SearchTrackWidget, 0, 0, 1, 1)
 

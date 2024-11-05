@@ -1,8 +1,6 @@
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Property
 from searchtrackwidget_ui import Ui_SearchTrackWidgetBase
-from AudioStreamer.events import TrackStartEvent, TrackEndEvent
-
 
 # Search Track Widget
 class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
@@ -89,4 +87,14 @@ class SearchTrackWidget(QWidget, Ui_SearchTrackWidgetBase):
                 SearchTrackWidget.playing_widget = self
                 self.toggleLabelColor()
         super().mouseDoubleClickEvent(event)
+ 
+    def resizeEvent(self, event):
+        # Adjust width dynamically
+        total_width = self.width()
+        padding = 225
+        available_width = total_width - padding
+        # Set the maximum width for the track title
+        self.musicLabel.setMaximumWidth(available_width)
+        self.artistLabel.setMaximumWidth(available_width)
+        super().resizeEvent(event)    
     
