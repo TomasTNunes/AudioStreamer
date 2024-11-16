@@ -6,12 +6,13 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import QTimer
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from ytmusicapi import YTMusic
 from AudioStreamer.audiostreamerV04 import AudioStreamer
 from AudioStreamer.events import TrackStartEvent, TrackEndEvent
 from track import Track
-# Add the 'SongLink' directory to sys.path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'SongLink'))
-from SongLink.songlink import SongLink
+# # Add the 'SongLink' directory to sys.path
+# sys.path.append(os.path.join(os.path.dirname(__file__), 'SongLink'))
+# from SongLink.songlink import SongLink
 # Add the 'ui' directory to sys.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'ui'))
 from ui.mainwindow_ui import Ui_MainWindow
@@ -71,8 +72,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                scope="user-library-read"))
         self.AS = AudioStreamer()
         SearchTrackWidget.setAudioStreamer(self.AS)
-        self.SL = SongLink()
-        Track.setSongLink(self.SL)
+        #self.SL = SongLink()
+        #Track.setSongLink(self.SL)
+        self.YTM = YTMusic()
+        Track.setYTMusic(self.YTM)
 
         # Add AudioStreamer Events
         self.AS.add_event_hook(self.onTrackStartEvent, event=TrackStartEvent)

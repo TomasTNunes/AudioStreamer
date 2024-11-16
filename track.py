@@ -1,10 +1,10 @@
-import requests
 import yt_dlp
 
 from AudioStreamer.audiostreamertrack import AudioStreamerTrack
 
 class Track(AudioStreamerTrack):
-    SL = None  # Class variable for the SongLink instance
+    #SL = None  # Class variable for the SongLink instance
+    YTM = None # Class variable for the YTMusic instance
 
     def __init__(self, itemResult, url=None, duration=None, extra=None):
         super().__init__(url, duration, extra)
@@ -18,10 +18,15 @@ class Track(AudioStreamerTrack):
         self._spotifyDuration = itemResult.get('duration_ms', 0) / 1000
         self._sl = None
     
+    # @classmethod
+    # def setSongLink(cls, songlink):
+    #     """Set the shared SongLink instance for all Track instances."""
+    #     cls.SL = songlink
+    
     @classmethod
-    def setSongLink(cls, songlink):
-        """Set the shared SongLink instance for all Track instances."""
-        cls.SL = songlink
+    def setYTMusic(cls, YTM):
+        """Set the shared YTMusic instance for all Track instances."""
+        cls.YTM = YTM
 
     @property
     def name(self):
@@ -57,8 +62,11 @@ class Track(AudioStreamerTrack):
     def getYoutubeAudio(self):
         if not self.url:
             try:
-                self.sl = self.SL.getByUrl(self._spotifyUri)
-                youtube_url = self.sl.entitiesByProvider['youtube'].linksByPlatform['youtubeMusic']
+                #self.sl = self.SL.getByUrl(self._spotifyUri)
+                #youtube_url = self.sl.entitiesByProvider['youtube'].linksByPlatform['youtubeMusic']
+                search_query = f"{self.name} {self.artists}"
+                result = self.YTM.search(search_query, filter="songs", limit=1)[0]
+                youtube_url = f"https://music.youtube.com/watch?v={result['videoId']}"
                 ydl_opts = {
                     'format': 'bestaudio',
                     'noplaylist': True,
